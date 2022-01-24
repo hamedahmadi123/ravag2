@@ -1,10 +1,10 @@
-const URL_GET = '/api/getData.php';
-const URL_INSERT = '/api/insert.php';
-const URL_ARRAY_INSERT = 'api/array/insert.php';
+const URL_GET = '/amozesh/api/getData.php';
+const URL_INSERT = '/amozesh/api/insert.php';
+const URL_ARRAY_INSERT = '/amozesh/api/array/insert.php';
 
-const URL_upload = 'api//upload';
+const URL_upload = '/amozesh/api/upload';
 
-const URL_SendSMS= 'api/api/sendSms';
+const URL_SendSMS= '/amozesh/api/sendSms';
 const URL_login= 'api/login';
 
 
