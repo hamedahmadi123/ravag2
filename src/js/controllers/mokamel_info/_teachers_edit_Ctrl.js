@@ -146,7 +146,7 @@ app.controller('Theacher_edit', ['$scope', '$filter', '$http', function ($scope,
 
     $("#uploadFile1").on('fileuploaded', function (event, data) {
         // and check what's in both params
-        $scope.stu_image = data.response.data;
+        $scope.th_image = data.response.data;
     });
     $("#toggleOrient").on('change', function () {
         var val = $(this).prop('checked');
