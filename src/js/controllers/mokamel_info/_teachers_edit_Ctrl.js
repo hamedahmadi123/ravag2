@@ -2,6 +2,8 @@ app.controller('Theacher_edit', ['$scope', '$filter', '$http', function ($scope,
     $scope.eroretext = "";
     $scope.th_id = "";
     $scope.th_image = "";
+    debugger
+
     $scope.users = [
         {value: "1", name: "مدیر آموزشگاه"},
         {value: "2", name: "معاون"},
@@ -79,6 +81,8 @@ app.controller('Theacher_edit', ['$scope', '$filter', '$http', function ($scope,
     $scope.updateTecherFunctin = function ($id) {
         if ((localStorage.adminId) && localStorage.adminCount != 0 && (localStorage.adminCount && localStorage.adminCount != undefined && localStorage.adminCount != "undefined")) {
             if (($scope.th_fitstname) && ($scope.th_lastname) && ($scope.th_fathername) && ($scope.th_mdrk) && ($scope.th_type)) {
+                debugger
+
                 var upd_th = {
                     ViewName: "TeacherUpdate",
                     parameters: [
@@ -146,7 +150,10 @@ app.controller('Theacher_edit', ['$scope', '$filter', '$http', function ($scope,
 
     $("#uploadFile1").on('fileuploaded', function (event, data) {
         // and check what's in both params
+        debugger
         $scope.th_image = data.response.data;
+        debugger
+
     });
     $("#toggleOrient").on('change', function () {
         var val = $(this).prop('checked');
