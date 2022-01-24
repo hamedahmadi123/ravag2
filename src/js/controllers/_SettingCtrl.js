@@ -35,10 +35,10 @@ app.controller('Setting', ['$scope', '$filter', '$http', function ($scope, $filt
         mutualTransaction: {
             kendoDataRequest: {
                 filter: {
-                    field: "schoolid",
-                    logic: "and",
-                    operator: "eq",
-                    value: localStorage.schoolId + ""
+                    // field: "schoolid",
+                    // logic: "and",
+                    // operator: "eq",
+                    // value: localStorage.schoolId + ""
                 },
             }
         }

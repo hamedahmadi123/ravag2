@@ -44,10 +44,10 @@ app.controller('dashboardCtrl', ['$scope', '$filter', '$http', function ($scope,
                 mutualTransaction: {
                     kendoDataRequest: {
                         filter: {
-                            field: "schoolid",
-                            logic: "and",
-                            operator: "eq",
-                            value: localStorage.schoolId + ""
+                            // field: "schoolid",
+                            // logic: "and",
+                            // operator: "eq",
+                            // value: localStorage.schoolId + ""
                         },
                     }
                 }
@@ -66,7 +66,7 @@ app.controller('dashboardCtrl', ['$scope', '$filter', '$http', function ($scope,
                             operator: "eq",
                             value: localStorage.userId + ''
                             ,
-                            filters: [{field: "schoolid", logic: "and", operator: "eq", value: localStorage.schoolId + ""}]
+                            filters: []
                         },
                     }
                 }

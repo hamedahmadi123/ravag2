@@ -29,10 +29,10 @@ app.controller('class_insert', ['$scope', '$filter', '$http', function ($scope, 
         mutualTransaction: {
             kendoDataRequest: {
                 filter: {
-                    field: "schoolid",
-                    logic: "and",
-                    operator: "eq",
-                    value: localStorage.schoolId
+                    // field: "schoolid",
+                    // logic: "and",
+                    // operator: "eq",
+                    // value: localStorage.schoolId
                 },
             }
         }

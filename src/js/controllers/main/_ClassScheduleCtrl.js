@@ -31,13 +31,7 @@ app.controller('ClassSchedule', ['$scope', '$filter', '$http', function ($scope,
             ViewName: "ClassSelect",
             mutualTransaction: {
                 kendoDataRequest: {
-                    filter: {
-                        field: "schoolid", logic: "and", operator: "eq", value: localStorage.schoolId + ''
-                        , filters: [
-                            {field: "classid", logic: "and", operator: "eq", value: $scope.cls_id}
-                        ]
-
-                    },
+                    filter:  {field: "classid", logic: "and", operator: "eq", value: $scope.cls_id},
                 }
             }
         }
@@ -129,10 +123,10 @@ app.controller('ClassSchedule', ['$scope', '$filter', '$http', function ($scope,
             mutualTransaction: {
                 kendoDataRequest: {
                     filter: {
-                        field: "schoolid",
-                        logic: "and",
-                        operator: "eq",
-                        value: localStorage.schoolId + ""
+                        // field: "schoolid",
+                        // logic: "and",
+                        // operator: "eq",
+                        // value: localStorage.schoolId + ""
                     },
                 }
             }
