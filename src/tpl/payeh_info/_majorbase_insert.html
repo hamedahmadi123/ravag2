@@ -1,0 +1,158 @@
+<div>
+    <div class="bg-light lter b-b wrapper-md" ng-init="app.settings.asideFixed = true;app.settings.headerFixed = true;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+                <h1 class="m-n font-thin h3"><img src="img/icon/rele.png" class="icnSize"> درج {{titleHeader}} جدید
+                </h1>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="float: left">
+                    <div class="panel-body">
+                        <a href="#/app/page/majorbase">
+                            <button style="width: 100%" type="button" class="btn btn-addon , btn btn-default"
+                            ><i class="icon-arrow-left"></i> &nbsp;بازگشت
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="line line-dashed  line-lg pull-in"></div>
+    <div class="container panel v-middle media-middle text-center align-items-center">
+        <br>
+        <div class="panel-body">
+
+            <form class="form-validation" method="post" name="myform" autocomplete="on">
+                <div class="row">
+                    <div class="alert alert-danger" ng-show="errText()">
+                        <i class="icon-info"></i> &nbsp; <strong> {{errText()}}&nbsp;</strong>
+                        را وارد نمایید.
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <div class="panel-body">
+                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label" style="margin-top: 8px;"><span
+                                    class="starstyle">*</span>عنوان:</label>
+                           <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <input ng-model="mb_name" class="form-control rounded" tooltip="عنوان مقطع جدید"
+                                       placeholder="عنوان مقطع ...."
+                                       ng-required="true" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <div class="panel-body">
+                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label" style="margin-top: 8px;">کد {{titleHeader}} :</label>
+                           <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <input ng-model="mb_code" class="form-control rounded" tooltip="کد {{titleHeader}}"
+                                       placeholder="کد {{titleHeader}}...."
+                                       type="number">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row" style="border:  1px #f0f3f4 solid">
+                    <div align="right" style="padding: 10px;">
+                        <label class="control-label"><span class="starstyle">*</span>مقطع تحصیلی:</label>
+                    </div>
+                    <div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div class="panel-body">
+                                <div class="col-sm-12">
+                                    <select ng-required="true"
+                                            ng-model="mb_parrent"
+                                            ng-options="pr as pr.title for pr in parrent "
+                                            class="form-control rounded"
+                                            ng-change="seleteChild1(mb_parrent.majorbaseid,mb_parrent.title)">
+                                        <option ng-selected="true" value="">select</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-show="mb_parrent && child1.length != 0">
+                            <div class="panel-body">
+                                <div class="col-sm-12">
+                                    <select
+                                            ng-model="mb_child1"
+                                            ng-options="ch1 as ch1.title for ch1 in child1 "
+                                            class="form-control rounded"
+                                            ng-change="seleteChild2(mb_child1.majorbaseid , mb_child1.title)">
+                                        <option ng-selected="true" value="">select</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-show="mb_child1 && child2.length != 0">
+                            <div class="panel-body">
+                                <div class="col-sm-12">
+                                    <select
+                                            ng-model="mb_child2"
+                                            ng-options="ch1 as ch1.title for ch1 in child2 "
+                                            class="form-control rounded"
+                                            ng-change="seleteChild3(mb_child2.majorbaseid , mb_child2.title)">
+                                        <option ng-selected="true" value="">select</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-show="mb_child2 && child3.length != 0">
+                            <div class="panel-body">
+                                <div class="col-sm-12">
+                                    <select
+                                            ng-model="mb_child3"
+                                            ng-options="ch1 as ch1.title for ch1 in child3 "
+                                            class="form-control rounded"
+                                            ng-change="seleteChild4(mb_child3.majorbaseid , mb_child3.title)">
+                                        <option ng-selected="true" value="">select</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!--                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-show="mb_child3 && child4.length != 0">-->
+                        <!--                        <div class="panel-body">-->
+                        <!--                            <div class="col-sm-12">-->
+                        <!--                                <select ng-required="true"-->
+                        <!--                                        ng-model="mb_child4"-->
+                        <!--                                        ng-options="ch1.majorbaseid as ch1.title for ch1 in child4 "-->
+                        <!--                                        class="form-control rounded">-->
+                        <!--                                    <option  ng-selected="true" value="">select</option>-->
+                        <!--                                </select>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <!--                    </div>-->
+                    </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div align="center">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-7">
+                                <div class="panel-body">
+                                    <button ng-click="insertMajorbaseFunctin()"
+                                            style="width: 100%" type="submit" class="btn btn-info">
+                                        <i class="icon-plus"></i> &nbsp; <span style="color: white">تایید</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-5">
+                                <div class="panel-body">
+                                    <a ng-click="BackToHistory()">
+                                        <button style="width: 100%" type="submit" href="index.html"
+                                                class="btn btn-dark">
+                                            <i class="icon-close"></i>
+                                            &nbsp;
+                                            <span> لغو </span></button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

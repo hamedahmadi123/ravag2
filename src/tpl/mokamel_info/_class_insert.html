@@ -1,0 +1,224 @@
+<div>
+    <div class="bg-light lter b-b wrapper-md" ng-init="app.settings.asideFixed = true;app.settings.headerFixed = true;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+                <h1 class="m-n font-thin h3"><img src="img/icon/class.png" class="icnSize"> درج کلاس جدید </h1>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="float: left">
+                    <div class="panel-body">
+                        <a href="#/app/page/Class_Ctrl">
+                            <button style="width: 100%" type="button" class="btn btn-addon , btn btn-default"
+                            ><i class="icon-arrow-left"></i> &nbsp;بازگشت
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="line line-dashed  line-lg pull-in"></div>
+    <div class="container panel v-middle media-middle text-center align-items-center">
+        <br>
+        <div class="panel-body">
+
+            <form class="form-validation" method="post" name="myform">
+                <div class="row">
+                    <div class="alert alert-danger" ng-show="errText()">
+                        <i class="icon-info"></i> &nbsp; <strong> {{errText()}}&nbsp;</strong>
+                        را وارد نمایید.
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <div class="panel-body">
+
+                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label" style="margin-top: 8px;"><span
+                                    class="starstyle">*</span>نام
+                                کلاس :</label>
+                           <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <input ng-model="cls_name" class="form-control rounded" tooltip="نام کلاس"
+                                       placeholder="نام..."
+                                       ng-required="true" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <div class="panel-body">
+                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label" style="margin-top: 8px;"><span
+                                    class="starstyle">*</span>ترم :</label>
+                           <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <select ng-required="true"
+                                        ng-model="cls_term" tooltip="ترم تحصیلی"
+                                        ng-options="trm.termid as trm.title for trm in terms "
+                                        class="form-control rounded">
+                                    <option ng-disabled="true" ng-selected="true" value="">ترم تحصیلی کلاس را انتخاب
+                                        نمایید .
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <div class="panel-body">
+                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"  style="margin-top: 8px;">کلاس گروهی:</label>
+                           <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <div style="margin-top: 5px">
+                                    <input tooltip="گروهی" id="toggle" class="checkStyle" ng-model="cls_isgrouping"
+                                           type="checkbox"/>
+                                    <label for="toggle" class="labelClass"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="line line-dashed line-lg pull-in"></div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <div class="panel-body">
+                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label" style="margin-top: 8px;"><span
+                                    class="starstyle">*</span>پایه تحصیلی:</label>
+                           <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <select ng-required="true" tooltip="پایه تحصیلی"
+                                        ng-model="cls_base"  ng-show="isMajor"
+                                        ng-options="pyh.majorbaseid  as pyh.description  for pyh in majorbase"
+                                        class="form-control rounded" ng-change="setMajorBase(cls_base)">
+                                    <option ng-disabled="true"
+                                            ng-selected="false" value="">پایه تحصیلی
+                                        دانش آموز
+                                        را انتخاب
+                                        نمایید.
+                                    </option>
+
+                                </select>
+                               <select ng-required="true" tooltip="پایه تحصیلی"
+                                        ng-model="cls_base" ng-show="!isMajor"
+                                        ng-options="pyh.majorbaseid  as pyh.description  for pyh in majorbase"
+                                        class="form-control rounded" ng-change="selectStudent(cls_base)">
+                                    <option ng-disabled="true"
+                                            ng-selected="false" value="">پایه تحصیلی
+                                        دانش آموز
+                                        را انتخاب
+                                        نمایید.
+                                    </option>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-show="cls_base && isMajor">
+                        <div class="panel-body">
+                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label" style="margin-top: 8px;"><span
+                                    class="starstyle">*</span>رشته تحصیلی:</label>
+                           <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <select ng-required="true" tooltip="رشته تحصیلی"
+                                        ng-model="cls_major"
+                                        ng-options="mjr.majorbaseid as mjr.title  for mjr in majors"
+                                        class="form-control rounded" ng-change="selectStudent(cls_major)">
+                                    <option ng-disabled="true"
+                                            ng-selected="false" value="">رشته تحصیلی
+                                        دانش آموز
+                                        را انتخاب
+                                        نمایید.
+                                    </option>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <details open ng-show="showSt" ng-click="setStudent()">
+                    <summary style="font-size: 20px;">انتخاب دانش آموزان</summary>
+                    <div ng-if="student.length == '0'">
+                        <img src="img/notFound(404).png" style="width: 25% ; height: auto" align="center"/>
+                        <h5 id="txtNoOrd">متاسفانه دانش آموزی در
+                            این رشته یافت نشد !</h5>
+                        <a style="color: black;text-decoration: underline" href="#/app/page/Class_Ctrl">بازگشت به لیست
+                            کلاس ها</a>
+                    </div>
+                    <div style="width: 100%" ng-if="student.length != '0'">
+                        <br>
+                        <input st-search="" id="gsearch2" ng-model="gsearch"
+                               class="form-control"
+                               placeholder="جستجو ..." type="text"/>
+                        <div style="padding: 25px;float: left">
+                            <div dir="rtl">
+                                <label class="containerCheckBox"><span style="font-size: 13px;">انتخاب / برداشتن انتخاب همه</span>
+                                    <input type="checkbox" ng-model="onSelecte" ng-click="selectAllStudent(onSelecte)">
+                                    <span class="checkmark2"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th class="v-middle  media-middle text-center" scope="col" style="width: 5%">انتخاب</th>
+                                <th class="v-middle  media-middle text-center" scope="col" style="width: 5%">ردیف</th>
+                                <th class="v-middle  media-middle text-center" scope="col" style="width: 10%">تصویر</th>
+                                <th class="v-middle  media-middle text-center" scope="col" style="width: 45%">نام و نام
+                                    خانوادگی
+                                </th>
+                                <th class="v-middle  media-middle text-center" scope="col" style="width: 35%">کد دانش
+                                    آموز
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="mymodel in student | filter : gsearch">
+                                <th scope="row">
+                                    <label class="containerCheckBox">
+                                        <br>
+                                        <input type="checkbox" ng-model="checkbox1[mymodel.studentid]"
+                                               ng-change="selectARRStudnet(mymodel.studentid,checkbox1[mymodel.studentid])">
+                                        <span class="checkmark2" style="margin-left: 5px;margin-top: 5px"></span>
+                                    </label>
+                                </th>
+                                <td class="v-middle  media-middle text-center">
+                                    {{mymodel.studentid}}
+                                </td>
+                                <td class="v-middle  media-middle text-center">
+                                    <img width="50px" height="40px" class="thumb-sm avatar" ng-if="mymodel.image  != ' '"
+                                         src="{{mymodel.image || 'img/userNopic.jpg'}}">
+                                    <img width="50px" height="40px" class="thumb-sm avatar" ng-if="mymodel.image  == ' '"
+                                         src="img/userNopic.jpg">
+                                </td>
+                                <td class="v-middle  media-middle text-center">
+                                    {{ mymodel.firstname + " " + mymodel.lastname|| 'خالی' }}
+                                </td>
+                                <td class="v-middle  media-middle text-center">
+                                    {{ mymodel.studentcode || 'خالی'}}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </details>
+                <div style="width: 100%;margin-right: 20px;">
+                    <br><br>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4" style="float: right;color: white">
+                            <button ng-click="insertClassFunctin()"
+                                    style="width: 105%;background-color: #0F9E5E;"
+                                    type="submit" class="btn btn-light">
+                                <i class=" icon-plus"></i> &nbsp; <span style="color: white">تایید</span>
+                            </button>
+                        </div>
+
+                        <div class="col-xs-4 col-sm-3 col-md-4 col-lg-2"
+                             style="float: right;margin-right: 20px;color: white">
+                            <a ng-click="BackToHistory()">
+                                <button style="width: 100%;background-color: #6c757d"
+                                        type="submit" href="index.html"
+                                        class="btn btn-light">
+                                    <i class="icon-close"></i>
+                                    &nbsp;
+                                    <span> لغو </span></button>
+                            </a>
+                        </div>
+
+                    </div>
+                    <br>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

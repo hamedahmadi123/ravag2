@@ -1,0 +1,111 @@
+<div ng-controller="chequEdit">
+    <div class="bg-light lter b-b wrapper-md" ng-init="app.settings.asideFixed = true;app.settings.headerFixed = true;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-7">
+                <h1 class="m-n font-thin h3"><img src="img/icon/accounting.png" class="icnSize"> ویرایش چک </h1>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-5">
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="float: left">
+                    <div class="panel-body">
+                        <button style="width: 100%" ui-sref="app.page.wallet"
+                                type="button" class="btn btn-addon , btn btn-default"><i class="icon-arrow-left"></i>
+                            &nbsp;بازگشت
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="line line-dashed  line-lg pull-in"></div>
+    <div class="container">
+        <div class="main-wrapper">
+            <div class="row">
+                <div class="container panel v-middle media-middle text-center align-items-center">
+                    <div class="panel-body">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div class="panel-body" style="text-align: right">
+                                <label><b><span class="starstyle">*</span>مبلغ
+                                    چک :</b></label>&nbsp;
+                                <input ng-model="amount" class="form-control" type="text"
+                                       currency-mask>
+                                <h6 style="text-align: left">به ريال</h6>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div class="panel-body" style="text-align: right">
+                                <label><b><span class="starstyle">*</span>تاریخ
+                                    وصول :</b></label>&nbsp;
+                                <adm-dtp ng-model="dateCheque"
+                                         ng-required="true"
+                                         options="{calType: 'jalali', format: 'YYYY-MM-DD',autoClose:true,default: 'today'}"></adm-dtp>
+                            </div>
+                        </div>
+                        <div class="line line-dashed line-lg pull-in"></div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div class="panel-body" style="text-align: right">
+                                <label><span class="starstyle">*</span><b>نام
+                                    بانک : </b></label>&nbsp;
+                                <input ng-model="bank_name" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div class="panel-body" style="text-align: right">
+                                <label><b>نام
+                                    شعبه : </b></label>&nbsp;
+                                <input ng-model="bank_shobe" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div class="panel-body" style="text-align: right">
+                                <label><b>نام
+                                    صاحب حساب : </b></label>&nbsp;
+                                <input ng-model="bank_owner" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div class="panel-body" style="text-align: right">
+                                <label><b>شماره
+                                    حساب : </b></label>&nbsp;
+                                <input ng-model="bank_code" class="form-control" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert alert-danger" ng-show="errText()">
+                        <strong>
+                            {{errText()}}
+                       </strong>
+                        را مشخص نمایید.
+                    </div>
+                    <div class="modal-footer">
+                        <div style="width: 100%;margin-right: 20px;">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        <div class="panel-body">
+                                            <button
+                                                    style="width: 100%;" ng-click="updateCheque(cheque.cheque_id)"
+                                                    type="submit"
+                                                    class="btn btn-addon btn btn-default">
+                                                <i class="icon-plus"></i>&nbsp;<span> ویرایش </span></button>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        <div class="panel-body">
+                                            <button ui-sref="app.page.wallet"
+                                                    style="width: 100%;"
+                                                    type="submit"
+                                                    class="btn btn-addon btn btn-default">
+                                                <i class="icon-close"></i>&nbsp;<span> لغو </span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

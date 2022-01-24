@@ -1,0 +1,93 @@
+<div ng-controller="classWallet">
+    <div class="bg-light lter b-b wrapper-md" ng-init="app.settings.asideFixed = true;app.settings.headerFixed = true;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-7">
+                <h1 class="m-n font-thin h3"><img src="img/icon/accounting.png" class="icnSize"> مشاهده وضعیت پرداختی
+                    کلاس ها </h1>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-5">
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="float: left">
+                    <div class="panel-body">
+                        <button style="width: 100%" ui-sref="app.page.wallet"
+                                type="button" class="btn btn-addon , btn btn-default"><i class="icon-arrow-left"></i>
+                            &nbsp;بازگشت
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <div class="main-wrapper">
+            <div class="row">
+                <div class="container panel v-middle media-middle text-center align-items-center">
+                    <br>
+                    <div id="w1-info-1" class="alert-warning alert fade in" style="text-align: right" ng-show="!st_id">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
+                        </button>
+                        <h5>برای مشاهده اطلاعات پرداختی حساب همه دانش آموزان ابتدا کلاس مورد نظر را انتخاب نمایید.</h5>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6">
+                        <div class="panel-body">
+                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                   style="margin-top: 8px;"><span
+                                    class="starstyle">*</span>کلاس:</label>
+                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <select tooltip="لیست کلاس های موجود"
+                                        style="width: 100%"
+                                        ng-model="className"
+                                        ng-change="submitClass(className.classid , className.majorbaseid)"
+                                        ng-options="cls as cls.title for cls in class"
+                                        class="form-control rounded">
+                                    <option ng-selected="true" value="">کلاس مورد نظر
+                                    </option>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <table class="table table-striped" ng-show="className">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="v-middle  media-middle text-center ">
+                                #
+                            </th>
+                            <th scope="col" class="v-middle  media-middle text-center ">
+                                نام دانش آموز
+                            </th>
+                            <th scope="col" class="v-middle  media-middle text-center ">
+                                شماره تماس
+                            </th>
+                            <th ng-repeat="item in filter" scope="col" class="v-middle  media-middle text-center ">
+                                سال تحصیلی {{item.sal_tahsily}}
+                            </th>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="student in studentClass">
+                            <td class="v-middle  media-middle text-center">
+                                {{student.studentcode}}
+                            </td>
+                            <td class="v-middle  media-middle text-center">
+                                {{student.firstname + ' '+student.lastname}}
+                            </td>
+                            <td class="v-middle  media-middle text-center">
+                                {{student.fathermobile || student.mothermobile || student.mobile}}
+                            </td>
+                            <td class="v-middle  media-middle text-center" ng-repeat="item in filter" style="padding: 15px">
+                                <span>
+                                    <span ng-show="retPay(student.studentid,item.sal_tahsily)">&nbsp;پرداخت شده : <span class="h5">{{retPay(student.studentid,item.sal_tahsily)}}&nbsp;ريال</span></span>
+                                    <span ng-show="(retPay(student.studentid,item.sal_tahsily))&&(retBedhi(student.studentid,item.sal_tahsily))"><br><br></span>
+                                    <span ng-show="retBedhi(student.studentid,item.sal_tahsily)">&nbsp;بدهی : <span style="color: red" class="h5">{{retBedhi(student.studentid,item.sal_tahsily)}}&nbsp;ريال</span></span>
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

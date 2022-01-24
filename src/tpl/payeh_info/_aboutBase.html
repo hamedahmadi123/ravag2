@@ -1,0 +1,190 @@
+ <meta charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+
+<div>
+    <div class="bg-light lter b-b wrapper-md" ng-init="app.settings.asideFixed = true;app.settings.headerFixed = true;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+                <h1 class="m-n font-thin h4"><img src="img/icon/documents.png" class="icnSize"> درباره پایه (
+                    {{majorbase.title}} )</h1>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="float: left">
+                    <div class="panel-body">
+                        <a ng-click="BackToHistory()">
+                            <button style="width: 100%" type="button" class="btn btn-addon , btn btn-default"><i
+                                    class="icon-arrow-left"></i>
+                                بازگشت
+                            </button>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="line line-dashed  line-lg pull-in"></div>
+    <div class="container panel v-middle media-middle text-center align-items-center">
+        <div class="panel-body">
+            <form class="form-validation" method="post" name="myform">
+                <div class="row">
+                    <div class="alert alert-danger" ng-show="errText()">
+                        <i class="icon-info"></i> &nbsp; <strong> {{errText()}}&nbsp;</strong>
+                        را وارد نمایید.
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="panel-body">
+                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                   style="margin-top: 8px;"><span class="starstyle">*</span>توضیح
+                                کلی راجع به پایه:</label>
+                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <textarea ng-model="mjr_content" class="form-control"
+                                          tooltip="توضیح مختصر درمورد پایه انتخابی"
+                                          rows="3" ng-required="true" type="text" maxlength="500"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="panel-body">
+                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label label-info" style="margin-top: 8px;">پایه ای ترین مباحثی که در این دوره باید مد نظر قرار گیرد
+                                :</label>
+                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <div class="panel-body">
+                                        <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                               style="margin-top: 8px;">مورد1:</label>
+                                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                            <input ng-model="grayesh.a" class="form-control rounded"
+                                                   tooltip="اصولی که در این پایه مد نظر است"
+                                                   ng-required="true" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <div class="panel-body">
+                                        <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                               style="margin-top: 8px;">مورد2:</label>
+                                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                            <input ng-model="grayesh.b" class="form-control rounded"
+                                                   tooltip="اصولی که در این پایه مد نظر است"
+                                                   ng-required="true" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <div class="panel-body">
+                                        <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                               style="margin-top: 8px;">مورد3:</label>
+                                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                            <input ng-model="grayesh.c" class="form-control rounded"
+                                                   tooltip="اصولی که در این پایه مد نظر است"
+                                                   ng-required="true" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <div class="panel-body">
+                                        <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                               style="margin-top: 8px;">مورد 4:</label>
+                                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                            <input ng-model="grayesh.d" class="form-control rounded"
+                                                   tooltip="اصولی که در این پایه مد نظر است"
+                                                   ng-required="true" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <div class="panel-body">
+                                        <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                               style="margin-top: 8px;">مورد 5:</label>
+                                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                            <input ng-model="grayesh.e" class="form-control rounded"
+                                                   tooltip="اصولی که در این پایه مد نظر است"
+                                                   ng-required="true" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="panel-body">
+                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                   style="margin-top: 8px;">والپیپر : </label>
+                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <div class="col-xs-12 col-sm-9 col-md-6 col-lg-4" style="float: left">
+                                    <a href="{{about_majorbase.img}}" target="_blank" ng-show="about_majorbase.img">
+                                        <button style="width: 100%;" type="button" class="btn btn-addon , btn btn-info">
+                                            <i class="icon-eye"></i>
+                                            مشاهده تصویر فعلی
+                                        </button>
+                                    </a>
+                                </div>
+                                <div class="line line-dashed line-lg pull-in"></div>
+                                <div class="file-loading">
+                                    <input id="uploadFile1"
+                                           name="uploadFile1" multiple
+                                           type="file"
+                                           accept="image/*">
+                                </div>
+                                <div id="togStatus" class="hint-block">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="row" align="right">
+                    <h4>اعمال تغییرات برای پایه های مرتبط : </h4>
+                    <br>
+                    <div ng-repeat="item in like_major" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                               style="margin-top: 8px;"> مقطع <span>{{item.title}}</span><span> پایه </span><span> {{item.basename}} </span></label>
+                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                            <label class="containerCheckBox">
+                                <input type="checkbox" ng-model="checkbox1"
+                                       ng-change="itemArray(item.majorbaseid , checkbox1)">
+                                <span class="checkmark2"
+                                      style="margin-left: 5px;margin-top: 5px"></span>
+                            </label>
+                        </div>
+                        <div class="line line-dashed line-lg pull-in"></div>
+
+
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div align="center">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-7">
+                        <div class="panel-body">
+                            <button ng-click="aboutMajorInsert()"
+                                    style="width: 100%" type="submit" class="btn btn-success">
+                                <i class="icon-pencil"></i> &nbsp; <span style="color: white">تایید</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-5">
+                        <div class="panel-body">
+                            <a ng-click="BackToHistory()">
+                                <button style="width: 100%" type="submit" href="index.html"
+                                        class="btn btn-dark">
+                                    <i class="icon-close"></i>
+                                    &nbsp;
+                                    <span> لغو </span></button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+
+</div>
+

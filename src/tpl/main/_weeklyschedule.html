@@ -1,0 +1,129 @@
+<style>
+    .divs {
+        padding: 5px;
+        height: auto;
+        width: auto;
+    }
+</style>
+<div ng-controller="weeklyschedule">
+    <div class="bg-light lter b-b wrapper-md" ng-init="app.settings.asideFixed = true;app.settings.headerFixed = true;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+                <h1 class="m-n font-thin h3"><img src="img/icon/clander2.png" class="icnSize"> برنامه هفتگی </h1>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="float: left">
+                    <div class="panel-body">
+                        <a ng-click="BackToHistory()">
+                            <button style="width: 100%;" type="button" class="btn btn-addon , btn btn-default"><i
+                                    class="icon-arrow-left"></i>
+                                بازگشت
+                            </button>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="line line-dashed  line-lg pull-in"></div>
+    <div class="container">
+        <div class="panel panel-default" style="width: 100%;padding: 20px;">
+            <div class="m-n font-thin h3">
+                <h5></h5>
+            </div>
+            <div class="panel-body">
+                <form class="form-validation" method="post" name="myform">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="panel-heading font-bold" style="background-color: #f6f8f8">
+                                <i class="glyphicon glyphicon-info-sign"></i>&nbsp;<span>برای مشاهده برنامه ابتدا کلاس مورد نظر را انتخاب نمایید.</span>
+                            </div>
+                            <br>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="panel-body">
+                                    <label><b><span class="starstyle">*</span>کلاس :</b></label>&nbsp;
+                                    <select tooltip="عنوان کلاس" ng-change="setClassWeekly(wkl_class)"
+                                            ng-model="wkl_class" ng-required="true"
+                                            ng-options="cls.classid  as cls.title  for cls in class"
+                                            class="form-control rounded">
+                                        <option ng-disabled="true"
+                                                ng-selected="false" value="">کلاس
+                                            مورد نظر
+                                            را انتخاب
+                                            نمایید.
+                                        </option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
+                            <div>
+                                <div class="line line-dashed b-b line-lg pull-in"></div>
+                                <div class="row" align="left" dir="rtl">
+                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                            <div class="panel-body">
+                                                <button style="width: 100%" type="button" ng-click="printDiv('content2')"
+                                                        class="btn btn-addon , btn btn-success"><i
+                                                        class="icon-printer">&nbsp;</i>
+                                                    چاپ لیست
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                            <div class="panel-body">
+                                                <button style="width: 100%" type="button"
+                                                        class="btn btn-addon , btn btn-danger"><i
+                                                        class="fa fa-file-pdf-o">&nbsp;</i>
+                                                    خروجی PDF
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div id="content2">
+                                    <h4 ng-show="wkl_class">برنامه درسی کلاس {{cls_name}}</h4>
+                                    <br>
+                                    <div class="table-responsive" style="border: none">
+                                        <table class="table table-bordered , table table-striped" id="mytable"
+                                               style="border: 1px #eaeff0 solid">
+                                            <thead>
+                                            <tr>
+                                                <th ng-repeat="item in data1" class="v-middle  media-middle text-center"
+                                                    scope="col">{{ item.name }}
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="x in week">
+                                                <td ng-repeat="item in data1"
+                                                    class="v-middle  media-middle text-center">
+                                                    <div class="divs" ng-show="item.value != 0">
+                                                        <div style="width:100%; height: 100%;cursor: text"
+                                                             ng-click="resetData()"
+                                                             ng-if="item.value != 0">
+                                                            <div ng-show="obj[x.value + '-' + item.value]"><span
+                                                                    ng-show="obj[x.value + '-' + item.value]['child1'].teacherid">{{obj[x.value + '-' + item.value]['child1'].teacherName + " / " + obj[x.value + '-' + item.value]['child1'].lessonName}} </span><span
+                                                                    ng-show="obj[x.value + '-' + item.value]['child2'].teacherid"
+                                                                    style="width: 100%"><br><span><hr size="pixels">{{obj[x.value + '-' + item.value]['child2'].teacherName + " / " + obj[x.value + '-' + item.value]['child2'].lessonName}}</span>
+                                                        </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <span ng-if="item.value == 0">{{x.name}}</span>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

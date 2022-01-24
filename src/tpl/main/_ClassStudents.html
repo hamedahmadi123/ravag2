@@ -1,0 +1,562 @@
+<a class="floatMY , hidedesktop" id="menu-share" ng-show="modelClassId && flotingShow">
+    <i class="fa fa-share my-float"></i>
+</a>
+<ul class="ulMY" ng-show="modelClassId && flotingShow">
+    <li ng-click="floting()" tooltip="امکانات بیشتر"><a onclick="javascript:  window.scrollBy(0, 1800);"
+                                                        style="background-color: green"><i
+            class="fa fa-ellipsis-h my-float"></i></a></li>
+    <li ng-click="floting()" tooltip="چاپ لیست کلاسی"><a ng-click="selectLessonTeacher(modelClassMajorBase,'0')"
+                                                         data-toggle="modal" data-target="#print"
+                                                         style="background-color: blue"><i
+            class="fa fa-print my-float"></i></a></li>
+    <li ng-click="floting()" tooltip="ریز نمرات"><a data-toggle="modal" data-target="#print"
+                                                    ng-click="selectLessonTeacher(modelClassMajorBase,'1')"
+                                                    style="background-color: orange"><i
+            class="fa fa-bar-chart my-float"></i></a></li>
+    <li ng-click="floting()" tooltip="لیست دانش آموران"><a ng-click="selectStudentInclass(modelClassId)"
+                                                           style="background-color: red"><i
+            class="fa fa-graduation-cap my-float"></i></a></li>
+    <li ng-click="floting()" tooltip="لیست نمره دهی"><a data-toggle="modal" data-target="#print"
+                                                        ng-click="selectLessonTeacher(modelClassMajorBase,'1')"
+                                                        style="background-color: grey"><i
+            class="fa fa-list my-float"></i></a></li>
+</ul>
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9" style="float: left;margin-left: 8%;">
+        <div class="panel-body">
+            <div class="panel panel-default" style="width: 100%;padding: 20px;" ng-show="showAllClass">
+                <div class="m-n font-thin h3">
+                    <img src="img/icon/class.png" style="width: 35px;height: 35px;"> لیست کلاس ها
+                    <h5>برای انجام عملیات ابتدا کلاس مورد نظر را انتخاب نمایید.</h5>
+                </div>
+                <div class="panel-body">
+                    <form class="form-validation" method="post" name="myform">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <div id="Note">
+
+                                    <div ng-if="class.length == '0'" align="center">
+                                        <img src="img/notFound(404).png" style="width:45%; ; height: auto"
+                                             align="center"/>
+                                        <p style="font-size: 20px;display: table;margin-left: auto;margin-right: auto;padding: 10px">
+                                            هیچ کلاسی
+                                            در حال حاضر
+                                            در این مدرسه درج نگردیده است . </p>
+                                    </div>
+                                    <div align="center">
+                                        <input id="gsearch" ng-model="gsearch"
+                                               class="form-control" style="width: 95%;"
+                                               placeholder="جستجو ..." type="text"/>
+                                        <br>
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4"
+                                             ng-repeat="item in class | filter:gsearch" ng-if="class.length != '0'">
+                                            <div class="panel panel-default" style="width: 100%;height: 150px;"
+                                                 ng-click="selectgrp(item.classid,item.title,item.majorbaseid)"
+                                                 id="{{item.classid}}">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title" style="color: white">
+                                                        <div class="row">
+                                                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                                                <p style="width: 100%;color: #0a1015;margin-top: 5px;">
+                                                                    {{item.title}}</p>
+                                                            </div>
+                                                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                                                <a ui-sref="app.page.class_edit({userId: item.classid})">
+                                                                    <i tooltip="ویرایش کلاس"
+                                                                       class="glyphicon glyphicon-option-horizontal"
+                                                                       style="float: left;padding: 5px;color: grey"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapse1" class="panel-collapse collapse in">
+                                                    <div class="panel-body">
+                                                        <p>
+                                                            <span>رشته تحصیلی :</span>&nbsp;<span>{{item.majorBaseName}}</span>
+                                                        </p>
+                                                        <p>
+                                                            <span>کلاس گروهی :</span>&nbsp;<span>{{groupClass(item.isgrouping)}}</span>
+                                                        </p>
+                                                        <br>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="line line-dashed line-lg pull-in"></div>
+                            <div class="row" dir="ltr">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="float: right">
+                                    <div class="panel-body" dir="rtl">
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                                            <div class="panel-body">
+                                                <button type="button" class="btn btn-addon "
+                                                        style="width: 100%"
+                                                        ng-disabled="!modelClassId"
+                                                        ng-click="selectLessonTeacher(modelClassMajorBase,'0')"
+                                                        data-toggle="modal" data-target="#print">
+                                                    <i class="fa fa-print">&nbsp;</i>چاپ لیست کلاسی
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                                            <div class="panel-body">
+                                                <button type="button" class="btn btn-addon "
+                                                        style="width: 100%"
+                                                        ng-disabled="true"
+                                                        ui-sref="app.page.report_card_class({classid: modelClassId})">
+                                                    <i class="fa fa-bar-chart">&nbsp;</i>کارنامه کلاسی
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <!--ng-disabled="!modelClassId"-->
+
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                                            <div class="panel-body">
+                                                <button type="button" class="btn btn-addon "
+                                                        style="width: 100%"
+                                                        ng-disabled="!modelClassId"
+                                                        ng-click="selectLessonTeacher(modelClassMajorBase,'1')"
+                                                        data-toggle="modal" data-target="#print">
+                                                    <i class="icon-list">&nbsp;</i> لیست نمره دهی
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                                            <div class="panel-body">
+                                                <button type="button" class="btn btn-addon "
+                                                        style="width: 100%"
+                                                        ng-click="selectStudentInclass(modelClassId)"
+                                                        ng-disabled="!modelClassId"><i
+                                                        class="fa fa-graduation-cap my-float">&nbsp;</i>لیست دانش آموزان
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <br><br> <br>
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                                            <div class="panel-body">
+                                                <a ui-sref="app.page.students_card({classid: modelClassId})"
+                                                   target="_blank">
+                                                    <button type="button" class="btn btn-addon "
+                                                            style="width: 100%" ng-disabled="!modelClassId">
+                                                        <i class="fa fa-id-card">&nbsp;</i> کارت دانش آموزی
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                                            <div class="panel-body">
+                                                <a ui-sref="app.page.ClassSchedule({userId: modelClassId})"
+                                                   target="_blank">
+                                                    <button type="button" class="btn btn-addon "
+                                                            style="width: 100%"
+                                                            ng-disabled="!modelClassId">
+                                                        <i class=" icon-calendar">&nbsp;</i> برنامه هفتگی
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                                            <div class="panel-body">
+                                                <a ui-sref="app.page.envelop_parrent({classid: modelClassId})"
+                                                   target="_blank">
+                                                    <button type="button" class="btn btn-addon "
+                                                            style="width: 100%" ng-disabled="!modelClassId">
+                                                        <i class="fa fa-envelope">&nbsp;</i>نامه به اولیا
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                                            <div class="panel-body">
+                                                <a ui-sref="app.page.sendSMS({classid: modelClassId})" target="_blank">
+                                                    <button type="button" class="btn btn-addon"
+                                                            style="width: 100%" ng-disabled="!modelClassId">
+                                                        <i class="fa fa-envelope">&nbsp;</i>ارسال پیامک به اولیا
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                            <!--************************************************-->
+                            <br><br>
+                            <div ng-show="showSt">
+                                <div class="line line-dashed b-b line-lg pull-in"></div>
+                                <div ng-if="studentClass.length == '0'" align="center">
+                                    <img src="img/notFound(404).png" style="width: 25% ; height: auto"
+                                         align="center"/>
+                                    <h4 id="txtNoOrd">متاسفانه دانش آموزی در
+                                        این رشته یافت نشد !</h4>
+                                </div>
+                                <div class="panel panel-default" style="width: 100%;"
+                                     ng-if="studentClass.length != '0'">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <div class="row">
+                                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                    <div class="panel-body">
+                                                        <h4 align="right">لیست دانش آموزان کلاس
+                                                            ({{modelClassName}})</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                                         style="margin-top: 3px;float: left">
+                                                        <div class="panel-body">
+                                                            <button style="width: 100%;" class="btn btn-link"
+                                                                    onclick="tableToExcel('tblExport' , 'لیست دانش آموزان')">
+                                                                <i class="fa fa-file-excel-o"></i>
+                                                                خروجی Excel
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                                         style="margin-top: 3px;">
+                                                        <div class="panel-body">
+                                                            <button style="width: 100%;" class="btn btn-link"
+                                                                    ng-click="printDiv('tblExport');">
+                                                                <i class="fa fa-print"></i>
+                                                                چاپ لیست
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse2" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                        <tr>
+                                                            <th scope="col" class="v-middle  media-middle text-center ">
+                                                                #
+                                                            </th>
+                                                            <th scope="col" class="v-middle  media-middle text-center ">
+                                                                تصویر
+                                                            </th>
+                                                            <th scope="col" class="v-middle  media-middle text-center ">
+                                                                نام و نام خانوادگی
+                                                            </th>
+                                                            <th scope="col" class="v-middle  media-middle text-center ">
+                                                                کد ملی
+                                                            </th>
+                                                            <th scope="col" class="v-middle  media-middle text-center ">
+                                                                ویرایش
+                                                            </th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr ng-repeat="mymodel in studentClass | filter : gsearch">
+                                                            <td scope="row" class="v-middle  media-middle text-center">
+                                                                {{mymodel.studentid}}
+                                                            </td>
+                                                            <td class="v-middle  media-middle text-center">
+                                                                <img width="50px" height="40px" class="thumb-sm avatar" ng-if="mymodel.image  != ' '"
+                                                                     src="{{mymodel.image || 'img/userNopic.jpg'}}">
+                                                                <img width="50px" height="40px" class="thumb-sm avatar" ng-if="mymodel.image  == ' '"
+                                                                     src="img/userNopic.jpg">
+                                                            </td>
+                                                            <td class="v-middle  media-middle text-center">
+                                                                {{ mymodel.firstname + " " + mymodel.lastname}}
+                                                            </td>
+                                                            <td class="v-middle  media-middle text-center">
+                                                                {{ mymodel.studentcode}}
+                                                            </td>
+                                                            <td class="v-middle  media-middle text-center">
+                                                                <button class="btn btn-sm btn-info"
+                                                                        ui-sref="app.page.Student_edit({userId: mymodel.studentid})">
+                                                                    <i class="icon-pencil"></i>&nbsp;ویرایش
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="panel panel-default" style="width: 100%;padding: 20px;" ng-show="showStInfo">
+                <div class="m-n font-thin h3">
+                    <img src="img/icon/student2.png" style="width: 35px;height: 35px;">اطلاعات ({{act_st_name}})
+                </div>
+                <div class="panel-body">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-show="act_st_id">
+                        <div class="panel-body" style="margin-top: 8px;">
+                            <p><span class="h5">پایه تحصیلی:</span> <span class="h4" ng-show="this_student.baseName">{{this_student.baseName }} /</span><span
+                                    class="h4" ng-show="this_student.title">{{ this_student.title}} </span></p>
+
+                        </div>
+                    </div>
+                    <br>
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <div class="row" ng-show="act_st_id">
+                        <div class="panel-body">
+                            <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2" dir="rtl"
+                                 style="background-color: #fafbfc;padding: 10px;border: 1px #eff1f2 solid">
+                                رتبه دانش آموز در کلاس
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2" dir="rtl"
+                                 style="padding: 10px;border: 1px #eff1f2 solid">
+                                {{RankAvgStudent.RankInClass || '-'}}
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2" dir="rtl"
+                                 style="background-color: #fafbfc;padding: 10px;border: 1px #eff1f2 solid">
+                                میانگین نمره کلاس
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2" dir="rtl"
+                                 style="padding: 10px;border: 1px #eff1f2 solid">
+                                {{RankAvgStudent.avaragePerSchool || '-'}}
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="float: right" dir="rtl"
+                             ng-show="act_st_id">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <td class="v-middle  media-middle text-center">درس</td>
+                                        <td class="v-middle  media-middle text-center">رتبه در پایه</td>
+                                        <td class="v-middle  media-middle text-center">میانگین نمره در پایه</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td class="v-middle  media-middle text-center">
+                                            {{RankAvgStudentInBase.lessonTitle}}
+                                        </td>
+                                        <td class="v-middle  media-middle text-center">
+                                            {{RankAvgStudentInBase.RankInBase}}
+                                        </td>
+                                        <td class="v-middle  media-middle text-center">
+                                            {{RankAvgStudentInBase.AvgBase}}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+        <div class="panel-body">
+            <div align="center" style="width: 100%">
+                <div ng-show="studentClass">
+                    <div ng-if="studentClass.length == '0'">
+                        <img src="img/notFound(404).png" style="width: 100% ; height: auto"
+                             align="center"/>
+                        <h5>متاسفانه دانش آموزی در
+                            این کلاس یافت نشد !</h5>
+                    </div>
+                    <div class="panel panel-default" style="width: 100%;"
+                         ng-if="studentClass.length != '0'">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="panel-body">
+                                            <h4 align="center">
+                                                <span style="font-size: 14px;">لیست دانش آموزان کلاس</span><br><br>
+                                                ({{modelClassName}})
+
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </h4>
+                        </div>
+                        <div class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col"
+                                                    class="v-middle  media-middle text-center ">
+                                                    نام و نام خانوادگی
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="mymodel in studentClass | filter : gsearch">
+                                                <td class="v-middle  media-middle text-center"
+                                                    ng-click="gotoSt(mymodel.studentid , mymodel.firstname + ' ' + mymodel.lastname)">
+                                                    <img width="50px" height="40px"
+                                                         class="thumb-sm avatar" ng-if="mymodel.image  != ' '"
+                                                         src="{{mymodel.image || 'img/nopic.png'}}">
+                                                    <img width="50px" height="40px"
+                                                         class="thumb-sm avatar" ng-if="mymodel.image  == ' '"
+                                                         src="img/nopic.png">
+                                                    {{ mymodel.firstname + " " + mymodel.lastname}}
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="panel-body">
+                                            <button type="button" ng-show="showStInfo"
+                                                    class="btn btn-addon , btn btn-dark"
+                                                    ng-click="backtoClass()" style="width: 100%"><i
+                                                    class="fa fa-arrow-left">&nbsp;</i>بازگشت
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="print" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">&times;
+                    </button>
+                    <h4 class="modal-title">
+                        <img src="img/icon/karname2.png" class="icnSize">
+                        چاپ لیست کلاس ({{modelClassName}})
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="panel-body">
+                                    <div class="alert alert-danger" ng-show="errText()">
+                                        <i class="icon-info"></i> &nbsp; <strong> {{errText()}}&nbsp;</strong>را
+                                        مشخص
+                                        نمایید .
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="panel-body">
+
+                                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                   style="margin-top: 8px;"><span
+                                                    class="starstyle">*</span>نام معلم:</label>
+                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                <select ng-required="true"
+                                                        tooltip="نام دبیر مربوطه"
+                                                        ng-model="clsTeacher"
+                                                        ng-options="x.teacherid as x.firstname + ' ' +  x.lastname  for x in techers "
+                                                        class="form-control rounded" ng-change="selectLessonForTeacher(clsTeacher)">
+                                                    <option ng-disabled="true" ng-selected="true"
+                                                            value="">معلم
+                                                        مورد نظر را انتخاب
+                                                        نمایید.
+                                                    </option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="panel-body">
+
+                                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                   style="margin-top: 8px;"><span
+                                                    class="starstyle">*</span>نام درس:</label>
+                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                <select ng-required="true"
+                                                        tooltip="نام درس"
+                                                        ng-model="clsLson"
+                                                        ng-options="item.lessonid as item.title for item in lessons"
+                                                        class="form-control rounded"
+                                                        ng-disabled="desbaleForm()">
+                                                    <option ng-disabled="true" ng-selected="true"
+                                                            value="">درس
+                                                        مورد نظر را انتخاب
+                                                        نمایید.
+                                                    </option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="width: 100%;margin-right: 20px;">
+                        <br>
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4"
+                                 style="float: right;color: white">
+                                <button
+                                        ng-click="gotoPrint()"
+                                        style="width: 105%;background-color: #0F9E5E;"
+                                        type="submit" class="btn btn-light">
+                                    <i class=" icon-plus"></i> &nbsp; <span
+                                        style="color: white"> چاپ لیست   </span>
+                                </button>
+                            </div>
+
+                            <div class="col-xs-4 col-sm-2 col-md-4 col-lg-2"
+                                 style="float: right;margin-right: 20px;color: white">
+                                <button data-dismiss="modal"
+                                        style="width: 100%;background-color: #6c757d"
+                                        type="submit" href="index.html"
+                                        class="btn btn-light">
+                                    <i
+                                            class="icon-close"></i>
+                                    &nbsp;
+                                    <span> لغو </span></button>
+                            </div>
+
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    }
+</script>

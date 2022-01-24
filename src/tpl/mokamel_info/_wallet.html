@@ -1,0 +1,358 @@
+<div ng-controller="wallet">
+    <div class="bg-light lter b-b wrapper-md" ng-init="app.settings.asideFixed = true;app.settings.headerFixed = true;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+                <h1 class="m-n font-thin h3"><img src="img/icon/accounting.png" class="icnSize"> حسابداری </h1>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" >
+                    <div class="panel-body">
+                        <button style="width: 100%" ui-sref="app.page.wallet_insert"
+                                type="button" class="btn btn-addon , btn btn-default"><i class="icon-plus"></i> &nbsp;افزودن
+                        </button>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" >
+                    <div class="panel-body">
+                        <button style="width: 100%" ui-sref="app.page.payBedehi"
+                                type="button" class="btn btn-addon , btn btn-default"><i class="fa fa-credit-card"></i> &nbsp;پرداخت بدهی ها
+                        </button>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="panel-body">
+                        <button style="width: 100%" ui-sref="app.page.wallet_select"
+                                type="button" class="btn btn-addon , btn btn-default"><i class="icon-bar-chart"></i>
+                            &nbsp; ریز حساب ها
+                        </button>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="panel-body">
+                        <button style="width: 100%"   data-toggle="modal" data-target="#chequeNotPass" ng-click="passNotCheque()"
+                                type="button" class="btn btn-addon , btn btn-default"><i class="icon-eye"></i>
+                            &nbsp;لیست چک ها
+                        </button>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="panel-body">
+                        <button style="width: 100%" ui-sref="app.page.allInWallet"  ng-click="passNotCheque()"
+                                type="button" class="btn btn-addon , btn btn-default"><i class="icon-eye"></i>
+                            &nbsp;مشاهده همه تراکنش ها
+                        </button>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="panel-body">
+                        <button style="width: 100%" ui-sref="app.page.classWallet"
+                                type="button" class="btn btn-addon , btn btn-default"><i class="fa fa-university"></i>
+                            &nbsp;وضعیت پرداخت کلاس ها
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="line line-dashed  line-lg pull-in"></div>
+    <div class="container">
+        <div class="main-wrapper">
+            <div class="row">
+                <div class="container panel v-middle media-middle text-center align-items-center">
+                    <div class="panel-body">
+                        <div class="panel panel-default" style="width: 100%;">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <div class="row">
+                                        <div class="col-xs-6 col-sm-8 col-md-9 col-lg-9">
+                                            <div class="panel-body">
+                                                <h4 style="text-align: right">چک های یک ماه پیش رو</h4>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3" style="float: left">
+                                            <h5 style="margin-top: 28px"><span>تاریخ امروز : </span>&nbsp;<span
+                                                    dir="ltr">{{thisDay + ' ' + actDayName}}</span></h5>
+                                        </div>
+                                    </div>
+                                </h4>
+                            </div>
+                            <div id="collapse1" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div style="width: 95%;display: table;margin-right: auto;margin-left: auto">
+                                            <div id="w1-info-1" class="alert-info alert fade in">
+                                                <button type="button" class="close" data-dismiss="alert"
+                                                        aria-hidden="true" style="font-size: 14px;">×
+                                                </button>
+                                                <h6>چک هایی که تاریخ آنها به رنگ
+                                                    سبز
+                                                    تبدیل شده است تاریخ وصول آنها در 7 روز آینده است.</h6>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <input id="gsearch3" ng-model="gsearch"
+                                                   class="form-control" style="width: 100%;"
+                                                   placeholder="جستجو ..." type="text"/>
+                                        </div>
+                                        <div class="table-responsive">
+
+                                            <table class="table table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col" class="v-middle  media-middle text-center ">نام دانش
+                                                        آموز
+                                                    </th>
+                                                    <th scope="col" class="v-middle  media-middle text-center ">مبلغ
+                                                        چک
+                                                    </th>
+                                                    <th scope="col" class="v-middle  media-middle text-center ">تاریخ
+                                                        وصول
+                                                    </th>
+                                                    <th scope="col" class="v-middle  media-middle text-center ">تعداد
+                                                        روز باقیمانده
+                                                    </th>
+                                                    <th scope="col" class="v-middle  media-middle text-center ">نام صاحب
+                                                        حساب
+                                                    </th>
+                                                    <th scope="col" class="v-middle  media-middle text-center ">شماره
+                                                        حساب
+                                                    </th>
+                                                    <th scope="col" class="v-middle  media-middle text-center ">نام
+                                                        بانک
+                                                    </th>
+                                                    <th scope="col" class="v-middle  media-middle text-center ">شعبه
+                                                    </th>
+                                                    <th scope="col" class="v-middle  media-middle text-center ">وضعیت
+                                                    </th>
+                                                    <th scope="col" class="v-middle  media-middle text-center">ویرایش</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody infinite-scroll='load2()' infinite-scroll-distance='1'>
+                                                <tr ng-repeat='item in name | filter : gsearch | orderBy: cheque_date : false '>
+                                                    <td class="v-middle  media-middle text-center">
+                                                        {{item.firstname + ' '+item.lastname }}
+                                                    </td>
+                                                    <td class="v-middle  media-middle text-center">
+                                                        {{item.amount}}
+                                                    </td>
+                                                    <td class="v-middle  media-middle text-center"
+                                                        ng-if="item.diff >= 0 && item.diff <= 7"
+                                                        style="background-color: #d1f8d6">
+                                                        {{retdata(item.cheque_date)}}
+                                                    </td>
+                                                    <td class="v-middle  media-middle text-center"
+                                                        ng-if="item.diff > 7 && item.diff <= 31">
+                                                        {{retdata(item.cheque_date)}}
+                                                    </td>
+                                                    <td class="v-middle  media-middle text-center">
+                                                        <span ng-if="item.diff == '0'">امروز</span>
+                                                        <span ng-if="item.diff != '0'"> {{item.diff}} روز دیگر</span>
+                                                    </td>
+                                                    <td class="v-middle  media-middle text-center">
+                                                        {{item.cheque_owner}}
+                                                    </td>
+                                                    <td class="v-middle  media-middle text-center">
+                                                        {{item.cheque_number}}
+                                                    </td>
+                                                    <td class="v-middle  media-middle text-center">
+                                                        {{item.cheque_bank}}
+                                                    </td>
+                                                    <td class="v-middle  media-middle text-center">
+                                                        {{ item.cheque_shobe}}
+                                                    </td>
+                                                    <td class="v-middle  media-middle text-center">
+                                                        <button class="btn btn-default" ng-show="item.pass =='0'" ng-click="passcheque(item.cheque_id)">پاس کردن
+                                                            چک
+                                                        </button>
+                                                        <span ng-show="item.pass =='1'" style="color: green">پاس شده است</span>
+                                                    </td>
+                                                    <td class="v-middle  media-middle text-center" scope="row">
+                                                        <i class="fa fa-pencil" style="cursor: pointer;font-size: 20px"
+                                                           ui-sref="app.page.chequEdit({cheqid: item.cheque_id})"></i>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bd-example-modal-lg" id="chequeNotPass" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal">&times;
+                        </button>
+                        <h4 class="modal-title">
+                            <img src="img/icon/class.png" class="icnSize">
+                           اطلاعات چک های پاس نشده
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="panel panel-default" style="width: 100%;">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                                <div class="panel-body">
+                                                    <h4 id="lblName" align="right">لیست چک های موجود</h4>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="float: left">
+                                                    <div class="panel-body">
+                                                        <select style="width: 100%"
+                                                                ng-model="filterTahsily" ng-click="filterBySal(filterTahsily)"
+                                                                ng-options="ft.sal_tahsily as ft.sal_tahsily for ft in filter"
+                                                                class="form-control rounded">
+                                                            <option ng-selected="true" value="">فیلتر بر
+                                                                اساس سال تحصیلی
+                                                            </option>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </h4>
+                                </div>
+                                <div id="collapse2" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="panel-body">
+                                                    <input id="gsearch" ng-model="gsearch"
+                                                           class="form-control" style="width: 100%;"
+                                                           placeholder="جستجو ..." type="text"/>
+                                                    <br>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped">
+                                                            <thead>
+                                                            <tr>
+                                                                <th scope="col" class="v-middle  media-middle text-center" >#</th>
+                                                                <th scope="col" class="v-middle  media-middle text-center " style="width: 2%">نام دانش
+                                                                    آموز
+                                                                </th>
+                                                                <th scope="col" class="v-middle  media-middle text-center" >مبلغ
+                                                                    چک
+                                                                </th>
+                                                                <th style="width: 15%" class="v-middle  media-middle text-center" >تاریخ
+                                                                    وصول
+                                                                </th>
+                                                                <th scope="col" class="v-middle  media-middle text-center" >تعداد
+                                                                    روز باقیمانده
+                                                                </th>
+                                                                <th scope="col" class="v-middle  media-middle text-center" >نام صاحب
+                                                                    حساب
+                                                                </th>
+                                                                <th scope="col" class="v-middle  media-middle text-center"> شماره
+                                                                    حساب
+                                                                </th>
+                                                                <th scope="col" class="v-middle  media-middle text-center" >نام
+                                                                    بانک
+                                                                </th>
+                                                                <th scope="col" class="v-middle  media-middle text-center" >شعبه
+                                                                </th>
+                                                                <th scope="col" class="v-middle  media-middle text-center" >وضعیت
+                                                                </th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr ng-repeat='item in passCheque | filter : gsearch | orderBy: cheque_date : false ' ng-show="item.show==true">
+                                                                <td class="v-middle  media-middle text-center" scope="row">
+                                                                    {{item.cheque_id}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center">
+                                                                    {{item.firstname + ' '+item.lastname }}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center">
+                                                                    {{item.amount}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center"
+                                                                    ng-if="item.diff >= 0 && item.diff <= 7"
+                                                                    style="background-color: #d1f8d6">
+                                                                    {{retdata(item.cheque_date)}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center"
+                                                                    ng-if="item.diff > 7 && item.diff <= 31">
+                                                                    {{retdata(item.cheque_date)}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center"
+                                                                    ng-if="item.diff<0">
+                                                                    {{retdata(item.cheque_date)}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center">
+                                                                    <span ng-if="item.diff == 0">امروز</span>
+                                                                    <span ng-if="item.diff > 0"> {{item.diff}} روز دیگر</span>
+                                                                    <span ng-if="item.diff < 0"> {{item.diff}} روز گذشته</span>
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center">
+                                                                    {{item.cheque_owner}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center">
+                                                                    {{item.cheque_number}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center">
+                                                                    {{item.cheque_bank}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center">
+                                                                    {{ item.cheque_shobe}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center">
+                                                                    <button class="btn btn-default" ng-show="item.pass =='0'" ng-click="passcheque(item.cheque_id)">پاس کردن
+                                                                        چک
+                                                                    </button>
+                                                                    <span ng-show="item.pass =='1'" style="color: green">پاس شده است</span>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <div ng-if="passCheque.length == '0'" class="v-middle  media-middle"
+                                                             style="background-color: #faf9fa;padding: 10px;">
+                                                            <h5>نتیجه ای یافت نشد</h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div style="width: 100%;margin-right: 20px;">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        <div class="panel-body">
+                                            <button data-dismiss="modal"
+                                                    style="width: 100%;"
+                                                    type="submit"
+                                                    class="btn btn-dark">
+                                                <i class="icon-close"></i>&nbsp;<span> بستن این پنجره </span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

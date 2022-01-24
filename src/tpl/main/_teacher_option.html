@@ -1,0 +1,511 @@
+<div ng-controller="teacher_option">
+    <div class="bg-light lter b-b wrapper-md" ng-init="app.settings.asideFixed = true;app.settings.headerFixed = true;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+                <h1 class="m-n font-thin h3"><img src="img/icon/techer.png" class="icnSize"> گزارشات معلمین </h1>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="float: left">
+                    <div class="panel-body">
+                        <a ng-click="BackToHistory()">
+                            <button style="width: 100%;" type="button" class="btn btn-addon , btn btn-default"><i
+                                    class="icon-arrow-left"></i>
+                                بازگشت
+                            </button>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="line line-dashed  line-lg pull-in"></div>
+    <div class="container">
+        <div class="panel panel-default" style="width: 100%;padding: 20px;">
+            <div class="m-n font-thin h3">
+                <h5></h5>
+            </div>
+            <div class="panel-body">
+                <form class="form-validation" method="post" name="myform">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="panel-heading font-bold" style="background-color: #f6f8f8"
+                                 ng-show="showInfoText">
+                                <i class="glyphicon glyphicon-info-sign"></i>&nbsp;<span>برای مشاهده اطلاعات ابتدا معلم و سپس کلاس / درس  مورد نظر را انتخاب نمایید.</span>
+                            </div>
+                            <br>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="panel-body">
+                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                           style="margin-top: 8px;"><span
+                                            class="starstyle">*</span>نام دبیر:</label>
+                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                        <select tooltip="دبیر مرود نظر را انتخاب نمایید"
+                                                ng-change="selectTeacher(ss_teacher.teacherid , ss_teacher.firstname+ ' ' + ss_teacher.lastname)"
+                                                ng-model="ss_teacher" ng-required="true"
+                                                ng-options="th  as th.firstname + ' ' + th.lastname  for th in teachers"
+                                                class="form-control rounded">
+                                            <option ng-disabled="true"
+                                                    ng-selected="false" value="">دبیر
+                                                مورد نظر
+                                                را انتخاب
+                                                نمایید.
+                                            </option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="panel-body">
+                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                           style="margin-top: 8px;">کلاس:</label>
+                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                        <select tooltip="کلاس های ارایه شده برای این دبیر" ng-disabled="!ss_teacher"
+                                                ng-model="ss_class" ng-required="true"
+                                                ng-change="selectLesson(ss_class.classlessonteacherid ,  ss_class.className +' / ' + ss_class.lessonName )"
+                                                ng-options="cls  as cls.className + ' / ' + cls.lessonName  for cls in classLesson"
+                                                class="form-control rounded">
+                                            <option ng-disabled="true"
+                                                    ng-selected="false" value="">کلاس
+                                                مورد نظر
+                                                را انتخاب
+                                                نمایید.
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                            <br>
+                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                            <div class="row" dir="ltr">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="float: right">
+                                    <div class="panel-body" dir="rtl">
+                                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                            <div class="panel-body">
+                                                <button type="button" class="btn btn-addon , btn btn-default"
+                                                        style="width: 100%"
+                                                        ng-disabled="!teacher_id">
+                                                    <details>
+                                                        <summary style="font-size: 14px;"
+                                                                 ng-click="disklpline_teacher()">عملکرد معلم<i
+                                                                class="fa fa-user-circle-o my-float">&nbsp;</i>
+                                                        </summary>
+                                                    </details>
+
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                            <div class="panel-body">
+                                                <button type="button" class="btn btn-addon , btn btn-info"
+                                                        style="width: 100%" ng-disabled="!class_id">
+                                                    <details>
+                                                        <summary style="font-size: 14px;" ng-click="selectSession()">
+                                                            جلسه ها
+                                                            <i class="icon-list my-float">&nbsp;</i>
+                                                        </summary>
+                                                    </details>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                            <div class="panel-body">
+                                                <button type="button" class="btn btn-addon , btn btn-success"
+                                                        style="width: 100%"
+                                                        ng-disabled="!class_id">
+                                                    <details>
+                                                        <summary style="font-size: 14px;" ng-click="selectScore()">
+                                                            نمرات
+                                                            <i class="fa fa-check my-float">&nbsp;</i>
+                                                        </summary>
+                                                    </details>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                            <div class="panel-body">
+                                                <button type="button" class="btn btn-addon , btn btn-danger"
+                                                        style="width: 100%"
+
+                                                        ng-disabled="!teacher_id">
+                                                    <details>
+                                                        <summary style="font-size: 14px;" ng-click="setClassWeekly()">
+                                                            برنامه هفتگی
+                                                            <i class="fa fa-calendar my-float">&nbsp;</i>
+                                                        </summary>
+                                                    </details>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-show="show_jlse">
+                                <div class="line line-dashed b-b line-lg pull-in"></div>
+                                <div class="panel panel-default" style="width: 100%;">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <div class="row">
+                                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                    <div class="panel-body">
+                                                        <h4 align="right">جلسات تشکیل شده توسط ( {{teacher_name}} )</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                                         style="margin-top: 3px;float: left">
+                                                        <div class="panel-body">
+                                                            <button style="width: 100%;" class="btn btn-link"
+                                                                    onclick="tableToExcel('tblExport' , 'لیست دانش آموزان')">
+                                                                <i class="fa fa-file-excel-o"></i>
+                                                                خروجی Excel
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                                         style="margin-top: 3px;">
+                                                        <div class="panel-body">
+                                                            <button style="width: 100%;" class="btn btn-link"
+                                                                    ng-click="printDiv('tblExport');">
+                                                                <i class="fa fa-print"></i>
+                                                                چاپ لیست
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse1" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                        <tr>
+                                                            <th scope="col">#</th>
+                                                            <th scope="col" class="v-middle  media-middle text-center">
+                                                                عنوان جلسه
+                                                            </th>
+                                                            <th scope="col" class="v-middle  media-middle text-center">
+                                                                نوع جلسه
+                                                            </th>
+                                                            <th scope="col" class="v-middle  media-middle text-center">
+                                                                تاریخ تشکیل جلسه
+                                                            </th>
+                                                            <th scope="col" class="v-middle  media-middle text-center">
+                                                                روز / زنگ
+                                                            </th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr ng-repeat='mymodel in session_weekly | filter : gsearch2'>
+                                                            <td scope="row">
+                                                                {{mymodel.sessionid}}
+                                                            </td>
+                                                            <td class="v-middle  media-middle text-center">
+                                                                {{ mymodel.title }}
+                                                            </td>
+                                                            <td class="v-middle  media-middle text-center">
+                                                                {{ mymodel.sessionName }}
+                                                            </td>
+                                                            <td class="v-middle  media-middle text-center" dir="ltr">
+                                                                {{crDate( mymodel.createdAt)}}
+                                                            </td>
+                                                            <td class="v-middle  media-middle text-center">
+                                                                {{ returnDay(mymodel.day)}} / زنگ {{mymodel.zang}}
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="panel-body"><p>
+                                                    <span style="color:green;">
+                                                        <span>تعداد جلسات تشکیل شده : </span>( {{session_weekly.length}} )
+                                                    </span>
+                                                </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-show="show_weekly">
+                                <div class="line line-dashed b-b line-lg pull-in"></div>
+                                <div class="panel panel-default" style="width: 100%;">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <div class="row">
+                                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                    <div class="panel-body">
+                                                        <h4 align="right">برنامه هفتگی همکار محترم ( {{teacher_name}}
+                                                            )</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                                         style="margin-top: 3px;float: left">
+                                                        <div class="panel-body">
+                                                            <button style="width: 100%;" class="btn btn-link"
+                                                                    onclick="tableToExcel('tblExport' , 'لیست دانش آموزان')">
+                                                                <i class="fa fa-file-excel-o"></i>
+                                                                خروجی Excel
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                                         style="margin-top: 3px;">
+                                                        <div class="panel-body">
+                                                            <button style="width: 100%;" class="btn btn-link"
+                                                                    ng-click="printDiv('tblExport');">
+                                                                <i class="fa fa-print"></i>
+                                                                چاپ لیست
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse2" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="table-responsive" style="border: none">
+                                                    <table class="table table-bordered , table table-striped"
+                                                           id="mytable"
+                                                           style="border: 1px #eaeff0 solid">
+                                                        <thead>
+                                                        <tr>
+                                                            <th ng-repeat="item in data1"
+                                                                class="v-middle  media-middle text-center"
+                                                                scope="col">{{ item.name }}
+                                                            </th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr ng-repeat="x in week">
+                                                            <td ng-repeat="item in data1"
+                                                                class="v-middle  media-middle text-center">
+                                                                <div class="divs" ng-show="item.value != 0">
+                                                                    <div style="width:100%; height: 100%;cursor: text"
+                                                                         ng-click="resetData()"
+                                                                         ng-if="item.value != 0">
+                                                                        <div ng-show="obj[x.value + '-' + item.value]"><span
+                                                                                ng-show="obj[x.value + '-' + item.value]['child1'].teacherid">{{ obj[x.value + '-' + item.value]['child1'].lessonName}} </span><span
+                                                                                ng-show="obj[x.value + '-' + item.value]['child2'].teacherid"
+                                                                                style="width: 100%"><br><span><hr
+                                                                                size="pixels">{{obj[x.value + '-' + item.value]['child2'].lessonName}}</span>
+                                                        </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <span ng-if="item.value == 0">{{x.name}}</span>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-show="show_enz_teacher">
+                                <div class="line line-dashed b-b line-lg pull-in"></div>
+                                <div class="panel panel-default" style="width: 100%;">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <div class="row">
+                                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                    <div class="panel-body">
+                                                        <h4 align="right">عملکرد کاری / رفتاری ( {{teacher_name}} )</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                                         style="margin-top: 3px;float: left">
+                                                        <div class="panel-body">
+                                                            <button style="width: 100%;" class="btn btn-link"
+                                                                    onclick="tableToExcel('tblExport' , 'لیست دانش آموزان')">
+                                                                <i class="fa fa-file-excel-o"></i>
+                                                                خروجی Excel
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                                         style="margin-top: 3px;">
+                                                        <div class="panel-body">
+                                                            <button style="width: 100%;" class="btn btn-link"
+                                                                    ng-click="printDiv('tblExport');">
+                                                                <i class="fa fa-print"></i>
+                                                                چاپ لیست
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse3" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                        <tr>
+                                                            <th scope="col">#</th>
+                                                            <th scope="col" class="v-middle  media-middle text-center">
+                                                                عنوان انضباط
+                                                            </th>
+                                                            <th scope="col" class="v-middle  media-middle text-center">
+                                                                کلاس
+                                                            </th>
+                                                            <th scope="col" class="v-middle  media-middle text-center">
+                                                                روز / زنگ
+                                                            </th>
+                                                            <th scope="col" class="v-middle  media-middle text-center">
+                                                                یادداشت
+                                                            </th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr ng-repeat='mymodel in disklpline_th | filter : gsearch2'>
+                                                            <td scope="row">
+                                                                {{mymodel.teacherdisciplineid}}
+                                                            </td>
+                                                            <td class="v-middle  media-middle text-center">
+                                                                {{ mymodel.disciplineName }}
+                                                            </td>
+                                                            <td class="v-middle  media-middle text-center">
+                                                                {{ mymodel.className }}
+                                                            </td>
+                                                            <td class="v-middle  media-middle text-center" dir="ltr">
+                                                                {{ returnDay(mymodel.day)}} / زنگ {{mymodel.zang}}
+                                                            </td>
+                                                            <td class="v-middle  media-middle text-center">
+                                                                <span>{{mymodel.description}}</span>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="panel-body"><p>
+                                                    <span style="color:green;">
+                                                        <span>تعداد انضباط مثبت : </span>( {{enz_good}} )
+                                                    </span>
+                                                    &nbsp;/&nbsp;
+                                                    <span style="color:red;">
+                                                        <span>تعداد انضباط منفی : </span>( {{enz_bad}} )
+                                                    </span>
+                                                </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-show="show_score">
+                                <div class="line line-dashed b-b line-lg pull-in"></div>
+                                <div class="panel panel-default" style="width: 100%;">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <div class="row">
+                                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                    <div class="panel-body">
+                                                        <h4 align="right">نمرات کلاسی دبیر محترم ( {{teacher_name}}
+                                                            )</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                                         style="margin-top: 3px;float: left">
+                                                        <div class="panel-body">
+                                                            <button style="width: 100%;" class="btn btn-link"
+                                                                    onclick="tableToExcel('tblExport' , 'لیست دانش آموزان')">
+                                                                <i class="fa fa-file-excel-o"></i>
+                                                                خروجی Excel
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                                         style="margin-top: 3px;">
+                                                        <div class="panel-body">
+                                                            <button style="width: 100%;" class="btn btn-link"
+                                                                    ng-click="printDiv('tblExport');">
+                                                                <i class="fa fa-print"></i>
+                                                                چاپ لیست
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse4" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                        <tr>
+                                                            <th scope="col" class="v-middle  media-middle text-center">
+                                                                نام دانش آموز
+                                                            </th>
+                                                            <th scope="col" class="v-middle  media-middle text-center">
+                                                                کلاس
+                                                            </th>
+                                                            <th scope="col" class="v-middle  media-middle text-center">
+                                                                درس
+                                                            </th>
+                                                            <th scope="col" class="v-middle  media-middle text-center">
+                                                                عنوان جلسه
+                                                            </th>
+                                                            <th scope="col" class="v-middle  media-middle text-center">
+                                                            نمره ثبت شده
+                                                            </th>
+                                                            <th scope="col" class="v-middle  media-middle text-center">
+                                                               تاریخ ثبت
+                                                            </th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr ng-repeat='mymodel in session_score | filter : gsearch2'>
+                                                            <td class="v-middle  media-middle text-center">
+                                                                {{mymodel.StudentFullName}}
+                                                            </td>
+                                                            <td class="v-middle  media-middle text-center">
+                                                                {{ mymodel.classTitle }}
+                                                            </td>
+                                                            <td class="v-middle  media-middle text-center">
+                                                                {{ mymodel.lessonTitle }}
+                                                            </td>
+                                                            <td class="v-middle  media-middle text-center" dir="ltr">
+                                                                {{mymodel.title}}
+                                                            </td>
+                                                            <td class="v-middle  media-middle text-center">
+                                                                {{mymodel.value}}
+                                                            </td>
+                                                            <td class="v-middle  media-middle text-center">
+                                                                {{crDate(mymodel.createdAt)}}
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

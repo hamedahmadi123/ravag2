@@ -1,0 +1,357 @@
+<style>
+    .btnSize {
+        width: 200px;
+    }
+</style>
+<div>
+    <div class="bg-light lter b-b wrapper-md" ng-init="app.settings.asideFixed = true;app.settings.headerFixed = true;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+                <h1 class="m-n font-thin h3"><img src="img/icon/setting2.png" class="icnSize">تنظیمات</h1>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="float: left">
+                    <div class="panel-body">
+                        <button style="width: 100%" type="button" class="btn btn-addon , btn btn-default"
+                                ui-sref="app.page.insertStudent"><i class="icon-plus"></i> &nbsp; بازگشت به داشبورد
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="line line-dashed  line-lg pull-in"></div>
+    <div class="container">
+        <div class="main-wrapper">
+            <div class="container panel v-middle media-middle text-center align-items-center"
+                 style="background-color: transparent">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="panel-body" style="background-color: white">
+                            <ul class="nav nav-pills nav-sm" style="margin-right: 8%">
+
+                                <li class="active"><a data-toggle="tab" href="/#school">
+                                    <img src="img/icon/company.png" class="icnSize"
+                                         style="font-size: 25px;display: table;margin-right: auto;margin-left: auto;margin-bottom: 12px;">
+                                    مشخصات آموزشگاه</a></li>
+
+                                <li><a data-toggle="tab" href="/#design">
+                                    <img src="img/icon/design.png"
+                                         class="icnSize"
+                                         style="font-size: 25px;display: table;margin-right: auto;margin-left: auto;margin-bottom: 12px;">تنظیمات
+                                    ظاهری پنل</a></li>
+
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="streamline b-l b-info m-l-lg-2 m-b padder-v">
+                                <div class="panel panel-default" style="width: 100%;">
+                                    <div class="tab-content ">
+                                        <!--order-->
+                                        <div class="tab-pane fade in active , panel-body" id="school">
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="alert alert-danger" ng-show="errText()">
+                                                        <i class="icon-info"></i> &nbsp; <strong>
+                                                        {{errText()}}&nbsp;</strong>
+                                                        را وارد نمایید.
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                        <div class="panel-body">
+                                                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                                   style="margin-top: 8px;"><span
+                                                                    class="starstyle">*</span>نام:</label>
+                                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                                <input ng-model="sch_name" ng-required="true"
+                                                                       class="form-control rounded"
+                                                                       tooltip="نام آموزشگاه" style="width: 100%"
+                                                                       placeholder="نام آموزشگاه"
+                                                                       type="text">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                        <div class="panel-body">
+                                                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                                   style="margin-top: 8px;">شیفت:</label>
+                                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                                <select tooltip="دونوبته"
+                                                                        ng-model="sch_shift" style="width: 100%"
+                                                                        ng-options="shf.value as shf.name for shf in shift "
+                                                                        class="form-control rounded">
+                                                                    <option ng-disabled="true"
+                                                                            ng-selected="false" value="">شیفت
+                                                                        آموزشگاه
+                                                                        را مشخص
+                                                                        نمایید.
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                                         ng-show="sch_shift == '1'">
+                                                        <div class="panel-body">
+                                                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                                   style="margin-top: 8px;">اختلاف زمانی :</label>
+                                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                                <input ng-model="sch_difftime"
+                                                                       class="form-control rounded"
+                                                                       tooltip="اختلاف زمانی بین دو شیفت"
+                                                                       style="width: 100%"
+                                                                       placeholder="برای مثال (5 ساعت) ..."
+                                                                       type="number">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                        <div class="panel-body">
+                                                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                                   style="margin-top: 8px;"><span
+                                                                    class="starstyle">*</span>جنسیت :</label>
+                                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                                <select ng-required="true" style="width: 100%"
+                                                                        tooltip="جنیست دانش آموزان"
+                                                                        ng-model="sch_type" style="width: 100%"
+                                                                        ng-options="agn.value as agn.name for agn in jensiat "
+                                                                        class="form-control rounded">
+                                                                    <option ng-disabled="true"
+                                                                            ng-selected="false" value="">جنیست
+                                                                        دانش آموزان
+                                                                        را انتخاب
+                                                                        نمایید.
+                                                                    </option>
+
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                        <div class="panel-body">
+                                                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                                   style="margin-top: 8px;"><span
+                                                                    class="starstyle">*</span>استان :</label>
+                                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                                <select tooltip="استان"
+                                                                        ng-model="sch_city" style="width: 100%"
+                                                                        ng-options="loc.location_id as loc.location_name for loc in loca"
+                                                                        class="form-control rounded">
+                                                                    <option ng-disabled="true"
+                                                                            ng-selected="false" value="">استان
+                                                                        مورد نظر
+                                                                        را انتخاب
+                                                                        نمایید.
+                                                                    </option>
+
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                                         ng-show="sch_city">
+                                                        <div class="panel-body">
+                                                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                                   style="margin-top: 8px;">شهر :</label>
+                                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                                <select tooltip="شهر" style="width: 100%"
+                                                                        ng-model="sch_province"
+                                                                        ng-options="loc.location_id as loc.location_name for loc in subloca"
+                                                                        class="form-control rounded">
+                                                                    <option ng-disabled="true"
+                                                                            ng-selected="false" value="">شهر
+                                                                        مورد نظر
+                                                                        را انتخاب
+                                                                        نمایید.
+                                                                    </option>
+
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                        <div class="panel-body">
+                                                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                                   style="margin-top: 8px;">نشانی :</label>
+                                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                                <input ng-model="sch_address" style="width: 100%"
+                                                                       class="form-control rounded"
+                                                                       tooltip="آدس آموزشگاه را به طور دقیق وارد نمایید."
+                                                                       placeholder="آدرس آموزشگاه..."
+                                                                       type="text">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                        <div class="panel-body">
+                                                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                                   style="margin-top: 8px;">ناحیه :</label>
+                                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                                <input ng-model="sch_area" style="width: 100%"
+                                                                       class="form-control rounded"
+                                                                       tooltip="ناحیه آموزش پرورش"
+                                                                       placeholder="ناحیه آموزش پرورش.."
+                                                                       type="text">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                        <div class="panel-body">
+                                                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                                   style="margin-top: 8px;">شماره تلفن : </label>
+                                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                                <input ng-model="sch_tel" style="width: 100%"
+                                                                       class="form-control rounded"
+                                                                       tooltip="شماره تلفن تماس ثابت آموزشگاه"
+                                                                       type="text"
+                                                                       ui-mask="999-99999999">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                        <div class="panel-body">
+                                                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                                   style="margin-top: 8px;"><span
+                                                                    class="starstyle">*</span>تعداد زنگ:</label>
+                                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                                <input ng-model="zanghLenth" style="width: 100%"
+                                                                       class="form-control rounded"
+                                                                       tooltip="تعداد زنگ درسی کلاس ها برای مثال ( 4 زنگ )"
+                                                                       placeholder="تعداد زنگ درسی کلاس ها.."
+                                                                       maxlength="1" type="number">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                        <div class="panel-body">
+                                                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                                   style="margin-top: 8px;">یادداشت:</label>
+                                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                                <textarea rows="5"
+                                                                          style="width:100%;height:auto; "
+                                                                          ng-model="sch_note"
+                                                                          ui-validate=""
+                                                                          placeholder="یادداشت..."
+                                                                          type="text"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="line line-dashed b-b line-lg pull-in"></div>
+                                                <div align="center">
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-5">
+                                                                <div class="panel-body">
+                                                                    <a ng-click="BackToHistory()">
+                                                                        <button style="width: 100%" type="submit"
+                                                                                href="index.html"
+                                                                                class="btn btn-dark">
+                                                                            <i class="icon-close"></i>
+                                                                            &nbsp;
+                                                                            <span> لغو </span></button>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-7">
+                                                                <div class="panel-body">
+                                                                    <button ng-click="update_school(school.schoolid)"
+                                                                            style="width: 100%" type="submit"
+                                                                            class="btn btn-success">
+                                                                        <i class="icon-pencil"></i> &nbsp; <span
+                                                                            style="color: white">ویرایش</span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="tab-pane fade , panel-body" id="design">
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <br>
+                                                    <p align="right">شخصی سازی : </p>
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                                                            <label><b>رنگ منوبار بالای صفحه:</b></label>
+                                                            <input class="form-control" type="color"
+                                                                   placeholder="عنوان سایت خود را وارد نمایید..."
+                                                                   ng-model="obj_colore['h_menu_color']">
+                                                        </div>
+                                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                                                            <label><b>رنگ منوبار کنار صفحه:</b></label>
+                                                            <input class="form-control" type="color"
+                                                                   placeholder="عنوان سایت خود را وارد نمایید..."
+                                                                   ng-model="obj_colore['r_menu_color']">
+                                                        </div>
+                                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                                                            <label><b>رنگ پست زمینه:</b></label>
+                                                            <input class="form-control" type="color"
+                                                                   placeholder="عنوان سایت خود را وارد نمایید..."
+                                                                   ng-model="obj_colore['r_back_color']">
+                                                        </div>
+                                                    </div>
+                                                    <br><br>
+                                                    <div class="row">
+                                                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" >
+                                                                <p align="right">پیش نمایش : </p>
+                                                                <div class="row">
+                                                                    <div class="panel-body">
+                                                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                                                             style="background-color: {{obj_colore['h_menu_color'] || '#4caf50'}};height: 15px;">
+                                                                        </div>
+                                                                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"
+                                                                             style="background-color: {{obj_colore['r_menu_color'] || '#ffffff'}};height: 100px;border: 1px #dfe5e7 solid;border-top: none">
+                                                                        </div>
+                                                                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10"
+                                                                             style="background-color: {{obj_colore['r_back_color'] || '#f0f3f4'}};height: 100px;border: 1px #dfe5e7 solid;border-right: none;border-top: none">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                    <br>
+                                                    <br>
+                                                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                                                    <div class="row">
+                                                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4"
+                                                             style="color: white;float: right">
+                                                            <button ng-click="Insert_panel()"
+                                                                    style="width: 105%;background-color: #0F9E5E;"
+                                                                    type="submit" class="btn btn-light"><i
+                                                                    class=" icon-check"></i>&nbsp;&nbsp;<span> تایید   </span>
+                                                            </button>
+                                                        </div>
+
+                                                        <div class="col-xs-4 col-sm-2 col-md-4 col-lg-2"
+                                                             style="color: white;float: right;margin-right: 20px;">
+                                                            <a ng-click="cancel()">
+                                                                <button
+                                                                        style="width: 100%;background-color: #6c757d"
+                                                                        type="submit"
+                                                                        class="btn btn-light">
+                                                                    <i class="icon-close"></i>&nbsp;&nbsp;
+                                                                    <span> لغو </span></button>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

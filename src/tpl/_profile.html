@@ -1,0 +1,254 @@
+<div>
+    <div class="bg-light lter b-b wrapper-md" ng-init="app.settings.asideFixed = true;app.settings.headerFixed = true;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+                <h1 class="m-n font-thin h4"><img src="img/icon/editUser.png" class="icnSize"> ویرایش پروفایل (
+                    {{techer.firstname + " "+ techer.lastname}} )</h1>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="float: left">
+                    <div class="panel-body">
+                        <a href="#/app/page/teachers">
+                            <button style="width: 100%" type="button" class="btn btn-addon , btn btn-default"
+                            ><i class="icon-arrow-left"></i>
+                                بازگشت
+                            </button>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="line line-dashed  line-lg pull-in"></div>
+    <div class="container panel v-middle media-middle text-center align-items-center">
+        <br>
+        <div class="panel-body">
+
+
+            <form class="form-validation" method="post" name="myform">
+                <div class="row">
+                    <div class="alert alert-danger" ng-show="errText()">
+                        <i class="icon-info"></i> &nbsp; <strong> {{errText()}}&nbsp;</strong>
+                        را وارد نمایید.
+                    </div>
+                    <div class="panel-heading font-bold" style="background-color: #f6f8f8">
+                        اطلاعات فردی
+                    </div>
+                    <br>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <div class="panel-body" style="text-align: right">
+                            <label><b><span class="starstyle">*</span>نام کاربری :</b></label> &nbsp;
+                            <div class="input-group">
+                                <input ng-model="th_username" id="userInpout"
+                                       class="form-control rounded"
+                                       tooltip="نام کاربری برای ورود به پنل مدیریت" ng-required="true"
+                                       placeholder="نام کاربری..."
+                                       type="text">
+                                <span class="input-group-btn"><a
+                                        style="height: 34px;" ng-click="checkUsername(th_username , techer.teacherid)"
+                                        tooltip="چک کردن نام کاربری" id="userBtn"
+                                        data-toggle="modal" data-target="#allstudent"
+                                        class="btn btn-success btn-rounded no-border"><i style="font-size: 20px;"
+                                        class="icon-eye"></i></a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                         <div class="panel-body" style="text-align: right">
+                            <label><b><span class="starstyle">*</span>رمز عبور :</b></label> &nbsp;
+                            <input ng-model="th_pass"
+                                   class="form-control rounded"
+                                   tooltip="رمز عبور برای ورود به پنل مدیریت" ng-required="true"
+                                   placeholder="رمز عبور..."
+                                   type="text">
+                        </div>
+                    </div>
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <div class="panel-heading font-bold" style="background-color: #f6f8f8">
+                        اطلاعات فردی
+                    </div>
+                    <br>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                         <div class="panel-body" style="text-align: right">
+                            <label><b><span class="starstyle">*</span>نام :</b></label> &nbsp;
+                            <input ng-model="th_fitstname"
+                                   class="form-control rounded"
+                                   tooltip="نام" ng-required="true"
+                                   placeholder="نام..."
+                                   type="text">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                         <div class="panel-body" style="text-align: right">
+                            <label><b><span class="starstyle">*</span>نام خانوادگی:</b></label> &nbsp;
+                            <input ng-model="th_lastname"
+                                   class="form-control rounded"
+                                   tooltip="نام خانوادگی" ng-required="true"
+                                   placeholder="نام خانوادگی..."
+                                   type="text">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                         <div class="panel-body" style="text-align: right">
+                            <label><b><span class="starstyle">*</span>نام پدر:</b></label> &nbsp;
+                            <input ng-model="th_fathername"
+                                   class="form-control rounded"
+                                   tooltip="نام پدر"
+                                   placeholder="نام پدر..."
+                                   type="text">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                         <div class="panel-body" style="text-align: right">
+                            <label><b><span style="color: blue;margin: 5px">*</span>کد ملی :</b></label>&nbsp;
+                            <input ng-model="th_codemeli" class="form-control rounded"
+                                   tooltip="کد ملی"
+                                   type="text" ui-mask="999-999999-9">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                         <div class="panel-body" style="text-align: right">
+                            <label><b>تاریخ تولد :</b></label>&nbsp;
+                            <adm-dtp ng-model="th_berthday"
+                                     options="{calType: 'jalali', format: 'YYYY-MM-DD',autoClose:true}"></adm-dtp>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                         <div class="panel-body" style="text-align: right">
+                            <label><b>نشانی :</b></label>&nbsp;
+                            <input ng-model="th_address"
+                                   class="form-control rounded"
+                                   tooltip="آدرس منزل معلم را به طور دقیق وارد نمایید."
+                                   placeholder="آدرس منزل..."
+                                   type="text">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                         <div class="panel-body" style="text-align: right">
+                            <label><b>شماره تلفن تماس:</b></label>&nbsp;
+                            <input ng-model="th_phone"
+                                   class="form-control rounded"
+                                   tooltip="شماره تلفن تماس معلم"
+                                   type="text"
+                                   ui-mask="999-99999999">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                         <div class="panel-body" style="text-align: right">
+                            <label><b>ایمیل:</b></label>&nbsp;
+                            <input ng-model="th_email"
+                                   class="form-control rounded"
+                                   tooltip="ایمیل معلم" placeholder="example@domain.com"
+                                   type="email">
+                        </div>
+                    </div>
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <div class="row">
+                        <br>
+                        <div class="panel-heading font-bold" style="background-color: #f6f8f8">
+                            اطلاعات تکمیلی
+                        </div>
+                        <br>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                             <div class="panel-body" style="text-align: right">
+                                <label><b><span class="starstyle">*</span>مدرک تحصیلی :</b></label>&nbsp;
+                                <select tooltip="استان"
+                                        ng-model="th_mdrk" ng-required="true"
+                                        ng-options="mdk.educationdegreeid as mdk.name for mdk in madraks"
+                                        class="form-control rounded">
+                                    <option ng-disabled="true"
+                                            ng-selected="false" value="">مدرک تحصیلی
+                                        معلم
+                                        را انتخاب
+                                        نمایید.
+                                    </option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                             <div class="panel-body" style="text-align: right">
+                                <label><b><span class="starstyle">*</span>سمت :</b></label>&nbsp;
+                                <select tooltip="سمت"
+                                        ng-model="th_type"
+                                        ng-options="usr.value as usr.name for usr in users"
+                                        class="form-control rounded">
+                                    <option ng-disabled="true"
+                                            ng-selected="false" value="">سمت را
+                                        را مشخص
+                                        نمایید.
+                                    </option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                             <div class="panel-body" style="text-align: right">
+                                <label><b>یادداشت :</b></label>&nbsp;
+                                <textarea rows="15"
+                                          style="width:100%;height:auto; "
+                                          ng-model="th_note"
+                                          ui-validate=""
+                                          placeholder="یادداشت..."
+
+                                          type="text"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                             <div class="panel-body" style="text-align: right">
+                                <label><b>عکس پرسنلی 4*3 :</b></label>&nbsp;
+                                <div class="file-loading">
+                                    <input id="uploadFile1" name="uploadFile1" multiple
+                                           type="file"
+                                           accept="image/*">
+                                </div>
+                                <div id="togStatus" class="hint-block">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                             <div class="panel-body" style="text-align: right">
+                                <label><b><span style="color: blue;margin: 5px">*</span>کد پرسنلی :</b></label>&nbsp;
+                                <input ng-model="th_prscode"
+                                       class="form-control rounded"
+                                       tooltip="کد پرسنلی"
+                                       placeholder="کد پرسنلی..."
+                                       type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div align="center">
+                        <br><br>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-5">
+                                    <div class="panel-body">
+                                        <a ng-click="BackToHistory()">
+                                            <button style="width: 100%" type="submit" href="index.html"
+                                                    class="btn btn-dark">
+                                                <i class="icon-close"></i>
+                                                &nbsp;
+                                                <span> لغو </span></button>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-7">
+                                    <div class="panel-body">
+                                        <button ng-click="updateTecherFunctin(techer.teacherid)"
+                                                style="width: 100%" type="submit" class="btn btn-info">
+                                            <i class="icon-pencil"></i> &nbsp; <span style="color: white">ویرایش</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

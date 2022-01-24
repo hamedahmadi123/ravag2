@@ -1,0 +1,633 @@
+<div ng-controller="quizSchedule">
+    <div class="bg-light lter b-b wrapper-md" ng-init="app.settings.asideFixed = true;app.settings.headerFixed = true;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+                <h1 class="m-n font-thin h3"><img src="img/icon/clander.png" class="icnSize">برنامه آزمون</h1>
+                <h5>برای تخصیص مراقب یا امتحان ابتدا برنامه امتحانی را انتخاب نمایید.</h5>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="float: left">
+                    <div class="panel-body">
+                        <button style="width: 100%" type="button" class="btn btn-addon , btn btn-default"
+                                data-toggle="modal" data-target="#myModal"><i class="icon-plus"></i> &nbsp; برنامه آزمون
+                            جدید
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="line line-dashed  line-lg pull-in"></div>
+    <div class="container">
+        <div class="main-wrapper">
+            <div class="row">
+                <div class="container panel v-middle media-middle text-center align-items-center">
+                    <br>
+                    <div class="panel panel-default" style="width: 100%;">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                        <div class="panel-body">
+                                            <h4 align="right">برنامه ریزی</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="float: left">
+                                            <div class="panel-body">
+                                                <button style="width: 100%" type="button"
+                                                        data-toggle="modal" data-target="#exams"
+                                                        class="btn btn-addon , btn btn-default"
+                                                        ng-disabled="!quizeId"><i
+                                                        class="	fa fa-file"></i> &nbsp;امتحانات
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="float: left">
+                                            <div class="panel-body">
+                                                <button style="width: 100%" type="button"
+                                                        class="btn btn-addon , btn btn-default"
+                                                        data-toggle="modal" data-target="#Watchmens"
+                                                        ng-disabled="!quizeId"><i
+                                                        class="fa fa-users"></i> &nbsp;مراقبین
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped" id="tblExport">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">انتخاب</th>
+                                                <th scope="col" class="v-middle  media-middle text-center"
+                                                    style="width: 10%">#
+                                                </th>
+                                                <th scope="col" class="v-middle  media-middle text-center"
+                                                    style="width: 50%">عنوان
+                                                </th>
+                                                <th scope="col" class="v-middle  media-middle text-center"
+                                                    style="width: 20%">ویرایش
+                                                </th>
+                                                <th scope="col" class="v-middle  media-middle text-center"
+                                                    style="width: 20%">حذف
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody infinite-scroll='load2()' infinite-scroll-distance='0'>
+                                            <tr ng-repeat='mymodel in name | filter : gsearch'>
+                                                <td scope="row">
+                                                    <label class="containerCheckBox">
+                                                        <input type="radio" name="radio" ng-model="btn_select"
+                                                               value="{{mymodel.studentid}}"
+                                                               ng-click="selectQuiz(mymodel.examtitleid)">
+                                                        <span class="checkmark2"></span>
+                                                    </label>
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    {{mymodel.examtitleid}}
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    {{ mymodel.title }}
+                                                </td>
+
+                                                <td class="v-middle  media-middle text-center">
+                                                    <button class="btn btn-sm btn-info" data-toggle="modal"
+                                                            data-target="#update"
+                                                            ng-click="detial(mymodel.examtitleid)">
+                                                        <i class="icon-pencil"></i>&nbsp;ویرایش
+                                                    </button>
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    <button class="btn btn-sm btn-danger"
+                                                            ng-click="deleteExamTitel((mymodel.examtitleid),(mymodel.title) )">
+                                                        <i class="icon-trash"></i>&nbsp;حذف
+                                                    </button>
+                                                </td>
+
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10" style="float: left;">
+                            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                <div class="panel-body">
+                                    <button style="width: 100%" type="button"
+                                            class="btn btn-addon , btn btn-info"
+                                            ng-disabled="!quizeId" ng-click="deleteAll()"><i class="fa fa-user"></i>
+                                        &nbsp;برنامه مدیر
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                <div class="panel-body">
+                                    <button style="width: 100%" type="button"
+                                            class="btn btn-addon , btn btn-danger"
+                                            ng-disabled="!quizeId" ng-click="deleteAll()"><i
+                                            class="fa fa-users"></i> &nbsp;برنامه مراقبین
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                <div class="panel-body">
+                                    <button style="width: 100%" type="button"
+                                            class="btn btn-addon , btn btn-warning"
+                                            ng-disabled="!quizeId" ng-click="deleteAll()"><i
+                                            class="	fa fa-id-card-o"></i> &nbspکارت ورود به جلسه
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                <div class="panel-body">
+                                    <button style="width: 100%" type="button"
+                                            class="btn btn-addon , btn btn-success"
+                                            ng-disabled="!quizeId" ng-click="deleteAll()"><i
+                                            class="	fa fa-calendar"></i> &nbsp;برنامه نسخه کلاسی
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="Watchmens" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">&times;
+                    </button>
+                    <h4 class="modal-title">
+                        <img src="img/icon/support2.png" class="icnSize">
+                        تخصیص مراقبین امتحانات
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col"
+                                                    style="width: 10%">#
+                                                </th>
+                                                <th scope="col" class="v-middle  media-middle text-center"
+                                                    style="width: 50%">عنوان
+                                                </th>
+                                                <th scope="col" class="v-middle  media-middle text-center"
+                                                    style="width: 20%">ویرایش
+                                                </th>
+                                                <th scope="col" class="v-middle  media-middle text-center"
+                                                    style="width: 20%">حذف
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody infinite-scroll='load2()' infinite-scroll-distance='0'>
+                                            <tr ng-repeat='mymodel in name | filter : gsearch'>
+                                                <td scope="row">
+                                                    <label class="containerCheckBox">
+                                                        <input type="radio" name="radio" ng-model="rd_select">
+                                                        <span class="checkmark2"></span>
+                                                    </label>
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    {{ mymodel.title }}
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    {{ mymodel.title }}
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    <button class="btn btn-sm btn-danger"
+                                                            ng-click="deleteExamTitel((mymodel.examtitleid),(mymodel.title) )">
+                                                        <i class="icon-trash"></i>&nbsp;حذف
+                                                    </button>
+                                                </td>
+
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="width: 100%;margin-right: 20px;">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <button
+                                            style="width: 100%;" ng-click="SelectWeeklyscheduleTeacher()"
+                                            type="submit" data-toggle="modal" data-target="#insertWathman"
+                                            class="btn btn-success">
+                                        <i class="icon-plus"></i>&nbsp;<span> تخصیص مراقب </span></button>
+                                </div>
+                                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                    <button data-dismiss="modal"
+                                            style="width: 100%;"
+                                            type="submit"
+                                            class="btn btn-dark">
+                                        <i class="icon-close"></i>&nbsp;<span> لغو </span></button>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bd-example-modal-lg" id="insertWathman" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal">&times;
+                        </button>
+                        <h4 class="modal-title">
+                            <img src="img/icon/support2.png" class="icnSize">
+                            تخصیص مراقب
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="panel-body">
+                                        <div class="panel panel-default" style="width: 100%;">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                                            <div class="panel-body">
+                                                                <h4 align="right" style="margin-top: 5px;">لیست
+                                                                    معلمین</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                                                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                <div class="panel-body">
+                                                                    <label class="containerCheckBox"><span
+                                                                            style="font-size: 13px;">انتخاب / برداشتن انتخاب همه</span>
+                                                                        <input type="checkbox" ng-model="selectingAll" ng-click="selectall(selectingAll)">
+                                                                        <span class="checkmark2"></span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                <div class="panel-body">
+                                                                    <label class="containerCheckBox"><span
+                                                                           id="lblAllTh" style="font-size: 13px;">مشاهده همه معلمین</span>
+                                                                        <input type="checkbox" ng-model="allTeacher" ng-click="selectAllTh(allTeacher)">
+                                                                        <span class="checkmark2"></span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </h4>
+                                            </div>
+                                            <div class="panel-collapse collapse in">
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th scope="col">انتخاب
+                                                                    <th scope="col"
+                                                                        class="v-middle  media-middle text-center">نام و
+                                                                        نام
+                                                                        خانوادگی
+                                                                    </th>
+                                                                    <th scope="col"
+                                                                        class="v-middle  media-middle text-center">روز
+                                                                        های
+                                                                        حضور
+                                                                    </th>
+                                                                    <th scope="col"
+                                                                        class="v-middle  media-middle text-center">تلفن
+                                                                        همراه
+                                                                    </th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr ng-repeat='mymodel in weeklyTeachers | filter : gsearch' ng-show="objDay[mymodel.day]">
+                                                                    <td scope="row">
+                                                                        <label class="containerCheckBox">
+                                                                            <br>
+                                                                            <input type="checkbox" ng-model="objTh[mymodel.weeklyscheduleid]"
+                                                                                   ng-change="itemArray(mymodel.weeklyscheduleid,objTh[mymodel.weeklyscheduleid])">
+                                                                            <span class="checkmark2"
+                                                                                  style="margin-left: 5px;margin-top: 5px"></span>
+                                                                        </label>
+                                                                    </td>
+                                                                    <td class="v-middle  media-middle text-center">
+                                                                        {{ mymodel.firstname + ' ' + mymodel.lastname }}
+                                                                    </td>
+                                                                    <td class="v-middle  media-middle text-center">
+                                                                        -
+                                                                    </td>
+                                                                    <td class="v-middle  media-middle text-center">
+                                                                        {{ mymodel.mobile }}
+                                                                    </td>
+                                                                    <td class="v-middle  media-middle text-center">
+                                                                        <button class="btn btn-sm btn-danger"
+                                                                                ng-click="deleteExamTitel((mymodel.examtitleid),(mymodel.title) )">
+                                                                            <i class="icon-trash"></i>&nbsp;حذف
+                                                                        </button>
+                                                                    </td>
+
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div style="width: 100%;margin-right: 20px;">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        <button
+                                                style="width: 100%;" data-dismiss="modal"
+                                                type="submit" ui-sref="app.page.quizSchedule_exam({examid: quizeId})"
+                                                class="btn btn-success">
+                                            <i class="icon-plus"></i>&nbsp;<span> جدید </span></button>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        <button data-dismiss="modal"
+                                                style="width: 100%;"
+                                                type="submit"
+                                                class="btn btn-dark">
+                                            <i class="icon-close"></i>&nbsp;<span> لغو </span></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="exams" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal">&times;
+                        </button>
+                        <h4 class="modal-title">
+                            <img src="img/icon/clander.png" class="icnSize">
+                            لیست امتحانات
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col"
+                                                        style="width: 10%">#
+                                                    </th>
+                                                    <th scope="col" class="v-middle  media-middle text-center"
+                                                        style="width: 50%">عنوان
+                                                    </th>
+                                                    <th scope="col" class="v-middle  media-middle text-center"
+                                                        style="width: 20%">ویرایش
+                                                    </th>
+                                                    <th scope="col" class="v-middle  media-middle text-center"
+                                                        style="width: 20%">حذف
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody infinite-scroll='load2()' infinite-scroll-distance='0'>
+                                                <tr ng-repeat='mymodel in name | filter : gsearch'>
+                                                    <td scope="row">
+                                                        {{mymodel.examtitleid}}
+                                                    </td>
+                                                    <td class="v-middle  media-middle text-center">
+                                                        {{ mymodel.title }}
+                                                    </td>
+                                                    <td class="v-middle  media-middle text-center">
+                                                        {{ mymodel.title }}
+                                                    </td>
+                                                    <td class="v-middle  media-middle text-center">
+                                                        <button class="btn btn-sm btn-danger"
+                                                                ng-click="deleteExamTitel((mymodel.examtitleid),(mymodel.title) )">
+                                                            <i class="icon-trash"></i>&nbsp;حذف
+                                                        </button>
+                                                    </td>
+
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div style="width: 100%;margin-right: 20px;">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        <button
+                                                style="width: 100%;" data-dismiss="modal"
+                                                type="submit" ui-sref="app.page.quizSchedule_exam({examid: quizeId})"
+                                                class="btn btn-success">
+                                            <i class="icon-plus"></i>&nbsp;<span> جدید </span></button>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        <button data-dismiss="modal"
+                                                style="width: 100%;"
+                                                type="submit"
+                                                class="btn btn-dark">
+                                            <i class="icon-close"></i>&nbsp;<span> لغو </span></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="update" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">&times;
+                    </button>
+                    <h4 class="modal-title">
+                        <img src="img/icon/clander.png" class="icnSize">ویرایش
+                        برنامه امتحانی ({{quiz.title}})
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="panel-body">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="panel-body">
+                                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                   style="margin-top: 8px;">عنوان:</label>
+                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                <input ng-model="quz_nameE" class="form-control rounded"
+                                                       tooltip="عنوان برنامه امتحانی برای مثال (ترم یک)"
+                                                       placeholder="عنوان برنامه اتحانی...."
+                                                       type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="width: 100%;margin-right: 20px;">
+                        <br>
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4" style="float: right;color: white">
+                                <button ng-click="updateExamTitle(quiz.examtitleid)"
+
+                                        style="width: 105%;background-color: #0F9E5E;"
+                                        type="submit" class="btn btn-light">
+                                    <i class=" icon-plus"></i> &nbsp; <span
+                                        style="color: white"> تایید   </span>
+                                </button>
+                            </div>
+
+                            <div class="col-xs-4 col-sm-2 col-md-4 col-lg-2"
+                                 style="float: right;margin-right: 20px;color: white">
+                                <button data-dismiss="modal"
+                                        style="width: 100%;background-color: #6c757d"
+                                        type="submit" href="index.html"
+                                        class="btn btn-light">
+                                    <i
+                                            class="icon-close"></i>
+                                    &nbsp;
+                                    <span> لغو </span></button>
+                            </div>
+
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">&times;
+                    </button>
+                    <h4 class="modal-title">
+                        <img src="img/icon/clander.png" class="icnSize">درج
+                        برنامه امتحانی جدید
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="panel-body">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="panel-body">
+                                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                   style="margin-top: 8px;">عنوان:</label>
+                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                <input ng-model="quz_name" class="form-control rounded"
+                                                       tooltip="عنوان برنامه امتحانی برای مثال (ترم یک)"
+                                                       placeholder="عنوان برنامه اتحانی...."
+                                                       type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="width: 100%;margin-right: 20px;">
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4" style="float: right;color: white">
+                                <button ng-click="insertExamTitle()"
+
+                                        style="width: 105%;background-color: #0F9E5E;"
+                                        type="submit" class="btn btn-light">
+                                    <i class=" icon-plus"></i> &nbsp; <span
+                                        style="color: white"> تایید   </span>
+                                </button>
+                            </div>
+
+                            <div class="col-xs-4 col-sm-2 col-md-4 col-lg-2"
+                                 style="float: right;margin-right: 20px;color: white">
+                                <button data-dismiss="modal"
+                                        style="width: 100%;background-color: #6c757d"
+                                        type="submit" href="index.html"
+                                        class="btn btn-light">
+                                    <i
+                                            class="icon-close"></i>
+                                    &nbsp;
+                                    <span> لغو </span></button>
+                            </div>
+
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,341 @@
+<div ng-controller="teachers">
+    <div class="bg-light lter b-b wrapper-md" ng-init="app.settings.asideFixed = true;app.settings.headerFixed = true;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-7">
+                <h1 class="m-n font-thin h3"><img src="img/icon/techer.png" class="icnSize"> لیست معلمین </h1>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-5">
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="panel-body">
+                        <button style="width: 100%" type="button" class="btn btn-addon , btn btn-default"
+                                ui-sref="app.page.insertTheacher"><i class="icon-plus"></i> &nbsp;افزودن معلم جدید
+                        </button>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="panel-body">
+                        <button style="width: 100%" type="button" class="btn btn-addon , btn btn-default"
+                                ng-click="deleteAll()"><i
+                                class="icon-trash"></i> &nbsp;حذف معلمین انتخاب شده
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="line line-dashed  line-lg pull-in"></div>
+    <div class="container">
+        <div class="main-wrapper">
+            <div class="row">
+                <div class="container panel v-middle media-middle text-center align-items-center">
+                    <br>
+                    <div class="panel panel-default" style="width: 100%;">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                        <div class="panel-body">
+                                            <h4 align="right">لیست {{filterText}}</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="float: left">
+                                            <div class="panel-body">
+                                                <button style="width: 100%;" class="btn btn-link"
+                                                        onclick="tableToExcel('tblExport' , 'لیست دانش آموزان')">
+                                                    <i class="fa fa-file-excel-o"></i>
+                                                    خروجی Excel
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" >
+                                            <div class="panel-body" >
+                                                <button style="width: 100%;" class="btn btn-link"
+                                                        ng-click="printDiv('tblExport');">
+                                                    <i class="fa fa-print"></i>
+                                                    چاپ لیست
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped" id="tblExport">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">انتخاب</th>
+                                                <th scope="col" class="v-middle  media-middle text-center">#</th>
+                                                <td scope="col" class="v-middle  media-middle text-center">کد پرسنلی
+                                                </td>
+                                                <th scope="col" class="v-middle  media-middle text-center"> نام و نام
+                                                    خانوادگی
+                                                </th>
+                                                <td scope="col" class="v-middle  media-middle text-center">مدرک تحصیلی
+                                                </td>
+                                                <th scope="col" class="v-middle  media-middle text-center ">ویرایش</th>
+                                                <th scope="col" class="v-middle  media-middle text-center ">حذف</th>
+                                                <th scope="col" class="v-middle  media-middle text-center ">جزییات</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody infinite-scroll='load2()' infinite-scroll-distance='0'>
+                                            <tr ng-repeat='mymodel in name | filter : gsearch'>
+                                                <th scope="row">
+                                                    <label class="containerCheckBox">
+                                                        <br>
+                                                        <input type="checkbox" ng-model="checkbox1"
+                                                               ng-change="itemArray(mymodel.teacherid,checkbox1)">
+                                                        <span class="checkmark2"
+                                                              style="margin-left: 5px;margin-top: 5px"></span>
+                                                    </label>
+                                                </th>
+                                                <td class="v-middle  media-middle text-center">
+                                                    {{mymodel.teacherid}}
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    <span ng-show="mymodel.personeli">{{ mymodel.personeli}}</span>
+                                                    <span ng-show="!mymodel.personeli">-</span>
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    {{ mymodel.firstname + " " + mymodel.lastname || 'خالی'}}
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    {{ mymodel.madrakTahsili || 'خالی'}}
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    <button class="btn btn-sm btn-info"
+                                                            ui-sref="app.page.Theacher_edit({userId: mymodel.teacherid})">
+                                                        <i class="icon-pencil"></i>&nbsp; ویرایش
+                                                    </button>
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    <button class="btn btn-sm btn-danger"
+                                                            ng-click="deleteTecher((mymodel.teacherid),(mymodel.mymodel.firstname + ' ' + mymodel.lastname) )">
+                                                        <i class="icon-trash"></i>&nbsp;حذف
+                                                    </button>
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    <button data-toggle="modal" data-target="#myModal"
+                                                            class="btn btn-sm btn-success"
+                                                            ng-click="detailTh(mymodel.teacherid)">مشاهده <i
+                                                            class="icon-eye"></i>&nbsp;
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">&times;
+                    </button>
+                    <h4 class="modal-title">
+                        <img src="img/icon/teacher.png" class="icnSize">
+                        ({{thisTh.firstname + ' ' + thisTh.lastname}})
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                            <img src="{{thisTh.image || 'img/userNopic.jpg'}}"
+                                                 class="img-circle"
+                                                 style="width: 100px;height: 100px;">
+                                        </div>
+                                        <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="panel-body">
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 8px;">نام
+                                                        :</label>
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <input ng-model="th_name"
+                                                               class="form-control rounded"
+                                                               tooltip="نام و نام خانوادگی "
+                                                               placeholder="نام و نام خانوادگی ..."
+                                                               ng-disabled="true"
+                                                               ng-required="true" type="text"
+                                                               style="cursor: text">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="panel-body">
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 8px;">کد ملی:</label>
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <input ng-model="th_id"
+                                                               class="form-control rounded"
+                                                               tooltip="کد ملی" ng-disabled="true"
+                                                               type="text" style="cursor: text">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="panel-body">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="panel-body">
+                                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                   style="margin-top: 8px;">تاریخ تولد
+                                                :</label>
+                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                <input ng-model="th_berthday"
+                                                       class="form-control rounded"
+                                                       tooltip="تاریخ تولد"
+                                                       placeholder="تاریخ تولد..." ng-disabled="true"
+                                                       ng-required="true" type="text"
+                                                       style="cursor: text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="panel-body">
+                                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                   style="margin-top: 8px;">نشانی
+                                                :</label>
+                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                <input ng-model="th_address"
+                                                       class="form-control rounded"
+                                                       tooltip="نشانی منزل"
+                                                       placeholder="نشانی منزل..." ng-disabled="true"
+                                                       ng-required="true" type="text"
+                                                       style="cursor: text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="panel-body">
+                                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                   style="margin-top: 8px;">شماره تلفن
+                                                :</label>
+                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                <input ng-model="th_tel" class="form-control rounded"
+                                                       tooltip="شماره تلفن"
+                                                       placeholder="شماره تلفن..." ng-disabled="true"
+                                                       ng-required="true" type="text"
+                                                       style="cursor: text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="panel-body">
+                                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                   style="margin-top: 8px;">مدرک
+                                                :</label>
+                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                <input ng-model="th_madrak" class="form-control rounded"
+                                                       tooltip="مدرک"
+                                                       placeholder="مدرک..." ng-disabled="true"
+                                                       ng-required="true" type="text"
+                                                       style="cursor: text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="panel-body">
+                                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                   style="margin-top: 8px;">سمت
+                                                :</label>
+                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                <select tooltip="سمت"
+                                                        ng-model="th_type" ng-disabled="true"
+                                                        ng-options="usr.value as usr.name for usr in users"
+                                                        class="form-control rounded">
+                                                    <option ng-disabled="true"
+                                                            ng-selected="false" value="">سمت کاربر در
+                                                        آموزشگاه
+                                                    </option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="width: 100%;margin-right: 20px;">
+                        <br>
+                        <div class="row">
+                            <div class="col-xs-4 col-sm-2 col-md-4 col-lg-2"
+                                 style="float: right;margin-right: 20px;color: white">
+                                <button data-dismiss="modal"
+                                        style="width: 100%;background-color: #6c757d"
+                                        type="submit" href="index.html"
+                                        class="btn btn-light">
+                                    <i
+                                            class="icon-close"></i>
+                                    &nbsp;
+                                    <span> لغو </span></button>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4"
+                                 style="float: right;color: white">
+                                <button data-dismiss="modal"
+                                        ui-sref="app.page.Student_edit({userId: thisSt.studentid})"
+                                        style="width: 105%;background-color: #0F9E5E;"
+                                        type="submit" class="btn btn-light">
+                                    <i class="icon-pencil"></i> &nbsp; <span
+                                        style="color: white"> ویرایش  </span>
+                                </button>
+                            </div>
+
+
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var tableToExcel = (function () {
+            var uri = 'data:application/vnd.ms-excel;base64,'
+                ,
+                template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+                , base64 = function (s) {
+                    return window.btoa(unescape(encodeURIComponent(s)))
+                }
+                , format = function (s, c) {
+                    return s.replace(/{(\w+)}/g, function (m, p) {
+                        return c[p];
+                    })
+                }
+            return function (table, name) {
+                if (!table.nodeType) table = document.getElementById(table)
+                var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+                window.location.href = uri + base64(format(template, ctx))
+            }
+        })()
+    </script>
+</div>
+
+

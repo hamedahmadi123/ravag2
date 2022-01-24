@@ -1,0 +1,286 @@
+<div>
+    <div class="bg-light lter b-b wrapper-md" ng-init="app.settings.asideFixed = true;app.settings.headerFixed = true;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+                <h1 class="m-n font-thin h3"><img src="img/icon/sms2.png" class="icnSize"> ارسال پیامک به اولیا </h1>
+                <span ng-if="studentClass.length != '0'"> کلاس ( {{studentClass[0].classname}})</span></div>
+            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="float: left">
+                    <div class="panel-body">
+                        <button style="width: 100%" type="button" class="btn btn-addon , btn btn-default"
+                                ui-sref="app.page.ClassStudents"><i class="icon-arrow-left"></i> &nbsp;بازگشت
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="line line-dashed  line-lg pull-in"></div>
+
+    <div class="container">
+        <div class="panel panel-default" style="width: 100%;padding: 20px;">
+            <div class="panel-body">
+                <form class="form-validation" method="post" name="myform">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <div id="Note">
+                                <div ng-if="studentClass.length == '0'" align="center">
+                                    <img src="img/notFound(404).png" style="width: 45%; ; height: auto"
+                                         align="center"/>
+                                    <p style="font-size: 20px;display: table;margin-left: auto;margin-right: auto;padding: 10px">
+                                        هیچ دانش آموزی در این کلاس یافت نشد . </p>
+                                </div>
+                                <div align="center" ng-if="studentClass.length != '0'">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="panel-body">
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 8px;">متن پیامک:</label>
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <div class="input-group">
+                                                            <input ng-disabled="true"
+                                                                   value="{{envelopText}}"
+                                                                   class="form-control text-sm btn-rounded no-border">
+                                                            <span class="input-group-btn"><a
+                                                                    style="height: 34px;" ng-click="editText()"
+                                                                    tooltip="ویرایش"
+                                                                    data-toggle="modal"
+                                                                    data-target="#myModal"
+                                                                    class="btn btn-success btn-rounded no-border"><i
+                                                                    class="glyphicon glyphicon-pencil"></i></a></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                                    <br>
+                                    <div class="panel panel-default" style="width: 100%;">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                        <div class="panel-body">
+                                                            <h4 align="right">لیست گیرندگان</h4>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                        <div class="panel-body" style="float: left;">
+                                                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"  style="float: left">
+                                                                <label class="containerCheckBox" style="float: left">
+                                                                    <br>
+                                                                    <input type="checkbox" ng-model="checkbox1"
+                                                                           ng-change="selectAllSt()">
+                                                                    <span class="checkmark2"
+                                                                          style="margin-left: 5px;margin-top: 15px"></span>
+                                                                </label>
+                                                            </div>
+                                                            &nbsp;&nbsp;
+                                                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10" style="float: left">
+                                                                <div ng-click="selectAllSt()" style="font-size: 14px;margin-top: 2px;">
+                                                                    انتخاب / برداشتن انتخاب همه
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse1" class="panel-collapse collapse in">
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="table-responsive" style="border: none">
+                                                        <table class="table table-striped">
+                                                            <thead>
+                                                            <tr>
+                                                                <th scope="col">انتخاب</th>
+                                                                <th scope="col"
+                                                                    class="v-middle  media-middle text-center ">کد دانش
+                                                                    آموز
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="v-middle  media-middle text-center "> نام و
+                                                                    نام خانوادگی
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="v-middle  media-middle text-center ">نام پدر
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="v-middle  media-middle text-center ">شماره
+                                                                    همراه پدر
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="v-middle  media-middle text-center ">شماره
+                                                                    همراه مادر
+                                                                </th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody infinite-scroll='load2()'
+                                                                   infinite-scroll-distance='0'>
+                                                            <tr ng-repeat='mymodel in studentClass | filter : gsearch'>
+                                                                <td scope="row"
+                                                                    class="v-middle  media-middle text-center"
+                                                                    align="center">
+                                                                    <label class="containerCheckBox">
+                                                                        <br>
+                                                                        <input type="checkbox"
+                                                                               ng-change="selectSt(obj[mymodel.studentid] , mymodel.studentid , mymodel.fathermobile , mymodel.mothermobile)"
+                                                                               ng-model="obj[mymodel.studentid]">
+                                                                        <span class="checkmark2"
+                                                                              style="margin-left: 5px;margin-top: 5px"></span>
+                                                                    </label>
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center">
+                                                                    {{mymodel.studentcode}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center">
+                                                                    {{ mymodel.firstname + " " + mymodel.lastname }}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center">
+                                                                    {{mymodel.fathername}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center">
+                                                                    {{mymodel.fathermobile || '-'}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center">
+                                                                    {{mymodel.mothermobile || '-'}}
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div align="center">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-7">
+                                                    <div class="panel-body">
+                                                        <button ng-click="sendSMS()"
+                                                                style="width: 100%" type="submit" class="btn btn-info">
+                                                            <i class="fa fa-paper-plane"></i> &nbsp; <span
+                                                                style="color: white">ارسال</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-5">
+                                                    <div class="panel-body">
+                                                        <a ng-click="BackToHistory()">
+                                                            <button style="width: 100%" type="submit" href="index.html"
+                                                                    class="btn btn-dark">
+                                                                <i class="icon-close"></i>
+                                                                &nbsp;
+                                                                <span> لغو </span></button>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">&times;
+                    </button>
+                    <h4 class="modal-title">
+                        <img src="img/icon/sms2.png" class="icnSize">
+                        متن پیامک به اولیا
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="panel-body">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="panel-body">
+                                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                   style="margin-top: 8px;">قالب پایمک آماده:</label>
+                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                <select tooltip="شهر"
+                                                        ng-model="sms_temp" ng-change="setTemp(sms_temp.text)"
+                                                        ng-options="sms as sms.title for sms in smsTemps"
+                                                        class="form-control rounded">
+                                                    <option ng-disabled="true"
+                                                            ng-selected="false" value="">قالب پیامکی
+                                                        مورد نظر
+                                                        را انتخاب
+                                                        نمایید.
+                                                    </option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="panel-body">
+                                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                   style="margin-top: 8px;">متن پیامک:</label>
+                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                <textarea rows="8" ng-change="smsLength(sms_note.length)"
+                                                          style="width:100%;height:auto; "
+                                                          ng-model="sms_note"
+                                                          ui-validate=""
+                                                          placeholder="متن پیامک..."
+                                                          type="text"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p><span>تعداد کاراکتر :</span>&nbsp;{{sms_note.length || '0'}}</p>
+                                    <p><span>تعداد پیامک :</span>&nbsp;{{smsLen}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="width: 100%;margin-right: 20px;">
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4" style="float: right;color: white">
+                                <button ng-click="insertText()"
+
+                                        style="width: 105%;background-color: #0F9E5E;"
+                                        type="submit" class="btn btn-light">
+                                    <i class=" icon-plus"></i> &nbsp; <span
+                                        style="color: white"> تایید   </span>
+                                </button>
+                            </div>
+
+                            <div class="col-xs-4 col-sm-2 col-md-4 col-lg-2"
+                                 style="float: right;margin-right: 20px;color: white">
+                                <button data-dismiss="modal"
+                                        style="width: 100%;background-color: #6c757d"
+                                        type="submit" href="index.html"
+                                        class="btn btn-light">
+                                    <i
+                                            class="icon-close"></i>
+                                    &nbsp;
+                                    <span> لغو </span></button>
+                            </div>
+
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

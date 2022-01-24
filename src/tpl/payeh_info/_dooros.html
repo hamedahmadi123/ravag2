@@ -1,0 +1,703 @@
+<div ng-controller="dooros">
+    <div class="bg-light lter b-b wrapper-md" ng-init="app.settings.asideFixed = true;app.settings.headerFixed = true;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+                <h1 class="m-n font-thin h3"><img src="img/icon/books.png" class="icnSize"> لیست دروس </h1>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="float: left">
+                    <div class="panel-body">
+                        <button ng-click="majorbaseSelect()" type="button"
+                                style="width: 100%" class="btn btn-addon , btn btn-default" data-toggle="modal"
+                                data-target="#insert"><i class="icon-plus"></i> &nbsp;افزودن درس جدید
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="line line-dashed  line-lg pull-in"></div>
+    <div class="container">
+        <div class="main-wrapper">
+            <div class="row">
+                <div class="container panel v-middle media-middle text-center align-items-center">
+                    <br>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <td style="width:2%; text-align: center ">
+                                    #
+                                </td>
+                                <td class="v-middle  media-middle text-center" style="width:28%; text-align: center">
+                                    عنوان درس
+                                </td>
+                                <td class="v-middle  media-middle text-center" style="width:20%; text-align: center">کد
+                                    درس
+                                </td>
+                                <td class="v-middle  media-middle text-center" style="width:20%; text-align: center">
+                                    تعداد
+                                    واحد
+                                </td>
+                                <td class="v-middle  media-middle text-center" style="width:10%; text-align: center ">
+                                    ویرایش
+                                </td>
+                                <td class="v-middle  media-middle text-center" style="width:10%; text-align: center ">
+                                    حذف
+                                </td>
+                                <td class="v-middle  media-middle text-center" style="width:10%; text-align: center ">
+                                    جزییات
+                                </td>
+                            </tr>
+                            </thead>
+                            <tbody infinite-scroll='load2()' infinite-scroll-distance='0'>
+                            <tr ng-repeat='mymodel in name | filter : gsearch'>
+                                <th scope="row">
+                                    {{mymodel.lessonid}}
+                                </th>
+                                <td class="v-middle  media-middle text-center">
+                                    {{ mymodel.title || 'خالی'}}
+                                </td>
+                                <td class="v-middle  media-middle text-center">
+                                    {{ mymodel.code || 'خالی'}}
+                                </td>
+                                <td class="v-middle  media-middle text-center">
+                                    {{ mymodel.unitcount || 'خالی'}}
+                                </td>
+                                <td class="v-middle  media-middle text-center">
+                                    <button ng-click="detial('upd',mymodel.lessonid)" data-toggle="modal"
+                                            data-target="#update" class="btn btn-sm btn-info">
+                                        <i class="icon-pencil"></i>&nbsp;ویرایش
+                                    </button>
+                                </td>
+                                <td class="v-middle  media-middle text-center">
+                                    <button class="btn btn-sm btn-danger"
+                                            ng-click="deleteDrs((mymodel.lessonid),(mymodel.title) )"><i
+                                            class="icon-trash"></i>&nbsp;حذف
+                                    </button>
+                                </td>
+                                <td class="v-middle  media-middle text-center">
+                                    <button ng-click="detial('det',mymodel.lessonid)" data-toggle="modal"
+                                            data-target="#update" class="btn btn-sm btn-success">مشاهده
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="update" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close"
+                                    data-dismiss="modal">&times;
+                            </button>
+                            <h4 class="modal-title">
+                                <img src="img/icon/report.png" class="icnSize">
+                                ویرایش درس ({{drsDetail.title}})
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="panel-body">
+                                            <div class="alert alert-danger" ng-show="errText()">
+                                                <i class="icon-info"></i> &nbsp; <strong> {{errText()}}&nbsp;</strong>
+                                                &nbsp; را مشخص نمایید.
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="panel-body">
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 8px;">شناسه:</label>
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <input ng-model="drs_id" ng-disabled="true"
+                                                               class="form-control rounded"
+                                                               placeholder="شناسه ...." tooltip="شناسه درس"
+                                                               ng-required="true" type="text"
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="panel-body">
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 8px;"><span
+                                                            class="starstyle">*</span>عنوان:</label>
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <input ng-model="drs_nameE" ng-disabled="desbaleForm()"
+                                                               class="form-control rounded" tooltip="عنوان درس"
+                                                               placeholder="عنوان ...." style="cursor: text"
+                                                               ng-required="true" type="text"
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="panel-body">
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 8px;"><span
+                                                            class="starstyle">*</span>تعداد
+                                                        واحد:</label>
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <input ng-model="drs_tedadVahedE" ng-disabled="desbaleForm()"
+                                                               class="form-control rounded" tooltip="تعداد واحد درس"
+                                                               placeholder="تعداد واحد ...." style="cursor: text"
+                                                               ng-required="true" type="number"
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="panel-body">
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 8px;">کد
+                                                        درس:</label>
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <input ng-model="drs_codeE" ng-disabled="desbaleForm()"
+                                                               class="form-control rounded" style="cursor: text"
+                                                               placeholder="کد...." tooltip="کد درس"
+                                                               ng-required="true" type="number"
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="panel-body">
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 8px;"><span
+                                                            class="starstyle">*</span>نمره
+                                                        قبولی:</label>
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <input ng-model="drs_passNomreE" ng-disabled="desbaleForm()"
+                                                               class="form-control rounded" tooltip="نمره قبولی این درس"
+                                                               tooltip="نمره قبولی" style="cursor: text"
+                                                               ng-required="true" type="text"
+                                                               ui-mask="99">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="panel-body">
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 8px;">درس
+                                                        توصیفی :</label>
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <div style="margin-top: 5px">
+                                                            <input id="toggle3" class="checkStyle" ng-model="tosifyE"
+                                                                   ng-change="setTosifyE(tosifyE)" type="checkbox"/>
+                                                            <label for="toggle3" class="labelClass"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="col-xs-12 co'l-sm-12 col-md-12 col-lg-12">
+                                                    <div class="panel-body">
+                                                        <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                               style="margin-top: 8px;">درس
+                                                            پودمانی:</label>
+                                                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                            <div style="margin-top: 5px">
+                                                                <input id="toggle4" class="checkStyle"
+                                                                       ng-model="podemanyE"
+                                                                       ng-change="setPodemanyE(podemanyE)"
+                                                                       type="checkbox"/>
+                                                                <label for="toggle4" class="labelClass"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <div style="width: 100%;margin-right: 20px;">
+                                    <br>
+                                    <div class="row">
+
+                                        <div class="col-xs-4 col-sm-2 col-md-4 col-lg-2"
+                                             style="float: right;margin-right: 20px;color: white">
+                                            <button data-dismiss="modal"
+                                                    style="width: 100%;background-color: #6c757d"
+                                                    type="submit" href="index.html"
+                                                    class="btn btn-light">
+                                                <i class="icon-close"></i>&nbsp;<span> لغو </span></button>
+                                        </div>
+                                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4"
+                                             style="float: right;color: white">
+                                            <button ng-click="updateDrs(drsDetail.lessonid)"
+                                                    style="width: 105%;background-color: #0F9E5E;"
+                                                    type="submit" class="btn btn-light">
+                                                <i class="icon-pencil"></i> &nbsp; <span
+                                                    style="color: white"> ویرایش   </span>
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="insert" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close"
+                                    data-dismiss="modal">&times;
+                            </button>
+                            <h4 class="modal-title">
+                                <img src="img/icon/class.png" class="icnSize">
+                                افزودن درس جدید
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="panel-body">
+                                            <div class="alert alert-danger" ng-show="errText()">
+                                                <i class="icon-info"></i> &nbsp; <strong> {{errText()}}&nbsp;</strong>
+                                                {{title()}} &nbsp;
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="panel-body">
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 8px;"><span
+                                                            class="starstyle">*</span>عنوان:</label>
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <input ng-model="drs_name" class="form-control rounded"
+                                                               placeholder="عنوان ...." tooltip="عنوان درس"
+                                                               ng-required="true" type="text"
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="panel-body">
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 8px;"><span
+                                                            class="starstyle">*</span>تعداد
+                                                        واحد:</label>
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <input ng-model="drs_tedadVahed" class="form-control rounded"
+                                                               placeholder="تعداد واحد ...."
+                                                               tooltip="تعداد واحد این درس"
+                                                               ng-required="true" type="number"
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="panel-body">
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 8px;">کد
+                                                        درس:</label>
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <input ng-model="drs_code" class="form-control rounded"
+                                                               placeholder="کد...." tooltip="کد درس"
+                                                               ng-required="true" type="number"
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="panel-body">
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 8px;"><span
+                                                            class="starstyle">*</span>نمره
+                                                        قبولی:</label>
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <input ng-model="drs_passNomre" class="form-control rounded"
+                                                               tooltip="نمره قبولی" tooltip="نمره قبولی"
+                                                               min="10" max="20" ng-required="true" type="text"
+                                                               ui-mask="99" max="20" min="10">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="panel-body">
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 8px;">درس
+                                                        توصیفی :</label>
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <div style="margin-top: 5px">
+                                                            <input id="toggle" class="checkStyle" ng-model="tosify"
+                                                                   ng-change="setTosify(tosify)" type="checkbox"/>
+                                                            <label for="toggle" class="labelClass"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="panel-body">
+                                                        <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                               style="margin-top: 8px;">درس
+                                                            پودمانی:</label>
+                                                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                            <div style="margin-top: 5px">
+                                                                <input id="toggle2" class="checkStyle"
+                                                                       ng-model="podemany"
+                                                                       ng-change="setPodemany(podemany)"
+                                                                       type="checkbox"/>
+                                                                <label for="toggle2" class="labelClass"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="panel-body">
+                                                        <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                               style="margin-top: 8px;font-size: 13.6px"><span
+                                                                class="starstyle">*</span>پایه تحصیلی:</label>
+                                                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                            <div class="input-group">
+                                                                <input ng-disabled="true"
+                                                                       value="{{arr1PathName.toString()}} - {{arr2PathName.toString()}} - {{arr3PathName.toString() }} - {{arr4PathName.toString() }}"
+                                                                       class="form-control text-sm btn-rounded no-border">
+                                                                <span class="input-group-btn"><a
+                                                                        style="height: 34px;"
+                                                                        tooltip="ویرایش" data-toggle="modal"
+                                                                        data-target="#myModal2"
+                                                                        class="btn btn-success btn-rounded no-border"><i
+                                                                        class="glyphicon glyphicon-pencil"></i></a></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <div style="width: 100%;margin-right: 20px;">
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4"
+                                             style="float: right;color: white">
+                                            <button ng-click="insertDarsFunctin()"
+
+                                                    style="width: 105%;background-color: #0F9E5E;"
+                                                    type="submit" class="btn btn-light">
+                                                <i class=" icon-plus"></i> &nbsp; <span
+                                                    style="color: white"> تایید   </span>
+                                            </button>
+                                        </div>
+
+                                        <div class="col-xs-4 col-sm-2 col-md-4 col-lg-2"
+                                             style="float: right;margin-right: 20px;color: white">
+                                            <button data-dismiss="modal"
+                                                    style="width: 100%;background-color: #6c757d"
+                                                    type="submit" href="index.html"
+                                                    class="btn btn-light">
+                                                <i
+                                                        class="icon-close"></i>
+                                                &nbsp;
+                                                <span> لغو </span></button>
+                                        </div>
+
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="myModal2" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close"
+                                    data-dismiss="modal">&times;
+                            </button>
+                            <h4 class="modal-title">
+                                <img src="img/icon/report.png" class="icnSize">
+                                <span class="starstyle">*</span>مقطع تحصیلی:
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="panel-body">
+
+
+                                            <section style="background:#ffffff;width: 100% ;">
+                                                <div class="container" style="width: 100%;">
+                                                    <div class="row" style="width: 100%;">
+                                                        <div class="board" style="width: 100%">
+                                                            <div class="tab-content">
+                                                                <div class="tab-pane fade in active" id="s1">
+                                                                    <label>دوره تحصیلی : </label>
+                                                                    <div style="border:  1px #f0f3f4 solid">
+                                                                        <div class="panel-body">
+                                                                            <div ng-repeat="pr in parrent"
+                                                                                 style="margin-right: 30px;">
+                                                                                <div class="row">
+                                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                                                                         style="margin-top: 8px;">
+                                                                                        {{pr.title}}
+                                                                                    </div>
+                                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                                        <label class="containerCheckBox"><br>
+                                                                                            <input type="checkbox"
+                                                                                                   ng-model="checkbox1"
+                                                                                                   ng-click="setS1(pr.majorbaseid,pr.title,checkbox1)">
+                                                                                            <span class="checkmark2"></span>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <br>
+                                                                    <div class="row" style="float: left;">
+                                                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                            <button type="button" class="btn btn-danger"
+                                                                                    href="insertOrder/#s1"
+                                                                                    data-toggle="tab">
+                                                                                قبلی
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                                                             ng-show="s2.length != '0'">
+                                                                            <input ng-click="selectMB1()" type="submit"
+                                                                                   value="بعدی"
+                                                                                   class="btn btn-success"
+                                                                                   href="insertOrder/#s2"
+                                                                                   data-toggle="tab">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="tab-pane fade " id="s2">
+                                                                    <label>پایه تحصیلی : </label>
+                                                                    <div style="border:  1px #f0f3f4 solid">
+                                                                        <div class="panel-body">
+                                                                            <div ng-repeat="item in s2"
+                                                                                 style="margin-right: 30px;">
+                                                                                <div class="row">
+                                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                                        {{item.title}}
+                                                                                    </div>
+                                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                                        <label class="containerCheckBox"><br>
+                                                                                            <input type="checkbox"
+                                                                                                   ng-model="checkbox2"
+                                                                                                   ng-click="setS2(item.majorbaseid,item.title,checkbox2)">
+                                                                                            <span class="checkmark2"></span>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <br>
+                                                                    <div class="row" style="float: left;">
+                                                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                            <button type="button" class="btn btn-danger"
+                                                                                    href="insertOrder/#s1"
+                                                                                    data-toggle="tab">
+                                                                                قبلی
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                                                             ng-show="s3.length != 0">
+                                                                            <input ng-click="selectMB2()" type="submit"
+                                                                                   value="بعدی"
+                                                                                   class="btn btn-success"
+                                                                                   href="insertOrder/#s3"
+                                                                                   data-toggle="tab">
+                                                                        </div>
+                                                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                                                             ng-show="s3.length == 0">
+                                                                            <input type="submit"
+                                                                                   ng-disabled="arr2Path.length == '0'"
+                                                                                   value="تایید"
+                                                                                   class="btn btn-success"
+                                                                                   data-dismiss="modal">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="tab-pane fade " id="s3">
+                                                                    <label>پایه تحصیلی2 : </label>
+                                                                    <div style="border:  1px #f0f3f4 solid">
+                                                                        <div class="panel-body">
+                                                                            <div ng-repeat="x in s3"
+                                                                                 style="margin-right: 30px;">
+                                                                                <div class="row">
+                                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                                        {{x.title}}
+                                                                                    </div>
+                                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                                        <label class="containerCheckBox"><br>
+                                                                                            <input type="checkbox"
+                                                                                                   ng-model="checkbox3"
+                                                                                                   ng-click="setS3(x.majorbaseid,x.title,checkbox3)">
+                                                                                            <span class="checkmark2"></span>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <br>
+                                                                    <div class="row" style="float: left;">
+                                                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                            <button type="button" class="btn btn-danger"
+                                                                                    href="insertOrder/#s2"
+                                                                                    data-toggle="tab">
+                                                                                قبلی
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                                                             ng-show="s4.length != '0'">
+                                                                            <input ng-click="selectMB3()" type="submit"
+                                                                                   value="بعدی"
+                                                                                   class="btn btn-success"
+                                                                                   href="insertOrder/#s4"
+                                                                                   data-toggle="tab">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="tab-pane fade " id="s4">
+                                                                    <label>پایه تحصیلی3 : </label>
+                                                                    <div style="border:  1px #f0f3f4 solid"
+                                                                         ng-show="s4.length!='0'">
+                                                                        <div class="panel-body">
+                                                                            <div ng-repeat="x in s4"
+                                                                                 style="margin-right: 30px;">
+                                                                                <div class="row">
+                                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                                        {{x.title}}
+                                                                                    </div>
+                                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                                        <label class="containerCheckBox"><br>
+                                                                                            <input type="checkbox"
+                                                                                                   ng-model="checkbox4"
+                                                                                                   ng-click="setS4(x.majorbaseid,x.title,checkbox4)">
+                                                                                            <span class="checkmark2"></span>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <br>
+                                                                    <div class="row" style="float: left;">
+                                                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                            <button type="button" class="btn btn-danger"
+                                                                                    href="insertOrder/#s3"
+                                                                                    data-toggle="tab">
+                                                                                قبلی
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                            <input ng-click="selectMB4()" type="submit"
+                                                                                   value="بعدی"
+                                                                                   class="btn btn-success"
+                                                                                   href="insertOrder/#s5"
+                                                                                   data-toggle="tab">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="tab-pane fade " id="s5">
+                                                                    <label>پایه تحصیلی4 : </label>
+                                                                    <div style="border:  1px #f0f3f4 solid"
+                                                                         ng-show="s4.length!='0'">
+                                                                        <div class="panel-body">
+                                                                            <div ng-repeat="x in s5"
+                                                                                 style="margin-right: 30px;">
+                                                                                <div class="row">
+                                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                                        {{x.title}}
+                                                                                    </div>
+                                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                                        <label class="containerCheckBox"><br>
+                                                                                            <input type="checkbox"
+                                                                                                   ng-model="checkbox5"
+                                                                                                   ng-click="setS5(x.majorbaseid,x.title,checkbox5)">
+                                                                                            <span class="checkmark2"></span>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <br>
+                                                                    <div class="row" style="float: left;">
+                                                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                            <button type="button"
+                                                                                    class="btn btn-danger"
+                                                                                    href="insertOrder/#s3"
+                                                                                    data-toggle="tab">
+                                                                                قبلی
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                            <input type="submit"
+                                                                                   ng-disabled="arr4Path.length == '0'"
+                                                                                   value="تایید"
+                                                                                   class="btn btn-success"
+                                                                                   data-dismiss="modal">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div style="width: 100%;margin-right: 20px;">
+                                <div class="row">
+
+                                    <div class="col-xs-4 col-sm-2 col-md-4 col-lg-2"
+                                         style="float: right;margin-right: 20px;color: white">
+                                        <button data-dismiss="modal"
+                                                style="width: 100%;background-color: #6c757d"
+                                                type="submit" href="index.html"
+                                                class="btn btn-light">
+                                            <i
+                                                    class="icon-close"></i>
+                                            &nbsp;
+                                            <span> لغو </span></button>
+                                    </div>
+
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

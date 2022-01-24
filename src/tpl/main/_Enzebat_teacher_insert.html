@@ -1,0 +1,594 @@
+<div ng-controller="Enzebat_teacher_insert">
+    <div class="bg-light lter b-b wrapper-md" ng-init="app.settings.asideFixed = true;app.settings.headerFixed = true;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+                <h1 class="m-n font-thin h3"><img src="img/icon/diagram.png" class="icnSize">ثبت عملکرد کاری / رفتاری
+                    معلم</h1>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="float: left">
+                    <div class="panel-body">
+                        <button style="width: 100%" type="button" class="btn btn-addon , btn btn-default"
+                                ng-click="BackToHistory()"><i class="icon-plus"></i>
+                            بازگشت
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="line line-dashed  line-lg pull-in"></div>
+    <div class="container">
+        <div class="main-wrapper">
+            <div class="row">
+                <div class="container panel v-middle media-middle text-center align-items-center">
+                    <div class="panel-body">
+                        <form class="form-validation" method="post" name="myform">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <div id="Note">
+                                        <div class="row">
+                                            <div class="line line-dashed line-lg pull-in"></div>
+                                            <div class="alert alert-danger" ng-show="errText()">
+                                                <i class="icon-info"></i> &nbsp; <strong> {{errText()}}&nbsp;</strong>
+                                                را وارد نمایید.
+                                            </div>
+                                            <div class="line line-dashed line-lg pull-in"></div>
+                                            <div>
+                                                <div class="line line-dashed line-lg pull-in"></div>
+                                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                    <div class="panel-body">
+                                                        <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                               style="margin-top: 8px;"><span
+                                                                class="starstyle">*</span>کلاس درس:</label>
+                                                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                            <div class="input-group">
+                                                                <input ng-model="dis_classLesson" ng-readonly="true"
+                                                                       style="border: 1px #e0e0e0 solid"
+                                                                       data-toggle="modal" data-target="#classLes"
+                                                                       tooltip="انتخاب کلاس درس"
+                                                                       class="form-control text-sm btn-rounded no-border">
+                                                                <span class="input-group-btn"><a
+                                                                        style="height: 34px;"
+                                                                        tooltip="مشاهده کلاس های درس"
+                                                                        data-toggle="modal" data-target="#classLes"
+                                                                        class="btn btn-success btn-rounded no-border"><i
+                                                                        class="glyphicon glyphicon-search"></i></a></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                    <div class="panel-body">
+                                                        <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                               style="margin-top: 8px;"><span
+                                                                class="starstyle">*</span>ساعت:</label>
+                                                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                            <div class="input-group">
+                                                                <input ng-model="dis_time" ng-readonly="true"
+                                                                       tooltip="لیست کلاس های ارایه شده برای معلم"
+                                                                       style="border: 1px #e0e0e0 solid"
+                                                                       ng-disabled="!classLessonId"
+                                                                       data-toggle="modal" data-target="#weekly"
+                                                                       ng-click="selectWeeklyschedule()"
+                                                                       class="form-control text-sm btn-rounded no-border">
+                                                                <span class="input-group-btn"><a
+                                                                        ng-disabled="!classLessonId"
+                                                                        style="height: 34px;"
+                                                                        ng-click="selectWeeklyschedule()"
+                                                                        tooltip="لیست کلاس های ارایه شده برای معلم"
+                                                                        data-toggle="modal"
+                                                                        data-target="#weekly"
+                                                                        class="btn btn-success btn-rounded no-border"><i
+                                                                        class="glyphicon glyphicon-search"></i></a></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                <div class="panel-body">
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 8px;"><span
+                                                            class="starstyle">*</span>نوع انضباط:</label>
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <div class="input-group">
+                                                            <input ng-model="dis_type" ng-readonly="true"
+                                                                   style="border: 1px #e0e0e0 solid"
+                                                                   ng-click="setDisclineType()"
+                                                                   data-toggle="modal" data-target="#disciplineType"
+                                                                   tooltip="انتخاب نوع انضباط"
+                                                                   class="form-control text-sm btn-rounded no-border">
+                                                            <span class="input-group-btn">
+                                                    <a style="height: 34px;"
+                                                       tooltip="مشاهده لیست انواع انضباط"
+                                                       data-toggle="modal" data-target="#disciplineType"
+                                                       class="btn btn-success btn-rounded no-border"><i
+                                                            class="glyphicon glyphicon-search"></i>
+                                                    </a></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                <div class="panel-body">
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 8px;"><span
+                                                            class="starstyle">*</span>تاریخ:</label>
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <adm-dtp ng-model="dis_date" ng-required="true"
+                                                                 options="{calType: 'jalali', format: 'YYYY-MM-DD',autoClose:true,default: 'today'}"></adm-dtp>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                <div class="panel-body">
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 8px;">یادداشت:</label>
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                    <textarea rows="8"
+                                                              style="width:100%;height:auto; "
+                                                              ng-model="dis_note"
+                                                              ui-validate=""
+                                                              placeholder="یادداشت..."
+                                                              type="text"
+                                                    ></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="line line-dashed line-lg pull-in"></div>
+                                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="float: left">
+                                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-7">
+                                                    <div class="panel-body">
+                                                        <button ng-click="InsertDisciplineTeacher()"
+                                                                style="width: 100%" type="submit"
+                                                                class="btn btn-default">
+                                                            <i class="icon-pencil"></i> &nbsp; <span>ثبت</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-5">
+                                                    <div class="panel-body">
+                                                        <a ng-click="BackToHistory()">
+                                                            <button style="width: 100%" type="submit" href="index.html"
+                                                                    class="btn btn-dark">
+                                                                <i class="icon-close"></i>
+                                                                &nbsp;
+                                                                <span> لغو </span></button>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bd-example-modal-lg" id="weekly" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">&times;
+                    </button>
+                    <h4 class="modal-title">
+                        <img src="img/icon/userDetail.png" class="icnSize">
+                        انتخاب ساعت کلاس ( {{dis_classLesson}} / {{classLesson_teacherName}} )
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="panel-body">
+                                    <div>
+                                        <div class="panel panel-default" style="width: 100%;">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                                            <div class="panel-body">
+                                                                <input id="gsearch2" ng-model="gsearch"
+                                                                       class="form-control rounded" style="width: 100%;"
+                                                                       placeholder="جستجو ..." type="text"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                                                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                <div class="panel-body">
+                                                                    <select tooltip="فیلتر بر اساس مثبت با منفی بودن انضباط"
+                                                                            style="width: 100%"
+                                                                            ng-model="disType"
+                                                                            ng-change="filterByType(disType)"
+                                                                            class="form-control rounded"
+                                                                            ng-options="typ.value as typ.name for typ in types">
+                                                                        <option ng-selected="true" value="">
+                                                                            فیلتر بر اساس نوع انضباط
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                <div class="panel-body">
+                                                                    <label class="containerCheckBox"><span
+                                                                            style="font-size: 13px;"
+                                                                    >مشاهده همه موارد انضباطی</span>
+                                                                        <input type="checkbox" ng-model="showAlltype"
+                                                                               ng-click="selectAlldisType(showAlltype)">
+                                                                        <span class="checkmark2"></span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </h4>
+                                            </div>
+                                            <div id="collapse7" class="panel-collapse collapse in">
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+                                                             ng-repeat="item in Weeklyschedules | filter:gsearch3">
+                                                            <div class="panel panel-default"
+                                                                 style="width: 100%;height: 100px;"
+                                                                 id="{{item.WeeklyScheduleId}}"
+                                                                 ng-click="selectWeekly(item.WeeklyScheduleId,item.day , item.zang)">
+                                                                <div class="panel-heading">
+                                                                    <h4 class="panel-title" style="color: white">
+                                                                        <div class="row">
+                                                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                                                <p style="width: 100%;color: #0a1015;margin-top: 5px;">
+                                                                                    {{returnDay(item.day)}}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </h4>
+                                                                </div>
+                                                                <div id="collapse1" class="panel-collapse collapse in">
+                                                                    <div class="panel-body">
+                                                                        <p>
+                                                                            <span>زنگ :</span>&nbsp;<span>{{item.zang}}</span>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div style="width: 100%;margin-right: 20px;">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        <button
+                                                style="width: 100%;" data-dismiss="modal"
+                                                type="submit" ng-click="submitWeekly()"
+                                                class="btn btn-success">
+                                            <i class="icon-plus"></i>&nbsp;<span> ثبت </span></button>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        <button data-dismiss="modal"
+                                                style="width: 100%;"
+                                                type="submit"
+                                                class="btn btn-dark">
+                                            <i class="icon-close"></i>&nbsp;<span> لغو </span></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bd-example-modal-lg" id="classLes" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal">&times;
+                        </button>
+                        <h4 class="modal-title">
+                            <img src="img/icon/class.png" class="icnSize">
+                            لیست کلاس های درسی
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="panel panel-default" style="width: 100%;">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                                <div class="panel-body">
+                                                    <input id="gsearch1" ng-model="gsearch"
+                                                           class="form-control rounded" style="width: 100%;"
+                                                           placeholder="جستجو ..." type="text"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                    <div class="panel-body">
+                                                        <select tooltip="فیلتر بر اساس کلاس"
+                                                                style="width: 100%"
+                                                                ng-model="filterClass"
+                                                                ng-change="filterClassLesson(filterClass,'0')"
+                                                                class="form-control rounded"
+                                                                ng-options="cls.classid as cls.title for cls in All_class">
+                                                            <option ng-selected="true" value="">
+                                                                کلاس
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                    <div class="panel-body">
+                                                        <select tooltip="فیلتر بر اساس دبیر"
+                                                                style="width: 100%"
+                                                                ng-model="filterTeacher"
+                                                                ng-change="filterClassLesson(filterTeacher,'1')"
+                                                                class="form-control rounded"
+                                                                ng-options="th.teacherid as th.firstname + ' ' + th.lastname for th in teachers">
+                                                            <option ng-selected="true" value="">
+                                                               دبیر
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </h4>
+                                </div>
+                                <div id="collapse2" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="panel-body">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped">
+                                                            <thead>
+                                                            <tr>
+                                                                <th scope="col"
+                                                                    class="v-middle  media-middle text-center">انتخاب
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="v-middle  media-middle text-center">رشته
+                                                                    تحصیلی
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="v-middle  media-middle text-center">عنوان
+                                                                    کلاس
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="v-middle  media-middle text-center">معلم
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="v-middle  media-middle text-center">درس
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="v-middle  media-middle text-center">تعداد
+                                                                    واحد
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="v-middle  media-middle text-center">ترم
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="v-middle  media-middle text-center">وضعیت
+                                                                    درس
+                                                                </th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr ng-repeat='mymodel in classLesson | filter : gsearch'
+                                                                ng-show="obj_clt[mymodel.classid] || obj_clt[mymodel.teacherid]"
+                                                                ng-click="setClassLesson(mymodel.classid,mymodel.className,mymodel.teacherid , mymodel.lessonid ,(mymodel.firstname + ' ' + mymodel.lastname),mymodel.classlessonteacherid)">
+                                                                <td scope="row">
+                                                                    <label class="containerCheckBox">
+                                                                        <input type="radio" name="radio" id="{{mymodel.classlessonteacherid}}"
+                                                                               ng-click="setClassLesson(mymodel.classid,mymodel.className,mymodel.teacherid , mymodel.lessonid ,(mymodel.firstname + ' ' + mymodel.lastname),mymodel.classlessonteacherid)">
+                                                                        <span class="checkmark2"></span>
+                                                                    </label>
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center">
+                                                                    {{ mymodel.majorName }}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center">
+                                                                    {{ mymodel.className }}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center">
+                                                                    {{ mymodel.firstname + ' ' + mymodel.lastname }}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center">
+                                                                    {{ mymodel.lessonName}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center">
+                                                                    {{ mymodel.unitcount}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center">
+                                                                    {{ mymodel.termName}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center">
+                                                                    <span ng-show="mymodel.poodemani == '1'">درس پودمانی</span>
+                                                                    <span ng-show="mymodel.isdescriptive == '1'">درس توصیفی</span>
+                                                                    <span ng-show="mymodel.poodemani == '0' && mymodel.isdescriptive == '0'">درس عادی</span>
+
+                                                                </td>
+
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div style="width: 100%;margin-right: 20px;">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        <button
+                                                style="width: 100%;" data-dismiss="modal"
+                                                type="submit" ng-click="submitSelectClassLesson()"
+                                                class="btn btn-success">
+                                            <i class="icon-plus"></i>&nbsp;<span> ثبت </span></button>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        <button data-dismiss="modal"
+                                                style="width: 100%;"
+                                                type="submit"
+                                                class="btn btn-dark">
+                                            <i class="icon-close"></i>&nbsp;<span> لغو </span></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bd-example-modal-lg" id="disciplineType" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal content-->
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">&times;
+                    </button>
+                    <h4 class="modal-title">
+                        <img src="img/icon/wrtie.png" class="icnSize">
+                        انواع انضباط
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="panel panel-default" style="width: 100%;">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                            <div class="panel-body">
+                                                <input id="gsearch3" ng-model="gsearch"
+                                                       class="form-control rounded" style="width: 100%;"
+                                                       placeholder="جستجو ..." type="text"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                <div class="panel-body">
+                                                    <select tooltip="فیلتر بر اساس مثبت با منفی بودن انضباط"
+                                                            style="width: 100%"
+                                                            ng-model="disType"
+                                                            ng-change="filterByType(disType)"
+                                                            class="form-control rounded"
+                                                            ng-options="typ.value as typ.name for typ in types">
+                                                        <option ng-selected="true" value="">
+                                                            فیلتر بر اساس نوع انضباط
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                <div class="panel-body">
+                                                    <label class="containerCheckBox"><span
+                                                            style="font-size: 13px;"
+                                                            id="lblType">مشاهده همه موارد انضباطی</span>
+                                                        <input type="checkbox" ng-model="showAlltype"
+                                                               ng-click="selectAlldisType(showAlltype)">
+                                                        <span class="checkmark2"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </h4>
+                            </div>
+                            <div id="collapse6" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+                                             ng-repeat="item in enz_types | filter:gsearch3"
+                                             ng-if="enz_types.length != '0'"
+                                             ng-show="obj_disType[item.disciplinetypeid]">
+                                            <div class="panel panel-default"
+                                                 style="width: 100%;height: 100px;"
+                                                 id="{{item.disciplinetypeid}}"
+                                                 ng-click="selectgrp(item.disciplinetypeid,item.name)">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title" style="color: white">
+                                                        <div class="row">
+                                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                                <p style="width: 100%;color: #0a1015;margin-top: 5px;">
+                                                                    {{item.name}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapse5" class="panel-collapse collapse in">
+                                                    <div class="panel-body">
+                                                        <p>
+                                                            <span>بارم :</span>&nbsp;<span>{{item.barem}}</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="width: 100%;margin-right: 20px;">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                    <button
+                                            style="width: 100%;" data-dismiss="modal"
+                                            type="submit" ng-click="submitDisciplineType()"
+                                            class="btn btn-success">
+                                        <i class="icon-plus"></i>&nbsp;<span> ثبت </span></button>
+                                </div>
+                                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                    <button data-dismiss="modal"
+                                            style="width: 100%;"
+                                            type="submit"
+                                            class="btn btn-dark">
+                                        <i class="icon-close"></i>&nbsp;<span> لغو </span></button>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

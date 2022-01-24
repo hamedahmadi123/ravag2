@@ -1,0 +1,133 @@
+<div>
+    <div class="bg-light lter b-b wrapper-md" ng-init="app.settings.asideFixed = true;app.settings.headerFixed = true;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+                <h1 class="m-n font-thin h4"><img src="img/icon/documents.png" class="icnSize"> ویرایش ترم (
+                    {{termha.title}} )</h1>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="float: left">
+                    <div class="panel-body">
+                        <a href="#/app/page/termha">
+                            <button style="width: 100%" type="button" class="btn btn-addon , btn btn-default"><i
+                                    class="icon-arrow-left"></i>
+                                بازگشت
+                            </button>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="line line-dashed  line-lg pull-in"></div>
+    <div class="container panel v-middle media-middle text-center align-items-center">
+        <div class="panel-body">
+            <form class="form-validation" method="post" name="myform">
+                <div class="row">
+                    <div class="alert alert-danger" ng-show="errText()">
+                        <i class="icon-info"></i> &nbsp; <strong> {{errText()}}&nbsp;</strong>
+                        را وارد نمایید.
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <div class="panel-body">
+
+                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label" style="margin-top: 8px;">سال:</label>
+                           <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <input ng-model="trm_year" class="form-control rounded"
+                                       tooltip="سال تحصیلی ترم برای مثال (1400)"
+                                       ng-required="true" type="text" ui-mask="9999">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <div class="panel-body">
+                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label" style="margin-top: 8px;"><span
+                                    class="starstyle">*</span>عنوان :</label>
+                           <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <input ng-model="trm_name" class="form-control rounded" tooltip="عنوان ترم جدید"
+                                       placeholder="برای مثال (ترم یک) ...."
+                                       ng-required="true" type="text"
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <div class="panel-body">
+                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label" style="margin-top: 8px;"><span
+                                    class="starstyle">*</span>دوره :</label>
+                           <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <select ng-required="true"
+                                        ng-model="trm_dore" tooltip="دوره ترم را مشخص کنید"
+                                        ng-options="dor.value as dor.name for dor in doreh "
+                                        class="form-control rounded">
+                                    <option ng-disabled="true" ng-selected="true" value="">دوره را انتخاب نمایید .
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <div class="panel-body">
+                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label" style="margin-top: 8px;"><span
+                                    class="starstyle">*</span>تاریخ شروع :</label>
+                           <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <adm-dtp ng-model="trm_start" ng-required="true"
+                                         tooltip="تاریخ شروع ترم"
+                                         options="{calType: 'jalali', format: 'YYYY-MM-DD',autoClose:true}"></adm-dtp>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <div class="panel-body">
+                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label" style="margin-top: 8px;"><span
+                                    class="starstyle">*</span>تاریخ پایان :</label>
+                           <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <adm-dtp ng-model="trm_end" ng-required="true"
+                                         tooltip="تاریخ پایان ترم"
+                                         options="{calType: 'jalali', format: 'YYYY-MM-DD',autoClose:true}"></adm-dtp>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div align="center">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-5">
+                                <div class="panel-body">
+                                    <a ng-click="BackToHistory()">
+                                        <button style="width: 100%" type="submit" href="index.html"
+                                                class="btn btn-dark">
+                                            <i class="icon-close"></i>
+                                            &nbsp;
+                                            <span> لغو </span></button>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-7">
+                                <div class="panel-body">
+                                    <button ng-click="updateTermFunctin()"
+                                            style="width: 100%" type="submit" class="btn btn-info">
+                                        <i class="icon-pencil"></i> &nbsp; <span style="color: white">ویرایش</span>
+                                    </button>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <br>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+

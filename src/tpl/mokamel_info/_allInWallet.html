@@ -1,0 +1,450 @@
+
+<div ng-controller="allInWallet">
+    <div class="bg-light lter b-b wrapper-md" ng-init="app.settings.asideFixed = true;app.settings.headerFixed = true;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-7">
+                <h1 class="m-n font-thin h3"><img src="img/icon/accounting.png" class="icnSize"> همه تراکنشات </h1>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-5">
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="float: left">
+                    <div class="panel-body">
+                        <button style="width: 100%" ui-sref="app.page.wallet"
+                                type="button" class="btn btn-addon , btn btn-default"><i class="icon-arrow-left"></i>
+                            &nbsp;بازگشت
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="line line-dashed  line-lg pull-in"></div>
+    <div class="container">
+        <div class="container">
+            <div class="main-wrapper">
+                <div class="row">
+                    <div class="container panel v-middle media-middle text-center align-items-center">
+                        <div class="panel-body">
+                            <div class="panel panel-default" style="width: 100%;">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <div class="row">
+                                            <div class="col-xs-6 col-sm-8 col-md-9 col-lg-9">
+                                                <div class="panel-body">
+                                                    <h4 style="text-align: right">لیست تراکنشات</h4>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3" style="float: left">
+                                                <div class="panel-body">
+                                                    <select tooltip="فیلتر دانش آموزان بر اساس کلاس"
+                                                            style="width: 100%"
+                                                            ng-model="filterClass"
+                                                            ng-change="filterByClass(filterClass.majorbaseid)"
+                                                            ng-options="cls as cls.title for cls in class"
+                                                            class="form-control rounded">
+                                                        <option ng-selected="true" value="">فیلتر بر
+                                                            اساس کلاس
+                                                        </option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </h4>
+                                </div>
+                                <div id="collapse1" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="panel-body">
+                                                <input id="gsearch3" ng-model="gsearch"
+                                                       class="form-control" style="width: 100%;"
+                                                       placeholder="جستجو ..." type="text"/>
+                                            </div>
+                                            <div class="table-responsive">
+
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th scope="col" class="v-middle  media-middle text-center ">نام
+                                                            دانش
+                                                            آموز
+                                                        </th>
+                                                        <th scope="col" class="v-middle  media-middle text-center ">کلاس
+                                                        </th>
+                                                        <th scope="col" class="v-middle  media-middle text-center ">کل
+                                                            مبلغ
+                                                            پرداخت شده
+                                                        </th>
+                                                        <th scope="col" class="v-middle  media-middle text-center ">
+                                                            تاریخ
+                                                            ثبت
+                                                        </th>
+                                                        <th scope="col" class="v-middle  media-middle text-center ">سال
+                                                            تحصیلی
+                                                        </th>
+                                                        <th scope="col" class="v-middle  media-middle text-center ">نوع
+                                                            پرداخت
+                                                        </th>
+                                                        <th scope="col" class="v-middle  media-middle text-center">
+                                                            عملیات
+                                                        </th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody infinite-scroll='load2()' infinite-scroll-distance='1'>
+                                                    <tr ng-repeat='item in name | filter : gsearch | orderBy: cheque_date : false '>
+                                                        <td class="v-middle  media-middle text-center">
+                                                            {{item.firstname + ' '+item.lastname }}
+                                                        </td>
+                                                        <td class="v-middle  media-middle text-center">
+                                                            {{item.basename + ' '+ item.classname }}
+                                                        </td>
+                                                        <td class="v-middle  media-middle text-center">
+                                                            <span dir="ltr">{{item.total_amount  | currency :'' :'0' }}</span>&nbsp;ريال
+                                                        </td>
+                                                        <td class="v-middle  media-middle text-center">
+                                                            {{retdata(item.created_at)}}
+                                                        </td>
+                                                        <td class="v-middle  media-middle text-center">
+                                                            <span> {{item.sal_tahsily}}</span>
+                                                        </td>
+                                                        <td class="v-middle  media-middle text-center">
+                                                            <span ng-show="item.pay_type == '0'">تماما نقدی</span>
+                                                            <span ng-show="item.pay_type == '1'">چک / نقدی</span>
+                                                            <span ng-show="item.pay_type == '2'">تسویه در آینده</span>
+                                                        </td>
+                                                        <td class="v-middle  media-middle text-center" scope="row">
+                                                            <i class="fa fa-pencil"
+                                                               style="cursor: pointer!important;font-size: 20px"
+                                                               ui-sref="app.page.wallet_edit({walid: item.wallet_id})"></i>
+                                                            &nbsp;&nbsp;
+                                                            <i class="fa fa-eye" data-toggle="modal"
+                                                               data-target="#showDet"
+                                                               ng-click="selectWallet(item.wallet_id)"
+                                                               style="color: green;cursor: pointer!important;font-size: 20px"></i>
+                                                            &nbsp;&nbsp;
+                                                            <i class="fa fa-trash"
+                                                               ng-click="deleteDis(item.wallet_id)"
+                                                               style="color: red;cursor: pointer!important;font-size: 20px"></i>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bd-example-modal-lg" id="showDet" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal">&times;
+                        </button>
+                        <h4 class="modal-title">
+                            <img src="img/icon/accounting.png" class="icnSize">
+                            اطلاعات مربوط به حساب
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="panel panel-default" style="width: 100%;">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="panel-body">
+                                                    <h4 id="lblName" align="right">نام دانش آموز ({{wal.firstname + ' '
+                                                        + wal.lastname}})</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </h4>
+                                </div>
+                                <div id="collapse2" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="panel-body">
+                                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="panel-body"
+                                                             style="text-align: right">
+                                                            <div class="row">
+                                                                <div class="col-xs-5 col-sm-2 col-md-3 col-lg-2"
+                                                                     style="color: grey">
+                                                                    ایجاد شده در &nbsp;&nbsp;<span dir="ltr">{{retdata(wal.created_at)}}</span>
+                                                                </div>
+                                                                <div class="col-xs-7 col-sm-10 col-md-9 col-lg-10">
+                                                                    <div class="line line-dashed b-b line-lg pull-in"
+                                                                         style="border-color: #23b7e5"></div>
+                                                                </div>
+                                                            </div>
+                                                            <br>
+                                                            <div class="panel-body">
+                                                                <div class="col-xs12 col-sm-12 col-md-12 col-lg-12">
+                                                                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3"
+                                                                         dir="rtl"
+                                                                         style="background-color: #fafbfc;padding: 10px;border: 1px #eff1f2 solid">
+                                                                        کل مبلغ قابل پرداخت :
+                                                                    </div>
+                                                                    <div class="col-xs-6 col-sm-9 col-md-3 col-lg-3"
+                                                                         dir="rtl"
+                                                                         style="padding: 10px;border: 1px #eff1f2 solid">
+                                                                        {{wal.total_amount}} ریال
+                                                                    </div>
+                                                                </div>
+                                                                <div class="line line-dashed line-lg pull-in"></div>
+                                                                <div class="col-xs12 col-sm-12 col-md-12 col-lg-12"
+                                                                     ng-show="wal.pay_type == '2'">
+                                                                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3"
+                                                                         dir="rtl"
+                                                                         style="background-color: #fafbfc;padding: 10px;border: 1px #eff1f2 solid">
+                                                                        مبلغ پرداخت شده :
+                                                                    </div>
+                                                                    <div class="col-xs-6 col-sm-9 col-md-3 col-lg-3"
+                                                                         dir="rtl"
+                                                                         style="padding: 10px;border: 1px #eff1f2 solid;background-color:#d1f8d6">
+                                                                        {{payBedehi(wal.wallet_id,wal.total_amount)}}
+                                                                        ريال
+                                                                    </div>
+                                                                </div>
+                                                                <div class="line line-dashed line-lg pull-in"></div>
+                                                                <div class="col-xs12 col-sm-12 col-md-12 col-lg-12"
+                                                                     ng-show="wal.pay_type == '2'">
+                                                                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3"
+                                                                         dir="rtl"
+                                                                         style="background-color: #fafbfc;padding: 10px;border: 1px #eff1f2 solid">
+                                                                        میزان بدهی :
+                                                                    </div>
+                                                                    <div class="col-xs-6 col-sm-9 col-md-3 col-lg-3"
+                                                                         dir="rtl"
+                                                                         style="padding: 10px;border: 1px #eff1f2 solid;background-color: #f8d0cb">
+                                                                        {{bedehi(wal.wallet_id,wal.total_amount)}} ريال
+                                                                    </div>
+                                                                </div>
+                                                                <div class="line line-dashed line-lg pull-in"></div>
+                                                                <div class="col-xs12 col-sm-12 col-md-12 col-lg-12">
+                                                                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3"
+                                                                         dir="rtl"
+                                                                         style="background-color: #fafbfc;padding: 10px;border: 1px #eff1f2 solid">
+                                                                        توضیحات :
+                                                                    </div>
+                                                                    <div class="col-xs-6 col-sm-9 col-md-3 col-lg-3"
+                                                                         dir="rtl"
+                                                                         style="padding: 10px;border: 1px #eff1f2 solid">
+                                                                        <span ng-show="{{wal.note}} != ' '">{{wal.note}}</span>
+                                                                        <span ng-show="!{{wal.note}} == ' ">-</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <br>
+                                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
+                                                                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                                                    <div class="panel-body">
+                                                                        <label class="containerCheckBox">تماما نقدی
+                                                                            <input type="checkbox" ng-disabled="true"
+                                                                                   ng-checked="wal.pay_type == 0">
+                                                                            <span class="checkmark2"></span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                                                    <div class="panel-body">
+                                                                        <label class="containerCheckBox">چک / نقدی
+                                                                            <input type="checkbox" ng-disabled="true"
+                                                                                   ng-checked="wal.pay_type == 1">
+                                                                            <span class="checkmark2"></span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                                                    <div class="panel-body">
+                                                                        <label class="containerCheckBox">تسویه در آینده
+                                                                            <input type="checkbox" ng-disabled="true"
+                                                                                   ng-checked="wal.pay_type == 2">
+                                                                            <span class="checkmark2"></span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="line line-dashed line-lg pull-in"></div>
+                                                            <div class="panel-body" ng-show="wal.pay_type == 2">
+                                                                <details style="color: red;cursor: pointer" ng-click="showBedehi(wal.wallet_id)">
+                                                                    <summary>برای مشاهده ریز بدهی های پرداخت شده مربوط به این قسط ،کلیک
+                                                                        نمایید
+                                                                    </summary>
+                                                                    <br>
+                                                                    <div class="table-responsive" style="color: black;">
+
+                                                                        <table class="table table-striped">
+                                                                            <thead>
+                                                                            <tr>
+                                                                                <th scope="col" class="v-middle  media-middle text-center ">
+                                                                                    #
+                                                                                </th>
+                                                                                <th scope="col" class="v-middle  media-middle text-center ">مبلغ پرداختی
+                                                                                </th>
+                                                                                <th scope="col" class="v-middle  media-middle text-center ">
+                                                                                    تاریخ
+                                                                                    پرداخت
+                                                                                </th>
+                                                                            </tr>
+                                                                            </thead>
+                                                                            <tbody >
+                                                                            <tr ng-repeat='item in payqest | filter : gsearch2'>
+                                                                                <td class="v-middle  media-middle text-center">
+                                                                                    {{item.cheque_id}}
+                                                                                </td>
+                                                                                <td class="v-middle  media-middle text-center">
+                                                                                    <span dir="ltr">{{item.amount  | currency :'' :'0' }}</span>&nbsp;ريال
+                                                                                </td>
+                                                                                <td class="v-middle  media-middle text-center" ng-show="item.pay_date">
+                                                                                    <span style="color: green"> {{retdata(item.pay_date)}}</span>
+                                                                                </td>
+                                                                                <td class="v-middle  media-middle text-center" ng-show="!item.pay_date">
+                                                                                   <span style="color: red">این قسط هنوز پرداخت نشده است.</span>
+                                                                                </td>
+                                                                            </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </details>
+                                                            </div>
+                                                            <div class="panel-body" ng-show="wal.pay_type == 1">
+                                                                <details style="color: red;cursor: pointer">
+                                                                    <summary>برای مشاهده اطلاعات مربوط به پرداخت کلیک
+                                                                        نمایید
+                                                                    </summary>
+                                                                    <br>
+                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                                                         ng-repeat="item in chqwal">
+                                                                        <div class="table-responsive"
+                                                                             style="color: black">
+                                                                            <table class="table table-bordered"
+                                                                                   style="background-color: #fafbfc;">
+                                                                                <tbody>
+                                                                                <tr>
+                                                                                    <td class="v-middle  media-middle text-center"
+                                                                                        style="width: 30%">
+                                                                                        <span>نوع پرداخت</span>
+                                                                                    </td>
+                                                                                    <td class="v-middle  media-middle text-center"
+                                                                                        style="width: 70%">
+                                                                                        <span ng-show="item.type == 0">به صورت نقدی</span>
+                                                                                        <span ng-show="item.type == 1">دریافت چک</span>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr ng-show="item.type == 1">
+                                                                                    <td class="v-middle  media-middle text-center">
+                                                                                        <span>نام صاحب حساب</span>
+                                                                                    </td>
+                                                                                    <td class="v-middle  media-middle text-center">
+                                                                                        {{item.cheque_owner}}
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr ng-show="item.type == 1">
+                                                                                    <td class="v-middle  media-middle text-center">
+                                                                                        <span>نام بانک </span>
+                                                                                    </td>
+                                                                                    <td class="v-middle  media-middle text-center">
+                                                                                        {{item.cheque_bank}}
+
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr ng-show="item.type == 1">
+                                                                                    <td class="v-middle  media-middle text-center">
+                                                                                        <span>نام شعبه</span>
+                                                                                    </td>
+                                                                                    <td class="v-middle  media-middle text-center">
+                                                                                        {{item.cheque_shobe}}
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr ng-show="item.type == 1">
+                                                                                    <td class="v-middle  media-middle text-center">
+                                                                                        شماره حساب
+                                                                                    </td>
+                                                                                    <td class="v-middle  media-middle text-center">
+                                                                                        {{item.cheque_number}}
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td class="v-middle  media-middle text-center">
+                                                                                        مبلغ به ریال
+                                                                                    </td>
+                                                                                    <td class="v-middle  media-middle text-center">
+                                                                                        {{item.amount}}
+
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr ng-show="item.type == 1">
+                                                                                    <td class="v-middle  media-middle text-center">
+                                                                                        <span>تاریخ چک</span>
+                                                                                    </td>
+                                                                                    <td class="v-middle  media-middle text-center">
+                                                                                        {{retdata(item.cheque_date)}}
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr ng-show="item.type == 1">
+                                                                                    <td class="v-middle  media-middle text-center">
+                                                                                        <span>وضعیت چک</span>
+                                                                                    </td>
+                                                                                    <td class="v-middle  media-middle text-center">
+                                                                                        <span ng-show="item.pass == 1"
+                                                                                              style="color: green">پاس شده</span>
+                                                                                        <span ng-show="item.pass == 0"
+                                                                                              style="color: red">نامشخص</span>
+                                                                                    </td>
+
+                                                                                </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                        <div class="line line-dashed line-lg pull-in"></div>
+                                                                    </div>
+                                                                </details>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div style="width: 100%;margin-right: 20px;">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        <div class="panel-body">
+                                            <button data-dismiss="modal"
+                                                    style="width: 100%;"
+                                                    type="submit"
+                                                    class="btn btn-dark">
+                                                <i class="icon-close"></i>&nbsp;<span> بستن این پنجره </span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

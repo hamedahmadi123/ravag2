@@ -1,0 +1,260 @@
+<div ng-controller="payBedehi">
+    <div class="bg-light lter b-b wrapper-md" ng-init="app.settings.asideFixed = true;app.settings.headerFixed = true;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-7">
+                <h1 class="m-n font-thin h3"><img src="img/icon/accounting.png" class="icnSize"> پرداخت بدهی ها </h1>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-5">
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="float: left">
+                    <div class="panel-body">
+                        <button style="width: 100%" ui-sref="app.page.wallet"
+                                type="button" class="btn btn-addon , btn btn-default"><i class="icon-arrow-left"></i>
+                            &nbsp;بازگشت
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="line line-dashed  line-lg pull-in"></div>
+    <div class="container">
+        <div class="container">
+            <div class="main-wrapper">
+                <div class="panel panel-default" style="width: 100%;">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                    <div class="panel-body">
+                                        <h4 align="right">لیست بدهی ها</h4>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                         style="float: left">
+                                        <div class="panel-body">
+                                            <select tooltip="لیست کلاس های موجود"
+                                                    style="width: 100%"
+                                                    ng-model="className"
+                                                    ng-change="filterByclass(className.majorbaseid)"
+                                                    ng-options="cls as cls.title for cls in class"
+                                                    class="form-control">
+                                                <option ng-selected="true" value="">فیلتر بر اساس کلاس
+                                                </option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </h4>
+                    </div>
+                    <div id="collapse3" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="panel-body">
+                                        <input id="gsearch3" ng-model="gsearch"
+                                               class="form-control" style="width: 100%;"
+                                               placeholder="جستجو ..." type="text"/>
+                                        <br>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col"
+                                                        class="v-middle  media-middle text-center">#
+                                                    </th>
+                                                    <th scope="col"
+                                                        class="v-middle  media-middle text-center ">
+                                                        نام دانش آموز
+                                                    </th>
+                                                    <th scope="col"
+                                                        class="v-middle  media-middle text-center ">
+                                                       کلاس
+                                                    </th>
+                                                    <th class="v-middle  media-middle text-center">
+                                                        سال تحصیلی
+                                                    </th>
+                                                    <th scope="col"
+                                                        class="v-middle  media-middle text-center">
+                                                        کل مبلغ
+                                                    </th>
+                                                    <th scope="col"
+                                                        class="v-middle  media-middle text-center">
+                                                        مبلغ پرداخت شده
+                                                    </th>
+                                                    <th scope="col"
+                                                        class="v-middle  media-middle text-center">
+                                                        بدهی
+                                                    </th>
+                                                    <th scope="col"
+                                                        class="v-middle  media-middle text-center">
+                                                        تاریخ ثبت
+                                                    </th>
+                                                    <th scope="col"
+                                                        class="v-middle  media-middle text-center">توضیحات
+                                                    </th>
+                                                    <th scope="col"
+                                                        class="v-middle  media-middle text-center">پرداخت بدهی
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr ng-repeat='item in all_bedehi | filter : gsearch3 '
+                                                    ng-show="item.show==true">
+                                                    <td class="v-middle  media-middle text-center"
+                                                        scope="row">
+                                                        {{item.wallet_id}}
+                                                    </td>
+                                                    <td class="v-middle  media-middle text-center">
+                                                        {{item.firstname + ' '+item.lastname }}
+                                                    </td>
+                                                    <td class="v-middle  media-middle text-center">
+                                                        {{item.basename + ' '+item.majorname }}
+                                                    </td>
+                                                    <td class="v-middle  media-middle text-center">
+                                                        {{item.sal_tahsily}}
+                                                    </td>
+                                                    <td class="v-middle  media-middle text-center">
+                                                        {{item.total_amount | currency :'' :'0' }}&nbsp;ريال
+                                                    </td>
+                                                    <td class="v-middle  media-middle text-center">
+                                                        {{item.amount | currency :'' :'0' }}&nbsp;ريال
+                                                    </td>
+                                                    <td class="v-middle  media-middle text-center">
+                                                        {{item.bedhi | currency :'' :'0' }}&nbsp;ريال
+                                                    </td>
+                                                    <td class="v-middle  media-middle text-center">
+                                                        {{retdata(item.created_at)}}
+                                                    </td>
+                                                    <td class="v-middle  media-middle text-center">
+                                                        {{item.note | limitTo : 25}}
+                                                    </td>
+                                                    <td class="v-middle  media-middle text-center">
+                                                        <button class="btn btn-default"
+                                                                ng-click="payment(item.wallet_id,item.cheque_id,item.total_amount,item.bedhi,item.firstname + ' '+item.lastname,item.student_id,item.amount)"
+                                                                data-toggle="modal" data-target="#myModal">
+                                                            پرداخت
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            <div ng-if="all_bedehi.length == '0'"
+                                                 class="v-middle  media-middle"
+                                                 style="background-color: #faf9fa;padding: 10px;">
+                                                <h5>نتیجه ای یافت نشد</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">&times;
+                    </button>
+                    <h4 class="modal-title">
+                        <img src="img/icon/report.png" class="icnSize">
+                      پرداخت بدهی
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="row">
+                            <div class="panel panel-default" style="width: 100%;">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-7">
+                                                <div class="panel-body">
+                                                    <h4 style="margin-top: 23px">{{st_name}}</h4>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-5">
+                                                    <div class="panel-body">
+                                                        <h3>
+                                                            <span class="h5">مبلغ بدهی : </span>
+                                                            <span style="color: red">{{bedehi}}&nbsp;ريال</span>
+                                                        </h3>
+
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </h4>
+                                </div>
+                                <div id="collapse4" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="panel-body">
+                                                <div class="alert alert-danger" ng-show="errText()">
+                                                    <i class="icon-info"></i> &nbsp; <strong> {{errText()}}&nbsp;</strong>را
+                                                    مشخص
+                                                    نمایید .
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="panel-body">
+                                                        <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label" style="margin-top: 8px;"><span
+                                                                class="starstyle">*</span>مبلغ پرداختی:</label>
+                                                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                                            <input ng-model="pay_amount" id="naqdInput"  currency-mask class="form-control"
+                                                                   ng-required="true" type="text" ng-change="defaultInput()">
+                                                            <h6 style="text-align: left">به ریال وارد کنید.</h6>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="width: 100%;margin-right: 20px;">
+                        <br>
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4" style="float: right;color: white">
+                                <button ng-click="payy()"
+                                        style="width: 105%;background-color: #0F9E5E;"  data-dismiss="modal"
+                                        type="submit" class="btn btn-light">
+                                    <i class=" icon-plus"></i> &nbsp; <span
+                                        style="color: white"> تایید   </span>
+                                </button>
+                            </div>
+
+                            <div class="col-xs-4 col-sm-2 col-md-4 col-lg-2"
+                                 style="float: right;margin-right: 20px;color: white">
+                                <button data-dismiss="modal"
+                                        style="width: 100%;background-color: #6c757d"
+                                        type="submit" href="index.html"
+                                        class="btn btn-light">
+                                    <i
+                                            class="icon-close"></i>
+                                    &nbsp;
+                                    <span> لغو </span></button>
+                            </div>
+
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,699 @@
+<style>
+    .jumbotron {
+        background-color: #f4511e;
+        color: #fff;
+        padding: 100px 25px;
+    }
+
+    .container-fluid {
+        padding: 60px 50px;
+    }
+
+    .bg-grey {
+        background-color: #f6f6f6;
+    }
+
+    .logo-small {
+        color: #f4511e;
+        font-size: 50px;
+    }
+
+    .logo {
+        color: #f4511e;
+        font-size: 200px;
+    }
+
+    .thumbnail {
+        padding: 0 0 15px 0;
+        border: none;
+        border-radius: 0;
+    }
+
+    .thumbnail img {
+        width: 100%;
+        height: 100%;
+        margin-bottom: 10px;
+    }
+
+    .carousel-control.right, .carousel-control.left {
+        background-image: none;
+        color: #f4511e;
+    }
+
+    .carousel-indicators li {
+        border-color: #f4511e;
+    }
+
+    .carousel-indicators li.active {
+        background-color: #f4511e;
+    }
+
+    .item h4 {
+        font-size: 19px;
+        line-height: 1.375em;
+        font-weight: 400;
+        font-style: italic;
+        margin: 70px 0;
+    }
+
+    .item span {
+        font-style: normal;
+    }
+
+    @media screen and (max-width: 768px) {
+        .col-sm-4 {
+            text-align: center;
+            margin: 25px 0;
+        }
+    }
+
+    #myProgress {
+        width: 100%;
+        background-color: #ddd;
+    }
+
+    #myBar {
+        width: 10%;
+        height: 20px;
+        background-color: #4CAF50;
+    }
+
+    .gray100 {
+        filter: grayscale(100%);
+    }
+
+    .gray0 {
+        filter: grayscale(0%);
+    }
+
+    @media all and (max-width: 600px) {
+        .hidenPhone {
+            display: none !important;
+        }
+    }
+
+    .container img {
+        width: 100%;
+        height: auto;
+    }
+
+    .hideme {
+        opacity: 0;
+    }
+
+    .liner {
+        height: 2px;
+        background: #ddd;
+        position: absolute;
+        width: 80%; /*margin: 0 auto;*/ /*left: 0;*/
+        right: 8%;
+        top: 50%; /*z-index: 1;*/
+    }
+
+    /*@import url(http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700);*/ /* written by riliwan balogun http://www.facebook.com/riliwan.rabo*/
+    .board {
+        width: 105%; /*display: table;*/ /*margin-left: auto;*/ /*margin-right: auto;*/
+        margin: 20px auto;
+        height: 100%;
+        background: #fff; /*box-shadow: 10px 10px #ccc,-10px 20px #ddd;*/
+    }
+
+    .board .nav-tabs {
+        position: relative;
+        background-color: #ffffff;
+        margin: 20px auto;
+        margin-bottom: 0;
+        box-sizing: border-box;
+    }
+
+    .board > div.board-inner {
+        background: #fafafa url(http://subtlepatterns.com/patterns/geometry2.png);
+        background-size: 100%;
+    }
+
+    p.narrow {
+        width: 100%;
+        margin: 10px auto;
+    }
+
+    .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+        color: #555555;
+        cursor: default; /* background-color: #ffffff; */
+        border: 0;
+        border-bottom-color: transparent;
+    }
+
+    span.round-tabs {
+        width: 70px;
+        height: 70px;
+        line-height: 70px;
+        display: inline-block;
+        border-radius: 100px;
+        background: white;
+        z-index: 2;
+        position: absolute;
+        left: 0;
+        text-align: center;
+        font-size: 25px;
+    }
+
+    span.round-tabs.one {
+        color: rgb(34, 194, 34);
+        border: 2px solid rgb(34, 194, 34);
+    }
+
+    li.active span.round-tabs.one {
+        background: #fff !important;
+        border: 2px solid #ddd;
+        color: rgb(34, 194, 34);
+    }
+
+    span.round-tabs.two {
+        color: #febe29;
+        border: 2px solid #febe29;
+    }
+
+    li.active span.round-tabs.two {
+        background: #fff !important;
+        border: 2px solid #ddd;
+        color: #febe29;
+    }
+
+    span.round-tabs.three {
+        color: #3e5e9a;
+        border: 2px solid #3e5e9a;
+    }
+
+    li.active span.round-tabs.three {
+        background: #fff !important;
+        border: 2px solid #ddd;
+        color: #3e5e9a;
+    }
+
+    span.round-tabs.four {
+        color: #f1685e;
+        border: 2px solid #f1685e;
+    }
+
+    li.active span.round-tabs.four {
+        background: #fff !important;
+        border: 2px solid #ddd;
+        color: #f1685e;
+    }
+
+    span.round-tabs.five {
+        color: #999;
+        border: 2px solid #999;
+    }
+
+    li.active span.round-tabs.five {
+        background: #fff !important;
+        border: 2px solid #ddd;
+        color: #999;
+    }
+
+    .nav-tabs > li.active > a span.round-tabs {
+        background: #fafafa;
+    }
+
+    .nav-tabs > li {
+        float: right;
+        width: 20%;
+    }
+
+    li.active:before {
+        content: " ";
+        position: absolute;
+        left: 45%;
+        opacity: 0;
+        margin: 0 auto;
+        bottom: -2px;
+        border: 10px solid transparent;
+        border-bottom-color: #fff;
+        z-index: 1;
+        transition: 0.2s ease-in-out;
+    }
+
+    .nav-tabs > li:after {
+        content: " ";
+        position: absolute;
+        left: 45%;
+        opacity: 0;
+        margin: 0 auto;
+        bottom: 0px;
+        border: 5px solid transparent;
+        border-bottom-color: #ddd;
+        transition: 0.1s ease-in-out;
+    }
+
+    .nav-tabs > li.active:after {
+        content: " ";
+        position: absolute;
+        left: 45%;
+        opacity: 1;
+        margin: 0 auto;
+        bottom: 0px;
+        border: 10px solid transparent;
+        border-bottom-color: #ddd;
+    }
+
+    .nav-tabs > li a {
+        width: 70px;
+        height: 70px;
+        margin: 20px auto;
+        border-radius: 100%;
+        padding: 0;
+    }
+
+    .nav-tabs > li a:hover {
+        background: transparent;
+    }
+
+    .tab-content {
+    }
+
+    .tab-pane {
+        position: relative; /*padding-top: 50px;*/
+    }
+
+    .tab-content .head {
+        font-family: 'Roboto Condensed', sans-serif;
+        font-size: 25px;
+        text-transform: uppercase; /*padding-bottom: 10px;*/
+    }
+
+    .btn-outline-rounded { /*padding: 10px 40px;*/ /*margin: 20px 0;*/
+        border: 2px solid transparent;
+        border-radius: 25px;
+    }
+
+    .btn.green {
+        background-color: #5cb85c; /*border: 2px solid #5cb85c;*/
+        color: #ffffff;
+    }
+
+    @media ( max-width: 585px ) {
+        .board {
+            width: 90%;
+            height: auto !important;
+        }
+
+        span.round-tabs {
+            font-size: 16px;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+        }
+
+        .tab-content .head {
+            font-size: 20px;
+        }
+
+        .nav-tabs > li a {
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+        }
+
+        .nav-tabs > li.active:after {
+            content: " ";
+            position: absolute;
+            left: 35%;
+        }
+    }
+
+    .starstyle {
+        color: red;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+</style>
+<div>
+    <div class="bg-light lter b-b wrapper-md" ng-init="app.settings.asideFixed = true;app.settings.headerFixed = true;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+                <h1 class="m-n font-thin h3"><img src="img/icon/techer.png" class="icnSize"> درج معلم جدید </h1>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="float: left">
+                    <div class="panel-body">
+                        <a href="#/app/page/teachers">
+                            <button style="width: 100%" type="button" class="btn btn-addon , btn btn-default"
+                            ><i class="icon-arrow-left"></i> &nbsp;بازگشت
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="line line-dashed  line-lg pull-in"></div>
+    <div class="main-wrapper , withAdd" style="display: table;margin-left: auto;margin-right: auto">
+        <div class="row">
+            <ng-form autocomplete="on">
+                <fieldset>
+                    <div style="background-color: white">
+                        <div class="modal-body" align="center">
+                            <div dir="rtl" style="background-color: #f6fffc"> <!-- featureds -->
+                                <div class="section featureds" style="background-color: white ; ">
+                                    <section style="background:#ffffff;width: 100% ;">
+                                        <div class="container" style="width: 100%;">
+                                            <div class="row" style="width: 100%;">
+                                                <div class="board" style="width: 100%">
+                                                    <div class="board-inner">
+                                                        <ul class="nav nav-tabs" id="myTab">
+                                                            <div class="liner"></div>
+                                                            <li style="margin-right: 5px" class="active"
+                                                                class="col-sm-3 col-md-3 col-sm-3 col-xs-3">
+                                                                <a style="cursor: text">
+                                                                    <!-- <span class="round-tabs one">-->
+                                                                    <img id="pic1"
+                                                                         src="img/icon/karname2.png"
+                                                                         alt="تصویر ناموجود"
+                                                                         style="height: auto;width: 100%;"
+                                                                         tooltip="قدم اول"/>
+                                                                    <!-- </span>--> </a></li>&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                                            <li style="margin-right: 20px"
+                                                                class="col-sm-3 col-md-3 col-sm-3 col-xs-3">
+                                                                <a style="cursor: text">
+                                                                    <img id="pic2"
+                                                                         src="img/icon/workflow.png"
+                                                                         alt="تصویر ناموجود"
+                                                                         style="height: auto;width: 100%;"
+                                                                         tooltip="قدم دوم"/>
+                                                                </a></li>
+                                                            <li style="margin-right: 45px"
+                                                                class="col-sm-3 col-md-3 col-sm-3 col-xs-3">
+                                                                <a style="cursor: text">
+                                                                    <img id="pic3"
+                                                                         src="img/icon/users.png"
+                                                                         alt="تصویر ناموجود"
+                                                                         style="height: auto;width: 100%;"
+                                                                         tooltip="قدم سوم"/> </a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <form autocomplete="on">
+                                                        <div id="myProgress" align="right">
+                                                            <div id="myBar"></div>
+                                                        </div>
+                                                        <div class="tab-content">
+                                                            <div class="tab-pane fade in active" id="step1">
+                                                                <br><br>
+                                                                <div class="row" style="width:100%;">
+                                                                    <div class="panel-heading font-bold"
+                                                                         style="background-color: #f6f8f8">
+                                                                        اطلاعات فردی
+                                                                    </div>
+                                                                    <br>
+                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                        <div class="panel-body">
+                                                                            <label><b><span
+                                                                                    class="starstyle">*</span>نام
+                                                                                :</b></label> &nbsp;
+                                                                            <input ng-model="th_fitstname"
+                                                                                   class="form-control rounded"
+                                                                                   tooltip="نام" ng-required="true"
+                                                                                   placeholder="نام معلم..."
+                                                                                   type="text">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                        <div class="panel-body">
+                                                                            <label><b><span
+                                                                                    class="starstyle">*</span>نام
+                                                                                خانوادگی:</b></label> &nbsp;
+                                                                            <input ng-model="th_lastname"
+                                                                                   class="form-control rounded"
+                                                                                   tooltip="نام خانوادگی"
+                                                                                   ng-required="true"
+                                                                                   placeholder="نام خانوادگی..."
+                                                                                   type="text">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                        <div class="panel-body">
+                                                                            <label><b><span
+                                                                                    class="starstyle">*</span>نام
+                                                                                پدر:</b></label> &nbsp;
+                                                                            <input ng-model="th_fathername"
+                                                                                   class="form-control rounded"
+                                                                                   tooltip="نام پدر"
+                                                                                   ng-required="true"
+                                                                                   placeholder="نام پدر..."
+                                                                                   type="text">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                        <div class="panel-body">
+                                                                            <label><b><span
+                                                                                    style="color: blue;margin: 5px">*</span>کد
+                                                                                ملی :</b></label>&nbsp;
+                                                                            <input ng-model="th_codemeli"
+                                                                                   class="form-control rounded"
+                                                                                   tooltip="کد ملی"
+                                                                                   type="text"
+                                                                                   ui-mask="999-999999-9">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <br>
+                                                                <br>
+                                                                <div class="row">
+                                                                    <div class="panel-body , marginBtnNext">
+                                                                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                                                                            <a ng-disabled="checkstep1()">
+                                                                                <button ng-disabled="checkstep1()"
+                                                                                        ng-click="setStylePic('next' , 'pic2' , 32)"
+                                                                                        href="insertOrder/#step2"
+                                                                                        data-toggle="tab"
+                                                                                        style="color: white;width: 200px;background-color: #27c24c;border-radius: 15px;margin-left: 8%;"
+                                                                                        type="submit"
+                                                                                        class="btn btn-light"><i
+                                                                                        class="icon-arrow-left"></i><span> مرحله بعدی  </span>
+                                                                                </button>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <br>
+                                                            </div>
+
+                                                            <div class="tab-pane fade " id="step2">
+                                                                <br><br>
+                                                                <div class="row">
+                                                                    <div class="panel-heading font-bold"
+                                                                         style="background-color: #f6f8f8">
+                                                                        اطلاعات تکمیلی
+                                                                    </div>
+                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                        <div class="panel-body">
+                                                                            <label><b>تاریخ تولد :</b></label>&nbsp;
+                                                                            <adm-dtp ng-model="th_berthday"
+
+                                                                                     options="{calType: 'jalali', format: 'YYYY-MM-DD',autoClose:true,default: 'today'}"></adm-dtp>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                        <div class="panel-body">
+                                                                            <label><b>نشانی :</b></label>&nbsp;
+                                                                            <input ng-model="th_address"
+                                                                                   class="form-control rounded"
+                                                                                   tooltip="آدرس منزل معلم را به طور دقیق وارد نمایید."
+                                                                                   placeholder="آدرس منزل..."
+                                                                                   type="text">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                        <div class="panel-body">
+                                                                            <label><b>شماره تلفن تماس:</b></label>&nbsp;
+                                                                            <input ng-model="th_phone"
+                                                                                   class="form-control rounded"
+                                                                                   tooltip="شماره تلفن تماس معلم"
+                                                                                   type="text"
+                                                                                   ui-mask="999-99999999">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                        <div class="panel-body">
+                                                                            <label><b>ایمیل:</b></label>&nbsp;
+                                                                            <input ng-model="th_email"
+                                                                                   class="form-control rounded"
+                                                                                   tooltip="ایمیل معلم"
+                                                                                   placeholder="example@domain.com"
+                                                                                   type="email">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <br><br>
+                                                                <div class="row , marginBtnNext2" align="center">
+                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                        <div class="panel-body">
+                                                                            <a href="insertOrder/#step1"
+                                                                               data-toggle="tab">
+                                                                                <button ng-click="setStylePic('prv' , 'pic1')"
+                                                                                        style="width: 200px;border-radius: 15px;margin-left: 8%;"
+                                                                                        type="submit"
+                                                                                        class="btn btn-danger">
+                                                                                    <i class="icon-arrow-right"></i><span> مرحله قبلی  </span>
+                                                                                </button>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                        <div class="panel-body">
+                                                                            <a ng-disabled="checkstep2()">
+                                                                                <button ng-disabled="checkstep2()"
+                                                                                        ng-click="setStylePic('next' , 'pic3' , 77)"
+                                                                                        href="insertOrder/#step3"
+                                                                                        data-toggle="tab"
+                                                                                        style="color: white;width: 200px;background-color: #27c24c;border-radius: 15px;margin-left: 8%;"
+                                                                                        type="submit"
+                                                                                        class="btn btn-light"><i
+                                                                                        class="icon-arrow-left"></i><span> مرحله بعدی  </span>
+                                                                                </button>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <br>
+                                                            </div>
+                                                            <div class="tab-pane fade" id="step3">
+                                                                <br><br>
+                                                                <div class="row">
+                                                                    <div class="panel-heading font-bold"
+                                                                         style="background-color: #f6f8f8">
+                                                                        اطلاعات تکمیلی
+                                                                    </div>
+                                                                    <br>
+                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                        <div class="panel-body">
+                                                                            <label><b><span
+                                                                                    class="starstyle">*</span>مدرک
+                                                                                تحصیلی :</b></label>&nbsp;
+                                                                            <select tooltip="استان"
+                                                                                    ng-model="th_mdrk"
+                                                                                    ng-required="true"
+                                                                                    ng-options="mdk.educationdegreeid as mdk.name for mdk in madraks"
+                                                                                    class="form-control rounded">
+                                                                                <option ng-disabled="true"
+                                                                                        ng-selected="false"
+                                                                                        value="">
+                                                                                    مدرک تحصیلی
+                                                                                    معلم
+                                                                                    را انتخاب
+                                                                                    نمایید.
+                                                                                </option>
+
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                        <div class="panel-body">
+                                                                            <label><b><span
+                                                                                    class="starstyle">*</span>سمت
+                                                                                :</b></label>&nbsp;
+                                                                            <select tooltip="سمت"
+                                                                                    ng-model="th_type"
+                                                                                    ng-options="usr.value as usr.name for usr in users"
+                                                                                    class="form-control rounded">
+                                                                                <option ng-disabled="true"
+                                                                                        ng-required="true"
+                                                                                        ng-selected="false"
+                                                                                        value="">سمت
+                                                                                    را
+                                                                                    را مشخص
+                                                                                    نمایید.
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                        <div class="panel-body">
+                                                                            <label><b>یادداشت :</b></label>&nbsp;
+                                                                            <textarea rows="13"
+                                                                                      style="width:100%;height:auto; "
+                                                                                      ng-model="stu_note"
+                                                                                      ui-validate=""
+                                                                                      placeholder="یادداشت..."
+                                                                                      type="text"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                        <div class="panel-body">
+                                                                            <label><b>عکس پرسنلی 4*3 :</b></label>&nbsp;
+                                                                            <div class="file-loading">
+                                                                                <input id="uploadFile1"
+                                                                                       name="uploadFile1" multiple
+                                                                                       type="file"
+                                                                                       accept="image/*">
+                                                                            </div>
+                                                                            <div id="togStatus" class="hint-block">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                        <div class="panel-body">
+                                                                            <label><b><span
+                                                                                    style="color: blue;margin: 5px">*</span>کد
+                                                                                پرسنلی :</b></label>&nbsp;
+                                                                            <input ng-model="th_prscode"
+                                                                                   class="form-control rounded"
+                                                                                   tooltip="کد پرسنلی"
+                                                                                   placeholder="کد پرسنلی..."
+                                                                                   type="text">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="alert alert-danger" ng-show="errText()">
+                                                                    <i class="icon-info"></i> &nbsp; <strong>
+                                                                    {{errText()}}&nbsp;</strong>
+                                                                    &nbsp; را مشخص نمایید.
+                                                                </div>
+                                                                <br><br>
+                                                                <div class="row , marginBtnNext2" align="center">
+                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                        <div class="panel-body">
+                                                                            <a href="insertOrder/#step1"
+                                                                               data-toggle="tab">
+                                                                                <button ng-click="setStylePic('prv' , 'pic2')"
+                                                                                        style="width: 200px;border-radius: 15px;margin-left: 8%;"
+                                                                                        type="submit"
+                                                                                        class="btn btn-danger">
+                                                                                    <i class="icon-arrow-right"></i><span> مرحله قبلی  </span>
+                                                                                </button>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                        <div class="panel-body">
+                                                                            <a ng-disabled="checkstep3()">
+                                                                                <button ng-disabled="checkstep3()"
+                                                                                        ng-click="moveprogss(100)"
+                                                                                        style="color: white;width: 200px;background-color: #27c24c;border-radius: 15px;margin-left: 8%;"
+                                                                                        type="submit"
+                                                                                        class="btn btn-light"><i
+                                                                                        class="icon-arrow-left"></i><span> افزودن معلم  </span>
+                                                                                </button>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <br>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+        </div>
+    </div>
+</div>

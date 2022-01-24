@@ -1,0 +1,1061 @@
+<style>
+    .tab {
+        float: right;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+    }
+
+    .tabcontent {
+        float: right;
+        padding: 0px 12px;
+        border: none;
+    }
+
+    .tab button {
+        display: block;
+        background-color: inherit;
+        color: black;
+        padding: 22px 16px;
+        border: none;
+        outline: none;
+        text-align: center;
+        cursor: pointer;
+        transition: 0.3s;
+        font-size: 17px;
+        width: 100%;
+    }
+
+    .tab button:hover {
+        background-color: #ddd;
+    }
+
+    .tab button.active {
+        background-color: #ccc;
+    }
+
+    .parallax { /* The image used */
+        /*black images*/ /*-webkit-filter: grayscale(1); !* Google Chrome, Safari 6+ & Opera 15+ *!*/ /**black images*!*/ /* Set a specific height */
+        min-height: 500px; /* Create the parallax scrolling effect */
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+
+</style>
+<!--panel admin-->
+<div class="hbox hbox-auto-xs hbox-auto-sm" ng-show="admin">
+    <!-- main -->
+    <div class="col">
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black"><img src="img/icon/dashbord.png"
+                                                                 class="icnSize"> داشبورد مدیر</h1>
+                    <small class="text-muted">نام مدرسه : {{schoolname}}</small>
+                </div>
+
+                <div class="col-sm-6 text-right hidden-xs">
+                    <div class="inline m-r text-left">
+                        <div class="m-b-xs">1290 <span class="text-muted">items</span></div>
+                        <div ng-init="d3_1=[ 106,108,110,105,110,109,105,104,107,109,105,100,105,102,101,99,98 ]"
+                             ui-jq="sparkline"
+                             ui-options="[ 106,108,110,105,110,109,105,104,107,109,105,100,105,102,101,99,98 ], {type:'bar', height:20, barWidth:5, barSpacing:1, barColor:'#dce5ec'}"
+                             class="sparkline inline">loading...
+                        </div>
+                    </div>
+                    <div class="inline text-left">
+                        <div class="inline m-r text-left">
+                            <div class="m-b-xs">1290 <span class="text-muted">items</span></div>
+                            <div ng-init="d3_1=[ 106,108,110,105,110,109,105,104,107,109,105,100,105,102,101,99,98 ]"
+                                 ui-jq="sparkline"
+                                 ui-options="[ 106,108,110,105,110,109,105,104,107,109,105,100,105,102,101,99,98 ], {type:'bar', height:20, barWidth:5, barSpacing:1, barColor:'#dce5ec'}"
+                                 class="sparkline inline">loading...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- / main header -->
+        <div class="wrapper-md" ng-controller="FlotChartDemoCtrl" style="width: 100%;background-color: #f0f3f4">
+            <div class="row" >
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                    <div class="panel-body">
+                        <div class="panel hbox hbox-auto-xs no-border" >
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+                                <img src="img/icon/karname2.png" style="width: 70px;height: 70px;">
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9" style="float: left">
+                                <div class="clear m-b" style="margin-top: 10px;">
+                                    <div class="m-b m-t-sm">
+                                        <span class="h4 text-black">نام کاربری</span>
+                                        <small class="m-l" style="font-size: 16px;">{{this_teacher.firstname + ' ' + this_teacher.lastname}}</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                    <div class="panel-body">
+                        <div class="panel hbox hbox-auto-xs no-border">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+                                <img src="img/icon/class2.png" style="width: 70px;height: 70px;">
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9" style="float: left">
+                                <div class="clear m-b" style="margin-top: 10px;">
+                                    <div class="m-b m-t-sm">
+                                        <span class="h4 text-black">ترم جاری</span>
+                                        <small class="m-l" style="font-size: 16px;">{{termName}}</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                    <div class="panel-body">
+                        <div class="panel hbox hbox-auto-xs no-border">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+                                <img src="img/icon/clander2.png" style="width: 70px;height: 70px;">
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9" style="float: left">
+                                <div class="clear m-b" style="margin-top: 10px;">
+                                    <div class="m-b m-t-sm">
+                                        <span class="h4 text-black">تاریخ امروز</span>
+                                        <small class="m-l"  style="font-size: 16px;" dir="ltr">{{thisDay + ' ' + actDayName}}</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- stats -->
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="row row-sm text-center">
+                        <div class="col-xs-6">
+                            <a class="block panel padder-v item bg-success" ui-sref="app.page.Experts">
+                                <div class="h1 text-white font-thin h1">
+                                    {{teacherCount.teacherCount}}
+                                </div>
+                                <span class="text-muted text-xs">معلمین</span>
+                                <div class="top text-right w-full">
+                                    <!--<i class="fa fa-caret-down text-warning m-r-sm"></i>-->
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <a class="block panel padder-v bg-primary item" ui-sref="app.page.Order">
+                                <span class="text-white font-thin h1 block">{{studentCount.studentCount}}</span>
+                                <span class="text-muted text-xs">دانش آموزان</span>
+                                <span class="bottom text-right w-full">
+                  <i class="fa fa-cloud-upload text-muted m-r-sm"></i>
+                </span>
+                            </a>
+                        </div>
+                        <div class="col-xs-6">
+                            <a class="block panel padder-v bg-info item" ui-sref="app.page.Tenders">
+                                <span class="text-white font-thin h1 block">{{attendanceCount.attendanceCount}}</span>
+                                <span class="text-muted text-xs">غیبت های امروز</span>
+                                <span class="top">
+                  <!--<i class="fa fa-caret-up text-warning m-l-sm m-r-sm"></i>-->
+                </span>
+                            </a>
+                        </div>
+                        <div class="col-xs-6">
+                            <a class="block panel padder-v item bg-dark" ui-sref="app.page.Auctions">
+                                <div class="text-white font-thin font-thin h1">
+                                   {{NowSessionCount.countSession}}
+                                </div>
+                                <span class="text-muted text-xs">کلاس های تشکیل شده امروز</span>
+                                <div class="bottom">
+                                    <!--<i class="fa fa-caret-up text-warning m-l-sm m-r-sm"></i>-->
+                                </div>
+                            </a>
+                        </div>
+                        <div ui-jq="sparkline"></div>
+                        <div class="col-xs-6 m-b-md">
+                            <div class="r bg-light dker item hbox no-border">
+                                <div class="col dk padder-v r-r" ng-repeat="ad in ads">
+                                    <div class="text-primary-dk font-thin h1" ng-repeat="auctions in auction">
+                                        <span>0</span>
+                                    </div>
+                                    <span class="text-muted text-xs">کل درآمد</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-xs-6 m-b-md">
+                            <div class="r bg-light dker item hbox no-border">
+                                <div class="col dk padder-v r-r" ng-repeat="ad in ads">
+                                    <div class="text-primary-dk font-thin h1" ng-repeat="auctions in auction"><span>{{auctions.kolCount - ad.CountPerCategory}}</span>
+                                    </div>
+                                    <span class="text-muted text-xs">کل آگهی ها</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <div class="panel wrapper">
+                        <!--<label class="i-switch bg-warning pull-right" ng-init="showSpline=true">-->
+                        <!--<input type="checkbox" ng-model="showSpline">-->
+                        <!--<i></i>-->
+                        <!--</label>-->
+                        <div class="row>" style="height: 180px;">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- / stats -->
+            <div class="panel hbox hbox-auto-xs no-border">
+                <!--TOP-->
+                <div class="col wrapper">
+
+                    <h4 class="font-thin m-t-none m-b-none text-primary-lt"><img src="img/icon/student2.png"
+                                                                                 class="icnSize">
+                        برترین دانش آموزان</h4>
+                    <span class="m-b block text-sm text-muted">گزارش برترین دانش آموزان بر اساس رتبه در کلاس</span>
+                    <table class="table table-bordered table-hover table-condensed bg-white-opacity">
+                        <tr style="font-weight: bold">
+                            <td >دانش آموز</td>
+                            <td >کلاس</td>
+                            <td >رتبه در کلاس</td>
+
+                        </tr>
+                        <tr ng-repeat="itme in activeUsers">
+                            <td>
+                                {{itme.firstname + " " + itme.lastname}}
+                            </td>
+                            <td>
+                                {{itme.ClassTitle}}
+                            </td>
+                            <td>
+                                {{itme.RankInClass}}
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- /TOP-->
+                </div>
+                <!--Down-->
+            </div>
+            <!-- / service -->
+            <div class="row" style="height: 200px;">
+
+            </div>
+        </div>
+    </div>
+    <!-- / main -->
+    <!-- right col -->
+    <div class="col w-md bg-white-only b-l bg-auto no-border-xs">
+        <div class="nav-tabs-alt">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active">
+                    <a data-target="#tab_1_1" data-toggle="tab" role="tab">
+                        <img src="img/icon/techer.png" class="icnSize2">
+
+                    </a>
+                </li>
+                <li>
+                    <a data-target="#tab_1_2" data-toggle="tab" role="tab">
+                        <img src="img/icon/notif.png" class="icnSize2">
+
+                    </a>
+                </li>
+                <li>
+                    <a data-target="#tab_1_3" data-toggle="tab" role="tab">
+                        <img src="img/icon/workflow.png" class="icnSize2">
+
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab_1_1" role="tabpanel">
+                <div class="wrapper-md">
+                    <div class="m-b-sm text-md">لیست معلمین</div>
+                    <ul class="list-group no-bg no-borders pull-in">
+                        <li class="list-group-item" ng-repeat="th in techers">
+                            <a ui-sref="app.page.ExpertsDetail({user_id: exp.user_id}) ">
+                                <div class="pull-left thumb-sm avatar m-r">
+                                    <img alt="..." class="img-circle" src="{{th.image}}"
+                                         style="width: 45px;height: 40px">
+                                    <i class="on b-white bottom"></i>
+                                </div>
+                                <div class="clear">
+                                    <div>{{th.firstname + ' ' + th.lastname }}</div>
+                                    <small class="text-muted">{{th.personeli || '-'}}</small>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="text-center">
+                        <br><br>
+                        <a ui-sref="app.page.Experts" class="btn btn-sm btn-primary padder-md m-b">مشاهده همه معلمین</a>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+            <div class="tab-pane tab-2" id="tab_1_2" role="tabpanel">
+                <div class="wrapper-md">
+                    <div class="m-b-sm text-md">پیام ها</div>
+                    <ul class="list-group no-borders pull-in auto">
+                        <li class="list-group-item" ng-repeat="x in msgs">
+                            <a ui-sref="app.page.massage">
+                            <span class="pull-left thumb-sm m-r">
+                                <img alt="..." class="img-circle"
+                                     src="img/userNopic.jpg">
+                            </span>
+                                <i class="fa fa-comment-o pull-right m-t-sm text-sm"></i>
+                                <div class="clear">
+                                    <div>{{x.name}}</div>
+                                    <div>{{x.comment}}</div>
+                                    <small class="text-muted">{{getdate(x.created_at)}}</small>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tab-pane tab-3" id="tab_1_3" role="tabpanel">
+                <div class="wrapper-md">
+                    <div class="m-b-sm text-md">Transaction</div>
+                    <ul class="list-group list-group-sm list-group-sp list-group-alt auto m-t">
+                        <li class="list-group-item">
+                            <span class="text-muted">Transfer to Jacob at 3:00 pm</span>
+                            <span class="block text-md text-info">B 15,000.00</span>
+                        </li>
+                        <li class="list-group-item">
+                            <span class="text-muted">Got from Mike at 1:00 pm</span>
+                            <span class="block text-md text-primary">B 23,000.00</span>
+                        </li>
+                        <li class="list-group-item">
+                            <span class="text-muted">Sponsored ORG at 9:00 am</span>
+                            <span class="block text-md text-warning">B 3,000.00</span>
+                        </li>
+                        <li class="list-group-item">
+                            <span class="text-muted">Send to Jacob at 8:00 am</span>
+                            <span class="block text-md">B 11,000.00</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div data-ng-include=" 'tpl/blocks/aside.right.html' ">
+            {% include '../tpl/blocks/aside.right.html' %}
+        </div>
+    </div>
+    <!-- / right col -->
+</div>
+<!--panel admin-->
+
+<!--panel Assistant-->
+<div class="hbox hbox-auto-xs hbox-auto-sm" ng-show="Assistant">
+    <!-- main -->
+    <div class="col">
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black"><img src="img/icon/dashbord.png"
+                                                                 class="icnSize"> داشبورد معاون</h1>
+                    <small class="text-muted">نام مدرسه : {{schoolname}}</small>
+                </div>
+                <div class="col-sm-6 text-right hidden-xs">
+                    <div class="inline m-r text-left">
+                        <div class="m-b-xs">1290 <span class="text-muted">items</span></div>
+                        <div ng-init="d3_1=[ 106,108,110,105,110,109,105,104,107,109,105,100,105,102,101,99,98 ]"
+                             ui-jq="sparkline"
+                             ui-options="[ 106,108,110,105,110,109,105,104,107,109,105,100,105,102,101,99,98 ], {type:'bar', height:20, barWidth:5, barSpacing:1, barColor:'#dce5ec'}"
+                             class="sparkline inline">loading...
+                        </div>
+                    </div>
+                    <div class="inline text-left">
+                        <div class="inline m-r text-left">
+                            <div class="m-b-xs">1290 <span class="text-muted">items</span></div>
+                            <div ng-init="d3_1=[ 106,108,110,105,110,109,105,104,107,109,105,100,105,102,101,99,98 ]"
+                                 ui-jq="sparkline"
+                                 ui-options="[ 106,108,110,105,110,109,105,104,107,109,105,100,105,102,101,99,98 ], {type:'bar', height:20, barWidth:5, barSpacing:1, barColor:'#dce5ec'}"
+                                 class="sparkline inline">loading...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- / main header -->
+        <div class="wrapper-md" style="width: 100%;background-color: #f0f3f4">
+            <div class="row" >
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                    <div class="panel-body">
+                        <div class="panel hbox hbox-auto-xs no-border" >
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+                                <img src="img/icon/karname2.png" style="width: 70px;height: 70px;">
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9" style="float: left">
+                                <div class="clear m-b" style="margin-top: 10px;">
+                                    <div class="m-b m-t-sm">
+                                        <span class="h4 text-black">نام کاربری</span>
+                                        <small class="m-l" style="font-size: 16px;">{{this_teacher.firstname + ' ' + this_teacher.lastname}}</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                    <div class="panel-body">
+                        <div class="panel hbox hbox-auto-xs no-border">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+                                <img src="img/icon/class2.png" style="width: 70px;height: 70px;">
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9" style="float: left">
+                                <div class="clear m-b" style="margin-top: 10px;">
+                                    <div class="m-b m-t-sm">
+                                        <span class="h4 text-black">غیبت های امروز</span>
+                                        <small class="m-l" style="font-size: 16px;">{{attendanceCount.attendanceCount}} نفر</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                    <div class="panel-body">
+                        <div class="panel hbox hbox-auto-xs no-border">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+                                <img src="img/icon/clander2.png" style="width: 70px;height: 70px;">
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9" style="float: left">
+                                <div class="clear m-b" style="margin-top: 10px;">
+                                    <div class="m-b m-t-sm">
+                                        <span class="h4 text-black">تاریخ امروز</span>
+                                        <small class="m-l"  style="font-size: 16px;" dir="ltr">{{thisDay + ' ' + actDayName}}</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- stats -->
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="row row-sm text-center">
+                        <div class="col-xs-6">
+                            <a class="block panel padder-v item bg-success" ui-sref="app.page.Experts">
+                                <div class="h1 text-white font-thin h1">
+                                    {{disCount.disCount}}
+                                </div>
+                                <span class="text-muted text-xs">انضباط های (منفی) ثبت شده</span>
+                                <div class="top text-right w-full">
+                                    <!--<i class="fa fa-caret-down text-warning m-r-sm"></i>-->
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <a class="block panel padder-v bg-primary item" ui-sref="app.page.Order">
+                                <span class="text-white font-thin h1 block">{{attCount.attendanceCount}}</span>
+                                <span class="text-muted text-xs">تعداد غیبت های غیر مجاز</span>
+                                <span class="bottom text-right w-full">
+                  <i class="fa fa-cloud-upload text-muted m-r-sm"></i>
+                </span>
+                            </a>
+                        </div>
+                        <div class="col-xs-6">
+                            <a class="block panel padder-v bg-info item" ui-sref="app.page.Tenders">
+                                <span class="text-white font-thin h1 block">{{attendanceCount.attendanceCount}}</span>
+                                <span class="text-muted text-xs">غیبت های امروز</span>
+                                <span class="top">
+                  <!--<i class="fa fa-caret-up text-warning m-l-sm m-r-sm"></i>-->
+                </span>
+                            </a>
+                        </div>
+                        <div class="col-xs-6">
+                            <a class="block panel padder-v item bg-dark" ui-sref="app.page.Auctions">
+                                <div class="text-white font-thin font-thin h1">
+                                    {{NowSessionCount.countSession}}
+                                </div>
+                                <span class="text-muted text-xs">کلاس های تشکیل شده امروز</span>
+                                <div class="bottom">
+                                    <!--<i class="fa fa-caret-up text-warning m-l-sm m-r-sm"></i>-->
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <div class="panel wrapper">
+                        <!--<label class="i-switch bg-warning pull-right" ng-init="showSpline=true">-->
+                        <!--<input type="checkbox" ng-model="showSpline">-->
+                        <!--<i></i>-->
+                        <!--</label>-->
+                        <div class="row>" style="height: 180px;">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel wrapper">
+                <div class="row" style="width: 90%;height: 300px;">
+                    <div class="col wrapper">
+                        <div>
+                            <div style="float:right">
+                                <div>
+                                    <h4 class="font-thin m-t-none m-b-none text-primary-lt">
+                                        <img src="img/icon/class2.png"
+                                             class="icnSize">
+                                        تست</h4>
+                                    <span class="m-b block text-sm text-muted">تست</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel wrapper">
+                <div class="row" style="width: 90%;height: 300px;">
+                    <div class="col wrapper">
+                        <div>
+                            <div style="float:right">
+                                <div>
+                                    <h4 class="font-thin m-t-none m-b-none text-primary-lt">
+                                        <img src="img/icon/class2.png"
+                                             class="icnSize">
+                                        تست</h4>
+                                    <span class="m-b block text-sm text-muted">تست</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col w-md bg-white-only b-l bg-auto no-border-xs">
+        <div class="nav-tabs-alt">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active">
+                    <a data-target="#tab_2_1" data-toggle="tab" role="tab">
+                        <img src="img/icon/report2.png" class="icnSize2">
+
+                    </a>
+                </li>
+                <li>
+                    <a data-target="#tab_2_2" data-toggle="tab" role="tab">
+                        <img src="img/icon/notif.png" class="icnSize2">
+
+                    </a>
+                </li>
+                <li>
+                    <a data-target="#tab_2_3" data-toggle="tab" role="tab">
+                        <img src="img/icon/workflow.png" class="icnSize2">
+
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab_2_1" role="tabpanel">
+                <div class="wrapper-md">
+                    <div class="m-b-sm text-md">غیبت های امروز</div>
+                    <ul class="list-group no-bg no-borders pull-in">
+                        <li class="list-group-item" ng-repeat="at in att_list">
+                            <a ui-sref="app.page.ExpertsDetail({user_id: exp.user_id}) ">
+                                <div class="pull-left thumb-sm avatar m-r">
+                                    <img alt="..." class="img-circle" src="{{at.image || 'img/userNopic.jpg'}}"
+                                         style="width: 45px;height: 40px">
+                                    <i class="on b-white bottom"></i>
+                                </div>
+                                <div class="clear">
+                                    <div>{{at.firstname + ' ' + at.lastname }}</div>
+                                    <small class="text-muted">{{at.title}}</small>
+                                    <small class="text-muted">{{at.phone || '-' }}</small>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="text-center">
+                        <br>
+                        <a ui-sref="app.page.attendanse" class="btn btn-sm btn-primary padder-md m-b">لیست غیبت ها</a>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+            <div class="tab-pane tab-2" id="tab_2_2" role="tabpanel">
+                <div class="wrapper-md">
+                    <div class="m-b-sm text-md">پیام ها</div>
+                    <ul class="list-group no-borders pull-in auto">
+                        <li class="list-group-item" ng-repeat="x in msgs">
+                            <a ui-sref="app.page.massage">
+                            <span class="pull-left thumb-sm m-r">
+                                <img alt="..." class="img-circle"
+                                     src="img/userNopic.jpg">
+                            </span>
+                                <i class="fa fa-comment-o pull-right m-t-sm text-sm"></i>
+                                <div class="clear">
+                                    <div>{{x.name}}</div>
+                                    <div>{{x.comment}}</div>
+                                    <small class="text-muted">{{getdate(x.created_at)}}</small>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tab-pane tab-3" id="tab_2_3" role="tabpanel">
+                <div class="wrapper-md">
+                    <div class="m-b-sm text-md">Transaction</div>
+                    <ul class="list-group list-group-sm list-group-sp list-group-alt auto m-t">
+                        <li class="list-group-item">
+                            <span class="text-muted">Transfer to Jacob at 3:00 pm</span>
+                            <span class="block text-md text-info">B 15,000.00</span>
+                        </li>
+                        <li class="list-group-item">
+                            <span class="text-muted">Got from Mike at 1:00 pm</span>
+                            <span class="block text-md text-primary">B 23,000.00</span>
+                        </li>
+                        <li class="list-group-item">
+                            <span class="text-muted">Sponsored ORG at 9:00 am</span>
+                            <span class="block text-md text-warning">B 3,000.00</span>
+                        </li>
+                        <li class="list-group-item">
+                            <span class="text-muted">Send to Jacob at 8:00 am</span>
+                            <span class="block text-md">B 11,000.00</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<!--panel Assistant-->
+
+<!--panel teacher-->
+<div class="hbox hbox-auto-xs hbox-auto-sm" ng-show="teacher">
+    <!-- main -->
+    <div class="col">
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black"><img src="img/icon/dashbord.png"
+                                                                 class="icnSize"> داشبورد معلم</h1>
+                    <small class="text-muted">نام مدرسه : {{schoolname}}</small>
+                </div>
+
+                <div class="col-sm-6 text-right hidden-xs">
+                    <div class="inline m-r text-left">
+                        <div class="m-b-xs">1290 <span class="text-muted">items</span></div>
+                        <div ng-init="d3_1=[ 106,108,110,105,110,109,105,104,107,109,105,100,105,102,101,99,98 ]"
+                             ui-jq="sparkline"
+                             ui-options="[ 106,108,110,105,110,109,105,104,107,109,105,100,105,102,101,99,98 ], {type:'bar', height:20, barWidth:5, barSpacing:1, barColor:'#dce5ec'}"
+                             class="sparkline inline">loading...
+                        </div>
+                    </div>
+                    <div class="inline text-left">
+                        <div class="inline m-r text-left">
+                            <div class="m-b-xs">1290 <span class="text-muted">items</span></div>
+                            <div ng-init="d3_1=[ 106,108,110,105,110,109,105,104,107,109,105,100,105,102,101,99,98 ]"
+                                 ui-jq="sparkline"
+                                 ui-options="[ 106,108,110,105,110,109,105,104,107,109,105,100,105,102,101,99,98 ], {type:'bar', height:20, barWidth:5, barSpacing:1, barColor:'#dce5ec'}"
+                                 class="sparkline inline">loading...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- / main header -->
+        <div class="wrapper-md" style="width: 100%;background-color: #f0f3f4">
+            <div class="row" >
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                    <div class="panel-body">
+                        <div class="panel hbox hbox-auto-xs no-border" >
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+                                <img src="img/icon/karname2.png" style="width: 70px;height: 70px;">
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9" style="float: left">
+                                <div class="clear m-b" style="margin-top: 10px;">
+                                    <div class="m-b m-t-sm">
+                                        <span class="h4 text-black">نام کاربری</span>
+                                        <small class="m-l" style="font-size: 16px;">{{this_teacher.firstname + ' ' + this_teacher.lastname}}</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                    <div class="panel-body">
+                        <div class="panel hbox hbox-auto-xs no-border">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+                                <img src="img/icon/class2.png" style="width: 70px;height: 70px;">
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9" style="float: left">
+                                <div class="clear m-b" style="margin-top: 10px;">
+                                    <div class="m-b m-t-sm">
+                                        <span class="h4 text-black">جلسات تشکیل شده تا این لحظه</span>
+                                        <small class="m-l" style="font-size: 16px;">{{contSession.countSession}} جلسه</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                    <div class="panel-body">
+                        <div class="panel hbox hbox-auto-xs no-border">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+                                <img src="img/icon/clander2.png" style="width: 70px;height: 70px;">
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9" style="float: left">
+                                <div class="clear m-b" style="margin-top: 10px;">
+                                    <div class="m-b m-t-sm">
+                                        <span class="h4 text-black">تاریخ امروز</span>
+                                        <small class="m-l"  style="font-size: 16px;" dir="ltr">{{thisData + ' ' + actDayName}}</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel hbox hbox-auto-xs no-border">
+                <!--TOP-->
+                <div class="col wrapper">
+                    <div>
+                        <div style="float:right">
+                            <div>
+                                <h4 class="font-thin m-t-none m-b-none text-primary-lt">
+                                    <img src="img/icon/class2.png"
+                                         class="icnSize">
+                                    برنامه هفتگی شما</h4>
+                                <span class="m-b block text-sm text-muted">برنامه درسی هفته جاری </span>
+                            </div>
+                        </div>
+                        <div style="float:left">
+                            <div style="padding: 10px;margin: 10px;">
+                                <!--left div-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="line line-dashed line-lg pull-in"></div>
+                    <div class="row" style="margin: 0px;">
+                        <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 , tab">
+                            <button class="tablinks" ng-repeat="x in week" ng-click="setDay(x.value,x.name)">
+                                {{x.name}}
+                            </button>
+                        </div>
+                        <div class="col-xs-8 col-sm-10 col-md-10 col-lg-10 , tabcontent" ng-show="obj[actDayId]">
+                            <div class="panel panel-default" style="width: 100%;">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <h3>برنامه درسی روز {{actDayName}} </h3>
+                                                <p><span> تاریخ : </span>&nbsp;<span dir="ltr">{{thisData}}</span></p>
+                                            </div>
+                                        </div>
+                                    </h4>
+                                </div>
+                                <div id="collapse2" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div ng-if="WeeklyscheduleTeachers.length != '0' && WeeklyscheduleTeachers != null">
+                                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 "
+                                                     ng-repeat="item in WeeklyscheduleTeachers">
+                                                    <div class="panel panel-default"
+                                                         style="width: 100%;height: auto;cursor: pointer"
+                                                         ng-click="Setweeklyschedule(item.weeklyscheduleid)">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title" style="color: white">
+                                                                <div class="row">
+                                                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                                                        <p style="width: 100%;color: #0a1015;margin-top: 5px;">
+                                                                            زنگ {{item.zang}}</p>
+                                                                    </div>
+                                                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                                                        <a>
+                                                                            <i class="glyphicon glyphicon-option-horizontal"
+                                                                               style="float: left;padding: 5px;color: grey"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="collapse1" class="panel-collapse collapse in">
+                                                            <div class="panel-body">
+                                                                <p>
+                                                                    <span>کلاس:</span>&nbsp;<span>{{item.classTitle}}</span>
+                                                                </p>
+                                                                <p>
+                                                                    <span>عنوان درس:</span>&nbsp;<span>{{item.lessonTitle}}</span>
+                                                                </p>
+                                                                <br>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div style="margin-top: 110px;"
+                                                         ng-if="WeeklyscheduleTeachers.length <= '3'">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div ng-if="WeeklyscheduleTeachers.length == '0' || WeeklyscheduleTeachers == null"
+                                                 align="center">
+                                                <img src="img/notFound(404).png" class="withNotFoundPhone"/>
+                                                <h5>شما در این روز هیج کلاسی
+                                                    ندارید.</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <!-- /TOP-->
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col w-md bg-white-only b-l bg-auto no-border-xs">
+        <div class="nav-tabs-alt">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active">
+                    <a data-target="#tab_3_1" data-toggle="tab" role="tab">
+                        <img src="img/icon/techer.png" class="icnSize2">
+
+                    </a>
+                </li>
+                <li>
+                    <a data-target="#tab_3_2" data-toggle="tab" role="tab">
+                        <img src="img/icon/notif.png" class="icnSize2">
+
+                    </a>
+                </li>
+                <li>
+                    <a data-target="#tab_3_3" data-toggle="tab" role="tab">
+                        <img src="img/icon/workflow.png" class="icnSize2">
+
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab_3_1" role="tabpanel">
+                <div class="wrapper-md">
+                    <div class="m-b-sm text-md">لیست معلمین</div>
+                    <ul class="list-group no-bg no-borders pull-in">
+                        <li class="list-group-item" ng-repeat="th in techers">
+                            <a ui-sref="app.page.ExpertsDetail({user_id: exp.user_id}) ">
+                                <div class="pull-left thumb-sm avatar m-r">
+                                    <img alt="..." class="img-circle" src="{{th.image || 'img/userNopic.jpg'}}"
+                                         style="width: 45px;height: 40px">
+                                    <i class="on b-white bottom"></i>
+                                </div>
+                                <div class="clear">
+                                    <div>{{th.firstname + ' ' + th.lastname }}</div>
+                                    <small class="text-muted">{{th.personeli || '-'}}</small>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="text-center">
+                        <br><br>
+                        <a ui-sref="app.page.Experts" class="btn btn-sm btn-primary padder-md m-b">همه معلمین</a>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+            <div class="tab-pane tab-2" id="tab_3_2" role="tabpanel">
+                <div class="wrapper-md">
+                    <div class="m-b-sm text-md">پیام ها</div>
+                    <ul class="list-group no-borders pull-in auto">
+                        <li class="list-group-item" ng-repeat="x in msgs">
+                            <a ui-sref="app.page.massage">
+                            <span class="pull-left thumb-sm m-r">
+                                <img alt="..." class="img-circle"
+                                     src="img/userNopic.jpg">
+                            </span>
+                                <i class="fa fa-comment-o pull-right m-t-sm text-sm"></i>
+                                <div class="clear">
+                                    <div>{{x.name}}</div>
+                                    <div>{{x.comment}}</div>
+                                    <small class="text-muted">{{getdate(x.created_at)}}</small>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tab-pane tab-3" id="tab_3_3" role="tabpanel">
+                <div class="wrapper-md">
+                    <div class="m-b-sm text-md">Transaction</div>
+                    <ul class="list-group list-group-sm list-group-sp list-group-alt auto m-t">
+                        <li class="list-group-item">
+                            <span class="text-muted">Transfer to Jacob at 3:00 pm</span>
+                            <span class="block text-md text-info">B 15,000.00</span>
+                        </li>
+                        <li class="list-group-item">
+                            <span class="text-muted">Got from Mike at 1:00 pm</span>
+                            <span class="block text-md text-primary">B 23,000.00</span>
+                        </li>
+                        <li class="list-group-item">
+                            <span class="text-muted">Sponsored ORG at 9:00 am</span>
+                            <span class="block text-md text-warning">B 3,000.00</span>
+                        </li>
+                        <li class="list-group-item">
+                            <span class="text-muted">Send to Jacob at 8:00 am</span>
+                            <span class="block text-md">B 11,000.00</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal">&times;
+                </button>
+                <h4 class="modal-title">
+                    <img src="img/icon/jalase.png" class="icnSize">
+                    افزودن جلسه جدید
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="panel-body">
+                                <div class="alert alert-danger" ng-show="errText()">
+                                    <i class="icon-info"></i> &nbsp; <strong> {{errText()}}&nbsp;</strong>را مشخص
+                                    نمایید .
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="panel-body">
+
+                                        <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                               style="margin-top: 8px;"><span
+                                                class="starstyle">*</span>عنوان جلسه:</label>
+                                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                            <input ng-model="jls_name" class="form-control rounded"
+                                                   placeholder="عنوان جلسه  ...." tooltip="عنوان جلسه"
+                                                   ng-required="true" type="text"
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="panel-body">
+
+                                        <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                               style="margin-top: 8px;"><span
+                                                class="starstyle">*</span>نوع جلسه:</label>
+                                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                            <select ng-required="true"
+                                                    tooltip="نوع جلسه"
+                                                    ng-model="jls_type" tooltip="نوع جلسه"
+                                                    ng-options="item.sessiontypeid as item.name for item in SessionTypes "
+                                                    class="form-control rounded">
+                                                <option ng-disabled="true" ng-selected="false" value="">
+                                                    نوع جلسه
+                                                    را انتخاب
+                                                    نمایید.
+                                                </option>
+
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="isPodemany">
+                                    <div class="panel-body">
+                                        <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                               style="margin-top: 8px;">پودمانی :</label>
+                                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                            <div style="margin-top: 5px">
+                                                <input tooltip="وضعیت پودمانی بودن جلسه" id="toggle"
+                                                       class="checkStyle"
+                                                       ng-model="sessionPodmany" type="checkbox"/>
+                                                <label for="toggle" class="labelClass"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div style="width: 100%;margin-right: 20px;">
+                    <br>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4" style="float: right;color: white">
+                            <button ng-click="insert_jlse()"
+
+                                    style="width: 105%;background-color: #0F9E5E;"
+                                    type="submit" class="btn btn-light">
+                                <i class=" icon-plus"></i> &nbsp; <span
+                                    style="color: white"> تایید   </span>
+                            </button>
+                        </div>
+
+                        <div class="col-xs-4 col-sm-2 col-md-4 col-lg-2"
+                             style="float: right;margin-right: 20px;color: white">
+                            <button data-dismiss="modal"
+                                    style="width: 100%;background-color: #6c757d"
+                                    type="submit" href="index.html"
+                                    class="btn btn-light">
+                                <i
+                                        class="icon-close"></i>
+                                &nbsp;
+                                <span> لغو </span></button>
+                        </div>
+
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--panel teacher-->

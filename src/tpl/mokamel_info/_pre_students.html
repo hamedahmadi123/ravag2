@@ -1,0 +1,1093 @@
+<style>
+    .td {
+        border: 1px solid #d4d6d6;
+    }
+</style>
+<div ng-controller="pre_students">
+    <div class="bg-light lter b-b wrapper-md" ng-init="app.settings.asideFixed = true;app.settings.headerFixed = true;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+                <h1 class="m-n font-thin h3"><img src="img/icon/student2.png" class="icnSize"> لیست پیش ثبت نام شده ها
+                </h1>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="float: left">
+                    <div class="panel-body">
+                        <button style="width: 100%;" type="button" class="btn btn-addon , btn btn-default"
+                                ng-click="deleteAll()"><i
+                                class="icon-trash"></i> &nbsp;حذف دانش آموزان انتخاب شده
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="line line-dashed  line-lg pull-in"></div>
+    <div class="container">
+        <div class="main-wrapper">
+            <div class="row">
+                <div class="container panel v-middle media-middle text-center align-items-center">
+                    <br>
+                    <div class="panel panel-default" style="width: 100%;">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                        <div class="panel-body">
+                                            <h4 align="right">لیست {{filterText}}</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="float: left">
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                             style="margin-top: 3px;float: left">
+                                            <div class="panel-body" style="float: left">
+                                                <button style="width: 100%;" class="btn btn-link"
+                                                        onclick="tableToExcel('tblExport' , 'لیست دانش آموزان')">
+                                                    <i class="fa fa-file-excel-o"></i>
+                                                    خروجی Excel
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="margin-top: 3px;">
+                                            <div class="panel-body" style="float: left">
+                                                <button style="width: 100%;" class="btn btn-link"
+                                                        ng-click="printDiv('tblExport');">
+                                                    <i class="fa fa-print"></i>
+                                                    چاپ لیست
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped" id="tblExport">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">انتخاب</th>
+                                                <th scope="col" class="v-middle  media-middle text-center ">#</th>
+                                                <th scope="col" class="v-middle  media-middle text-center "> نام و نام
+                                                    خانوادگی
+                                                </th>
+                                                <th scope="col" class="v-middle  media-middle text-center ">کد دانش
+                                                    آموز
+                                                </th>
+                                                <th scope="col" class="v-middle  media-middle text-center ">حذف</th>
+                                                <th scope="col" class="v-middle  media-middle text-center ">جزییات</th>
+                                                <th scope="col" class="v-middle  media-middle text-center ">نظرات</th>
+                                                <th scope="col" class="v-middle  media-middle text-center ">نتایج</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody infinite-scroll='load2()' infinite-scroll-distance='0'>
+                                            <tr ng-repeat='mymodel in name | filter : gsearch'>
+                                                <td class="v-middle  media-middle text-center" scope="row">
+                                                    <label class="containerCheckBox">
+                                                        <br>
+                                                        <input type="checkbox" ng-model="checkbox1"
+                                                               ng-change="itemArray(mymodel.studentid,checkbox1)">
+                                                        <span class="checkmark2"
+                                                              style="margin-left: 5px;margin-top: 5px"></span>
+                                                    </label>
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    {{mymodel.studentid}}
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    {{ mymodel.firstname + " " + mymodel.lastname|| 'خالی' }}
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    {{ mymodel.studentcode }}
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    <button class="btn btn-sm btn-danger"
+                                                            ng-click="deleteStudent((mymodel.studentid),(mymodel.firstname + ' ' +  mymodel.lastname) )">
+                                                        <i class="icon-trash"></i>&nbsp;حذف
+                                                    </button>
+                                                </td>
+
+
+                                                <td class="v-middle  media-middle text-center">
+                                                    <button data-toggle="modal" data-target="#myModal"
+                                                            class="btn btn-sm btn-success"
+                                                            ng-click="detailSt(mymodel.studentid)">مشاهده <i
+                                                            class="icon-eye"></i>&nbsp;
+                                                    </button>
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    <button class="btn btn-sm btn-info"
+                                                            data-toggle="modal" data-target="#note"
+                                                            ng-click="detailSt(mymodel.studentid,(mymodel.firstname + ' ' +  mymodel.lastname))">
+                                                        <i class="icon-note"></i>&nbsp;ثبت نظر
+                                                    </button>
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    <button data-toggle="modal" data-target="#myModal2"
+                                                            class="btn btn-sm btn-dark"
+                                                            ng-click="precommentSelect(mymodel.studentid ,(mymodel.firstname + ' ' +  mymodel.lastname))">
+                                                        نتایج نظرات <i
+                                                            class="icon-bar-chart"></i>&nbsp;
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bd-example-modal-lg" id="myModal" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal">&times;
+                        </button>
+                        <h4 class="modal-title">
+                            <img src="img/icon/wrtie.png" class="icnSize">
+                            فرم پیش ثبت نام دانش آموز ({{thisSt.firstname + ' ' + thisSt.lastname}})
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="panel-heading font-bold"
+                                         style="background-color: #f6f8f8">
+                                        اطلاعات فردی دانش آموز
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
+                                        <div class="panel-body">
+                                            <img style="width: 100px;height: 100px;"
+                                                 class="thumb-sm avatar" ng-if="thisSt.image  != ' '"
+                                                 src="{{thisSt.image || 'img/userNopic.jpg'}}">
+                                            <img style="width: 100px;height: 100px;"
+                                                 class="thumb-sm avatar" ng-if="thisSt.image  == ' '"
+                                                 src="img/userNopic.jpg">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">
+                                        <br>
+                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                            <div class="panel-body">
+                                                <label style="margin-top: 8px;font-size: 15px;"
+                                                       class="col-xs-5 col-sm-6 col-md-6 col-lg-7 control-label">نام و
+                                                    نام خانوداگی:</label>
+                                                <div class="col-xs-7 col-sm-6 col-md-6 col-lg-5" align="right">
+                                                    <h5> {{thisSt.firstname + ' ' + thisSt.lastname}}</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                            <div class="panel-body">
+                                                <label style="margin-top: 8px;font-size: 15px;"
+                                                       class="col-xs-4 col-sm-3 col-md-4 col-lg-4 control-label">نام
+                                                    پدر:</label>
+                                                <div class="col-xs-8 col-sm-9 col-md-8 col-lg-8" align="right">
+                                                    <h5> {{student_parr.fathername}}</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
+                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                            <div class="panel-body">
+                                                <label style="margin-top: 8px;font-size: 15px;"
+                                                       class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">کد
+                                                    ملی:</label>
+                                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" align="right">
+                                                    <h5> {{stu_id}}</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                            <div class="panel-body">
+                                                <label style="margin-top: 8px;font-size: 15px;"
+                                                       class="col-xs-4 col-sm-5 col-md-4 col-lg-5 control-label">تاریخ
+                                                    تولد:</label>
+                                                <div class="col-xs-8 col-sm-7 col-md-8 col-lg-7" align="right">
+                                                    <h5> {{stu_berthday}}</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-heading font-bold"
+                                     style="background-color: #f6f8f8">
+                                    اطلاعات فردی دانش آموز
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                                        <div class="panel-body">
+                                            <label style="margin-top: 8px;font-size: 15px;"
+                                                   class="col-xs-6 col-sm-6 col-md-6 col-lg-6 control-label">شماره
+                                                منزل:</label>
+                                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" align="right">
+                                                <h5> {{stu_tel}}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                                        <div class="panel-body">
+                                            <label style="margin-top: 8px;font-size: 15px;"
+                                                   class="col-xs-6 col-sm-6 col-md-6 col-lg-6 control-label">شماره
+                                                تماس:</label>
+                                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" align="right">
+                                                <h5> {{thisSt.student_phone}}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                                        <div class="panel-body">
+                                            <label style="margin-top: 8px;font-size: 15px;"
+                                                   class="col-xs-6 col-sm-6 col-md-6 col-lg-7 control-label">شماره
+                                                والدین
+                                                :</label>
+                                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-5" align="right">
+                                                <h5> {{stu_f_tel || stu_m_tel || '-'}}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="panel-body">
+                                            <label style="margin-top: 8px;font-size: 15px;"
+                                                   class="col-xs-3 col-sm-3 col-md-2 col-lg-2 control-label">نشانی
+                                                منزل:</label>
+                                            <div class="col-xs-9 col-sm-9 col-md-8 col-lg-8" align="right">
+                                                <h5> {{stu_address}}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="panel-heading font-bold"
+                                     style="background-color: #f6f8f8">
+                                    فرم پیش ثبت نام
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                                        <div class="panel-body">
+                                            <label style="margin-top: 8px;font-size: 15px;"
+                                                   class="col-xs-6 col-sm-7 col-md-6 col-lg-7 control-label">مدرسه سال
+                                                قبل:</label>
+                                            <div class="col-xs-6 col-sm-5 col-md-6 col-lg-5" align="right">
+                                                <h5 style="color: green" ng-show="pre_stu.Current_school == '0'">مدرسه
+                                                    جاری</h5>
+                                                <h5 ng-show="pre_stu.Current_school == '1'">
+                                                    {{pre_stu.Previous_school}}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                                        <div class="panel-body">
+                                            <label style="margin-top: 8px;font-size: 15px;"
+                                                   class="col-xs-6 col-sm-6 col-md-6 col-lg-6 control-label">پایه
+                                                تحصیلی:</label>
+                                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" align="right">
+                                                <h5> {{thisSt.basename}}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4" ng-show="thisSt.ismajor == 1">
+                                        <div class="panel-body">
+                                            <label style="margin-top: 8px;font-size: 15px;"
+                                                   class="col-xs-6 col-sm-6 col-md-6 col-lg-7 control-label">رشته
+                                                تحصیلی:</label>
+                                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-5" align="right">
+                                                <h5> {{thisSt.title}}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="thisSt.ismajor == 1">
+                                        <div class="panel-body">
+                                            <label style="margin-top: 8px;font-size: 15px;"
+                                                   class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">آشنایی
+                                                با رشته:</label>
+                                            <div class="col-xs-8 col-sm-9 col-md-8 col-lg-8" align="right">
+                                                <h5> {{about_major}}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="panel-heading font-bold"
+                                     style="background-color: #f6f8f8">
+                                    وضعیت درسی / انضباطی
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                        <div class="panel-body">
+                                            <label style="margin-top: 8px;font-size: 15px;"
+                                                   class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">وضعیت
+                                                انضباطی:</label>
+                                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" align="right">
+                                                <div id="enz1">
+                                                    <label style="margin-top: 1px;"
+                                                           class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">سال
+                                                        اول:</label>
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <input class="form-control" ng-readonly="true" type="text"
+                                                               ng-model="enz.one" ui-mask="99.99"/>
+                                                    </div>
+                                                </div>
+                                                <div class="line line-dashed line-lg pull-in"></div>
+                                                <div id="enz2">
+                                                    <label style="margin-top: 1px;"
+                                                           class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">سال
+                                                        دوم:</label>
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <input class="form-control" ng-readonly="true" type="text"
+                                                               ng-model="enz.two" ui-mask="99.99"/>
+                                                    </div>
+                                                </div>
+                                                <div class="line line-dashed line-lg pull-in"></div>
+                                                <div id="enz3">
+                                                    <label style="margin-top: 1px;"
+                                                           class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">سال
+                                                        سوم:</label>
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <input class="form-control" ng-readonly="true" type="text"
+                                                               ng-model="enz.tree" ui-mask="99.99"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                        <div class="panel-body">
+                                            <label style="margin-top: 8px;font-size: 15px;"
+                                                   class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">وضعیت
+                                                درسی:</label>
+                                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" align="right">
+                                                <div id="drs1">
+                                                    <label style="margin-top: 1px;"
+                                                           class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">درس
+                                                        ریاضی:</label>
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <input class="form-control" ng-readonly="true" type="text"
+                                                               ng-model="drs.reyazi" ui-mask="99.99"/>
+                                                    </div>
+                                                </div>
+                                                <div class="line line-dashed line-lg pull-in"></div>
+                                                <div id="drs2">
+                                                    <label style="margin-top: 1px;"
+                                                           class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">درس
+                                                        علوم:</label>
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <input class="form-control" ng-readonly="true" type="text"
+                                                               ng-model="drs.olom" ui-mask="99.99"/>
+                                                    </div>
+                                                </div>
+                                                <div class="line line-dashed line-lg pull-in"></div>
+                                                <div id="drs3">
+                                                    <label style="margin-top: 1px;"
+                                                           class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">درس
+                                                        هنر:</label>
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <input class="form-control" ng-readonly="true" type="text"
+                                                               ng-model="drs.honar" ui-mask="99.99"/>
+                                                    </div>
+                                                </div>
+                                                <div class="line line-dashed line-lg pull-in"></div>
+                                                <div id="drs4">
+                                                    <label style="margin-top: 1px;"
+                                                           class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">درس
+                                                        زبان:</label>
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <input class="form-control" ng-readonly="true" type="text"
+                                                               ng-model="drs.zaban" ui-mask="99.99"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="panel-heading font-bold"
+                                     style="background-color: #f6f8f8">
+                                    توضیحات و ...
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                        <div class="panel-body">
+                                            <label style="margin-top: 8px;font-size: 15px;"
+                                                   class="col-xs-6 col-sm-6 col-md-6 col-lg-6 control-label">یادداشت
+                                                :</label>
+                                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" align="right">
+                                                <h5> {{stu_note}}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                        <div class="panel-body">
+                                            <label style="margin-top: 8px;font-size: 15px;"
+                                                   class="col-xs-6 col-sm-6 col-md-6 col-lg-6 control-label">بیماری
+                                                :</label>
+                                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" align="right">
+                                                <h5 ng-show="stu_illness !=' '"> {{stu_illness}}</h5>
+                                                <h5 ng-show="stu_illness ==' '">هیچکدام</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div style="width: 100%;margin-right: 20px;">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                            <div class="panel-body">
+
+                                                <button data-dismiss="modal"
+                                                        style="width: 100%;"
+                                                        type="submit"
+                                                        class="btn btn-dark">
+                                                    <i class="icon-close"></i>&nbsp;<span> بستن </span></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bd-example-modal-lg" id="note" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal">&times;
+                        </button>
+                        <h4 class="modal-title">
+                            <img src="img/icon/wrtie.png" class="icnSize">
+                            ثبت نظر جهت ثبت نام دانش آموز ( {{thisSt.firstname + ' ' +thisSt.lastname}} ) در سال
+                            جاری :
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="panel-body">
+                                <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2" dir="rtl"
+                                     style="background-color: #fafbfc;padding: 10px;border: 1px #eff1f2 solid">
+                                    رشته
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" dir="rtl"
+                                     style="padding: 10px;border: 1px #eff1f2 solid;">
+                                    {{thisSt.basename + '/' +thisSt.title}}
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2" dir="rtl"
+                                     style="background-color: #fafbfc;padding: 10px;border: 1px #eff1f2 solid">
+                                    مدرسه سال قبل
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" dir="rtl"
+                                     style="padding: 10px;border: 1px #eff1f2 solid">
+                                    <span ng-if="pre_stu.Current_school == 0" style="color: green">مدرسه جاری</span>
+                                    <span ng-if="pre_stu.Current_school == 1">{{pre_stu.Previous_school}}</span>
+                                </div>
+                                <div class="line line-dashed  line-lg pull-in"></div>
+                                <div class="line line-dashed b-b line-lg pull-in"></div>
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="panel-body">
+                                        <label style="margin-top: 8px;font-size: 15px;"
+                                               class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">وضعیت
+                                            انضباطی:</label>
+                                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" align="right">
+                                            <div>
+                                                <label style="margin-top: 1px;"
+                                                       class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">سال
+                                                    اول:</label>
+                                                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                    <input class="form-control" ng-readonly="true" type="text"
+                                                           ng-model="enz.one" ui-mask="99.99"/>
+                                                </div>
+                                            </div>
+                                            <div class="line line-dashed line-lg pull-in"></div>
+                                            <div>
+                                                <label style="margin-top: 1px;"
+                                                       class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">سال
+                                                    دوم:</label>
+                                                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                    <input class="form-control" ng-readonly="true" type="text"
+                                                           ng-model="enz.two" ui-mask="99.99"/>
+                                                </div>
+                                            </div>
+                                            <div class="line line-dashed line-lg pull-in"></div>
+                                            <div>
+                                                <label style="margin-top: 1px;"
+                                                       class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">سال
+                                                    سوم:</label>
+                                                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                    <input class="form-control" ng-readonly="true" type="text"
+                                                           ng-model="enz.tree" ui-mask="99.99"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="panel-body">
+                                        <label style="margin-top: 8px;font-size: 15px;"
+                                               class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">وضعیت
+                                            درسی:</label>
+                                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" align="right">
+                                            <div>
+                                                <label style="margin-top: 1px;"
+                                                       class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">درس
+                                                    ریاضی:</label>
+                                                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                    <input class="form-control" ng-readonly="true" type="text"
+                                                           ng-model="drs.reyazi" ui-mask="99.99"/>
+                                                </div>
+                                            </div>
+                                            <div class="line line-dashed line-lg pull-in"></div>
+                                            <div>
+                                                <label style="margin-top: 1px;"
+                                                       class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">درس
+                                                    علوم:</label>
+                                                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                    <input class="form-control" ng-readonly="true" type="text"
+                                                           ng-model="drs.olom" ui-mask="99.99"/>
+                                                </div>
+                                            </div>
+                                            <div class="line line-dashed line-lg pull-in"></div>
+                                            <div>
+                                                <label style="margin-top: 1px;"
+                                                       class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">درس
+                                                    هنر:</label>
+                                                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                    <input class="form-control" ng-readonly="true" type="text"
+                                                           ng-model="drs.honar" ui-mask="99.99"/>
+                                                </div>
+                                            </div>
+                                            <div class="line line-dashed line-lg pull-in"></div>
+                                            <div>
+                                                <label style="margin-top: 1px;"
+                                                       class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">درس
+                                                    زبان:</label>
+                                                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                    <input class="form-control" ng-readonly="true" type="text"
+                                                           ng-model="drs.zaban" ui-mask="99.99"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="line line-dashed b-b line-lg pull-in"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="panel-body">
+                                        <div class="alert alert-danger" ng-show="errText()">
+                                            <i class="icon-info"></i> &nbsp; <strong> {{errText()}}&nbsp;</strong>مشخص
+                                            نمایید.
+                                        </div>
+                                        <!-- تربیتی-->
+                                        <div class="panel-body">
+                                            <label class="col-xs-6 col-sm-6 col-md-3 col-lg-3 control-label"
+                                                   style="margin-top: 6px;"><span
+                                                    style="color: red;margin: 5px">*</span>در زمینه تربیتی :</label>
+                                            <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                                                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                                                    <input placeholder="امتیاز از 20"
+                                                           class="form-control rounded"
+                                                           ng-model="tarbiaty.score"
+                                                           oninput="javascript:
+                                                                if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);
+                                                                if (this.value > this.max) this.value = this.value.slice(0, 0);"
+                                                           type="number"
+                                                           maxlength="2" max="20">
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"
+                                                     style="margin-top: 3px;float: left">
+                                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                                        <label class="containerCheckBox">
+                                                            <p style="margin-top: 8px;">موافق</p>
+                                                            <input type="checkbox" ng-model="t_t_btn"
+                                                                   ng-click="set_t_btn('t')">
+                                                            <span class="checkmark2"
+                                                                  style="margin-left: 5px;margin-top: 5px"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                                        <label class="containerCheckBox">
+                                                            <p style="margin-top: 8px;">مخالف</p>
+                                                            <input type="checkbox" ng-model="t_f_btn"
+                                                                   ng-click="set_t_btn('f')">
+                                                            <span class="checkmark2"
+                                                                  style="margin-left: 5px;margin-top: 5px"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <!-- اموزشی-->
+                                        <div class="panel-body">
+                                            <label class="col-xs-6 col-sm-6 col-md-3 col-lg-3 control-label"
+                                                   style="margin-top: 6px;"><span
+                                                    style="color: red;margin: 5px">*</span>در زمینه آموزشی :</label>
+                                            <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                                                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                                                    <input ng-model="amozeshi.score" class="form-control rounded"
+                                                           placeholder="امتیاز از 20" style="width: 100%"
+                                                           ng-required="true" type="number" oninput="javascript:
+                                                                if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);
+                                                                if (this.value > this.max) this.value = this.value.slice(0, 0);"
+                                                           type="number"
+                                                           maxlength="2" max="20">
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"
+                                                     style="margin-top: 3px;float: left">
+                                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                                        <label class="containerCheckBox">
+                                                            <p style="margin-top: 8px;">موافق</p>
+                                                            <input type="checkbox" ng-model="a_t_btn"
+                                                                   ng-click="set_a_btn('t')">
+                                                            <span class="checkmark2"
+                                                                  style="margin-left: 5px;margin-top: 5px"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                                        <label class="containerCheckBox">
+                                                            <p style="margin-top: 8px;">مخالف</p>
+                                                            <input type="checkbox" ng-model="a_f_btn"
+                                                                   ng-click="set_a_btn('f')">
+                                                            <span class="checkmark2"
+                                                                  style="margin-left: 5px;margin-top: 5px"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <label class="col-xs-4 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                   style="margin-top: 6px;">یادداشت :</label>
+                                            <div class="col-xs-8 col-sm-9 col-md-9 col-lg-9">
+                                                    <textarea placeholder="ثبت یادداشت برای این دانش آموز"
+                                                              class="form-control" style="width: 100%;"
+                                                              ng-model="score_note"
+                                                              type="text" rows="4"
+                                                    ></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div style="width: 100%;margin-right: 20px;">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        <div class="panel-body">
+                                            <button
+                                                    style="width: 100%;"
+                                                    type="submit" ng-click="submitComment()"
+                                                    class="btn btn-success">
+                                                <i class="icon-plus"></i>&nbsp;<span> ثبت </span></button>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        <div class="panel-body">
+
+                                            <button data-dismiss="modal"
+                                                    style="width: 100%;"
+                                                    type="submit"
+                                                    class="btn btn-dark">
+                                                <i class="icon-close"></i>&nbsp;<span> لغو </span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal2" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">&times;
+                    </button>
+                    <h4 class="modal-title">
+                        <img src="img/icon/student2.png" class="icnSize">
+                        نتایج نظرات ثبت شده برای دانش آموز
+                        ({{st_name}}) </h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="panel-body">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" dir="rtl"
+                                 style="background-color: #fafbfc;padding: 10px;border: 1px #eff1f2 solid">
+                                تعداد نظرات ثبت شده تا این لحظه
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2" dir="rtl"
+                                 style="padding: 10px;border: 1px #eff1f2 solid;">
+                                {{pre_comment.length}}
+                            </div>
+                            <div class="panel-body" style="">
+                                <a style="color: blue;text-decoration: underline;margin-right: 15px;"
+                                   ng-click="showPay_com()">مشاهده ریز نظرات</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="panel-body">
+                                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                   style="margin-top: 12px;">در زمینه آموزشی:</label>
+                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                <div class="col-xs-8 col-sm-6 col-md-4 col-lg-4" dir="rtl"
+                                                     style="background-color: #fafbfc;padding: 10px;border: 1px #eff1f2 solid">
+                                                    میانگین امتیازات
+                                                </div>
+                                                <div class="col-xs-4 col-sm-6 col-md-2 col-lg-2" dir="rtl"
+                                                     style="padding: 10px;border: 1px #eff1f2 solid;">
+                                                    {{amozeshi_Score_avg | limitTo: 4}}
+                                                </div>
+                                                <div class="line line-dashed  line-lg pull-in"></div>
+                                                <div class="col-xs-8 col-sm-6 col-md-4 col-lg-4" dir="rtl"
+                                                     style="background-color: #fafbfc;padding: 10px;border: 1px #eff1f2 solid">
+                                                    تعداد موافق ها
+                                                </div>
+                                                <div class="col-xs-4 col-sm-6 col-md-2 col-lg-2" dir="rtl"
+                                                     style="padding: 10px;border: 1px #eff1f2 solid;color:green;">
+                                                    {{amozeshi_true}}
+                                                </div>
+                                                <div class="col-xs-8 col-sm-6 col-md-4 col-lg-4" dir="rtl"
+                                                     style="background-color: #fafbfc;padding: 10px;border: 1px #eff1f2 solid">
+                                                    تعداد مخالف ها
+                                                </div>
+                                                <div class="col-xs-4 col-sm-6 col-md-2 col-lg-2" dir="rtl"
+                                                     style="padding: 10px;border: 1px #eff1f2 solid;color: red">
+                                                    {{amozeshi_false}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="line line-dashed  line-lg pull-in"></div>
+                                        <div class="panel-body">
+                                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                   style="margin-top: 12px;">در زمینه تربیتی:</label>
+                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                <div class="col-xs-8 col-sm-6 col-md-4 col-lg-4" dir="rtl"
+                                                     style="background-color: #fafbfc;padding: 10px;border: 1px #eff1f2 solid">
+                                                    میانگین امتیازات
+                                                </div>
+                                                <div class="col-xs-4 col-sm-6 col-md-2 col-lg-2" dir="rtl"
+                                                     style="padding: 10px;border: 1px #eff1f2 solid;">
+                                                    {{tarbiaty_Score_avg | limitTo: 4}}
+                                                </div>
+                                                <div class="line line-dashed  line-lg pull-in"></div>
+                                                <div class="col-xs-8 col-sm-6 col-md-4 col-lg-4" dir="rtl"
+                                                     style="background-color: #fafbfc;padding: 10px;border: 1px #eff1f2 solid">
+                                                    تعداد موافق ها
+                                                </div>
+                                                <div class="col-xs-4 col-sm-6 col-md-2 col-lg-2" dir="rtl"
+                                                     style="padding: 10px;border: 1px #eff1f2 solid;color:green;">
+                                                    {{tarbiaty_true}}
+                                                </div>
+                                                <div class="col-xs-8 col-sm-6 col-md-4 col-lg-4" dir="rtl"
+                                                     style="background-color: #fafbfc;padding: 10px;border: 1px #eff1f2 solid">
+                                                    تعداد مخالف ها
+                                                </div>
+                                                <div class="col-xs-4 col-sm-6 col-md-2 col-lg-2" dir="rtl"
+                                                     style="padding: 10px;border: 1px #eff1f2 solid;color: red">
+                                                    {{tarbiaty_false}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="panel-body">
+                                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" align="center">
+                                                    <div class="inline">
+                                                        <div ui-jq="easyPieChart"
+                                                             ng-repeat="item in darsadAmozeshi track by darsadAmozeshi"
+                                                             ui-options="{
+                                                 percent: '{{item}}',
+                                                 lineWidth: 50,
+                                                 trackColor: '{{app.color.light}}',
+                                                barColor: '{{amozeshiColore}}',
+                                                 scaleColor: false,
+                                                 size: 100,
+                                                 rotate: 90,
+                                                 lineCap: 'butt',
+                                                 animate: 2000
+                                                     }">
+                                                        </div>
+                                                        <h5><span>امتیاز در زمینه آموزشی</span> <span>({{darsadAmozeshi[0] | limitTo: 4}}%)</span>
+                                                        </h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" align="center">
+                                                    <div class="inline">
+                                                        <div ui-jq="easyPieChart"
+                                                             ng-repeat="item in darsadTarbiaty track by darsadTarbiaty"
+                                                             ui-options="{
+                                                  percent: '{{item}}',
+                                                 lineWidth: 50,
+                                                 trackColor: '{{app.color.light}}',
+                                                   barColor: '{{tarbiatyColore}}',
+                                                 scaleColor: false,
+                                                 size: 100,
+                                                 rotate: 90,
+                                                 lineCap: 'butt',
+                                                 animate: 2000
+                                                     }">
+                                                        </div>
+                                                        <h5><span>امتیاز در زمینه تربیتی</span> <span>({{darsadTarbiaty[0] | limitTo: 4}}%)</span>
+                                                        </h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="width: 100%;margin-right: 20px;">
+                        <br>
+                        <div class="row">
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"
+                                 style="float: right;margin-right: 20px;color: white">
+                                <button data-dismiss="modal"
+                                        style="width: 100%;background-color: #6c757d"
+                                        type="submit" href="index.html"
+                                        class="btn btn-light">
+                                    <i
+                                            class="icon-arrow-left"></i>
+                                    &nbsp;
+                                    <span> بازگشت </span></button>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bd-example-modal-lg" id="pay_com" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal">&times;
+                        </button>
+                        <h4 class="modal-title">
+                            <img src="img/icon/wrtie.png" class="icnSize">
+                            ریز نظرات ثبت شده برای دانش آموز ( {{st_name}} ) در سال جاری :
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="panel-body">
+                                <div class="panel panel-default" style="width: 100%;">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <div class="row">
+                                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                    <div class="panel-body">
+                                                        <h4 align="right">لیست نظرات</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"
+                                                     style="float: left">
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                                         style="margin-top: 3px;float: left">
+                                                        <div class="panel-body" style="float: left">
+                                                            <button style="width: 100%;" class="btn btn-link"
+                                                                    onclick="tableToExcel('tblExport' , 'لیست دانش آموزان')">
+                                                                <i class="fa fa-file-excel-o"></i>
+                                                                خروجی Excel
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                                         style="margin-top: 3px;">
+                                                        <div class="panel-body" style="float: left">
+                                                            <button style="width: 100%;" class="btn btn-link"
+                                                                    ng-click="printDiv('tblExport');">
+                                                                <i class="fa fa-print"></i>
+                                                                چاپ لیست
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse2" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="panel-body">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped , td" id="tblExport2">
+                                                            <thead>
+                                                            <tr>
+                                                                <th rowspan="2" scope="col"
+                                                                    class="v-middle  media-middle text-center , td">
+                                                                    #
+                                                                </th>
+                                                                <th rowspan="2"
+                                                                    class="v-middle  media-middle text-center , td">
+                                                                    نام
+                                                                    دبیر
+                                                                </th>
+                                                                <th colspan="2"
+                                                                    class="v-middle  media-middle text-center , td">
+                                                                    زمینه
+                                                                    آموزشی
+                                                                </th>
+                                                                <th colspan="2"
+                                                                    class="v-middle  media-middle text-center , td">
+                                                                    زمینه
+                                                                    تربیتی
+                                                                </th>
+                                                                <th rowspan="2"
+                                                                    class="v-middle  media-middle text-center , td">
+                                                                    یادداشت
+                                                                </th>
+                                                                <th rowspan="2"
+                                                                    class="v-middle  media-middle text-center , td">
+                                                                    تاریخ
+                                                                    ثبت نظر
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="v-middle  media-middle text-center , td">
+                                                                    نظر
+                                                                </th>
+                                                                <th class="v-middle  media-middle text-center , td">
+                                                                    امتیاز
+                                                                </th>
+                                                                <th class="v-middle  media-middle text-center , td">
+                                                                    نظر
+                                                                </th>
+                                                                <th class="v-middle  media-middle text-center , td">
+                                                                    امتیاز
+                                                                </th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr ng-repeat="item in pre_comment">
+                                                                <td class="v-middle  media-middle text-center , td">
+                                                                    {{item.id}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center , td">
+                                                                    {{ item.firstname + " " + item.lastname||
+                                                                    'خالی'}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center , td">
+                                                                    {{retAmozeshi(item.amozeshi , 'bool')}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center , td">
+                                                                    {{retAmozeshi(item.amozeshi , 'score')}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center , td">
+                                                                    {{retTarbity(item.tarbiaty , 'bool')}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center , td">
+                                                                    {{retTarbity(item.tarbiaty , 'score')}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center , td">
+                                                                    {{ item.comment || '---'}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center , td">
+                                                                    {{ convertData(item.createdAt) }}
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div style="width: 100%;margin-right: 20px;">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                                    <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                                        <button ng-click="backToNote()"
+                                                style="width: 100%;"
+                                                type="submit"
+                                                class="btn btn-dark">
+                                            <i class="icon-arrow-left"></i>&nbsp;<span> بازگشت </span></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var tableToExcel = (function () {
+        var uri = 'data:application/vnd.ms-excel;base64,'
+            ,
+            template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+            , base64 = function (s) {
+                return window.btoa(unescape(encodeURIComponent(s)))
+            }
+            , format = function (s, c) {
+                return s.replace(/{(\w+)}/g, function (m, p) {
+                    return c[p];
+                })
+            }
+        return function (table, name) {
+            if (!table.nodeType) table = document.getElementById(table)
+            var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+            window.location.href = uri + base64(format(template, ctx))
+        }
+    })()
+</script>
+</div>
+

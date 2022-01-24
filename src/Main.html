@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="app">
+<head>
+    <meta charset="utf-8"/>
+    <title>پنل مدیریت دوات</title>
+    <link rel="icon" href="img/davatIcon.png">
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link rel="stylesheet" href="../libs/assets/animate.css/animate.css" type="text/css"/>
+    <link rel="stylesheet" href="../libs/assets/font-awesome/css/font-awesome.min.css" type="text/css"/>
+    <link rel="stylesheet" href="../libs/assets/simple-line-icons/css/simple-line-icons.css" type="text/css"/>
+    <link rel="stylesheet" href="../libs/jquery/bootstrap/dist/css/bootstrap.css" type="text/css"/>
+    <link rel="stylesheet" href="css/forScroll/app.css">
+    <link rel="stylesheet" href="css/forScroll/app.rtl.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/DataPersion/kamadatepicker.min.css">
+    <link rel="stylesheet" href="../node_modules/adm-dtp/dist/ADM-dateTimePicker.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/fileinput.css">
+
+
+
+    <link rel="stylesheet" href="css/font.css" type="text/css"/>
+    <link rel="stylesheet" href="css/app.css" type="text/css"/>
+    <link rel="stylesheet" href="../libs/assets/bootstrap-rtl/dist/css/bootstrap-rtl.min.css" type="text/css"/>
+    <link rel="stylesheet" href="css/app.rtl.css" type="text/css"/>
+    <link rel="stylesheet" href="../node_modules/adm-dtp/dist/ADM-dateTimePicker.css">
+<!--    <script src="https://www.google.com/recaptcha/api.js?render=6LeaKsAUAAAAANQ1bnp0&#45;&#45;kX0I4_AosLrD7y2KaV"></script>-->
+<!--    <script>-->
+<!--        grecaptcha.ready(function() {-->
+<!--            grecaptcha.execute('6LeaKsAUAAAAANQ1bnp0&#45;&#45;kX0I4_AosLrD7y2KaV', {action: 'index.html'}).then(function(token) {-->
+
+<!--            });-->
+<!--        });-->
+<!--    </script>-->
+</head>
+<body ng-controller="AppCtrl" dir="rtl">
+<div class="app" id="app"
+     ng-class="{'app-header-fixed':app.settings.headerFixed, 'app-aside-fixed':app.settings.asideFixed = true, 'app-aside-folded':app.settings.asideFolded, 'app-aside-dock':app.settings.asideDock, 'container':app.settings.container}"
+     ui-view></div>
+<script src="../libs/jquery/jquery/dist/jquery.js"></script>
+<script src="../libs/jquery/bootstrap/dist/js/bootstrap.js"></script>
+<script src="../libs/angular/angular/angular.js"></script>
+<script src="../libs/angular/angular-animate/angular-animate.js"></script>
+<script src="../libs/angular/angular-aria/angular-aria.js"></script>
+<script src="../libs/angular/angular-cookies/angular-cookies.js"></script>
+<script src="../libs/angular/angular-messages/angular-messages.js"></script>
+<script src="../libs/angular/angular-resource/angular-resource.js"></script>
+<script src="../libs/angular/angular-sanitize/angular-sanitize.js"></script>
+<script src="../libs/angular/angular-touch/angular-touch.js"></script>
+<script src="../node_modules/chart.js/dist/Chart.js"></script>
+<script src="../node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
+<script src="../libs/angular/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="../libs/angular/ngstorage/ngStorage.js"></script>
+<script src="../libs/angular/angular-ui-utils/ui-utils.js"></script>
+<script src="../node_modules/adm-dtp/dist/ADM-dateTimePicker.js"></script>
+<script src="../libs/angular/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="../libs/angular/oclazyload/dist/ocLazyLoad.js"></script>
+<script src="../libs/angular/angular-translate/angular-translate.js"></script>
+<script src="../libs/angular/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+<script src="../libs/angular/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
+<script src="../libs/angular/angular-translate-storage-local/angular-translate-storage-local.js"></script>
+<script src="js/DataPersion/kamadatepicker.min.js"></script>
+<script src="../node_modules/angular-material-persian-datepicker/dist/datePicker.min.js"></script>
+<script src="js/app.js"></script>
+<script src="js/config.js"></script>
+<script src="js/jspdf.min.js"></script>
+<script src="js/config.lazyload.js"></script>
+<script src="js/config.router.js"></script>
+<script src="js/config.url.js"></script>
+<script src="js/main.js"></script>
+<script src="js/services/ui-load.js"></script>
+<script src="js/filters/fromNow.js"></script>
+<script src="js/directives/setnganimate.js"></script>
+<script src="js/directives/_UploadFile.js"></script>
+<script src="js/directives/ui-butterbar.js"></script>
+<script src="js/directives/ui-focus.js"></script>
+<script src="js/directives/ui-fullscreen.js"></script>
+<script src="js/directives/ui-jq.js"></script>
+<script src="js/directives/ui-module.js"></script>
+<script src="js/directives/ui-nav.js"></script>
+<script src="js/directives/ui-scroll.js"></script>
+<script src="js/directives/ui-shift.js"></script>
+<script src="js/directives/ui-toggleclass.js"></script>
+<script src="js/controllers/bootstrap.js"></script>
+<script src="js/controllers/dirPagination.js"></script>
+<script src="js/controllers/dashboard.js"></script>
+<script src="js/controllers/OrderEdit.js"></script>
+<script src="js/controllers/neworder.js"></script>
+<script src="../node_modules/jalali-moment/dist/jalali-moment.browser.js"></script>
+<script src="../src/js/moment.js"></script>
+<script src="../node_modules/bootstrap-fileinput/js/fileinput.js"></script>
+
+<script src="../node_modules/ng-infinite-scroll/build/ng-infinite-scroll.min.js"></script>
+
+
+
+</body>
+<script>
+    myfunc();
+    function myfunc() {
+        if ((localStorage.adminId) && localStorage.adminCount != 0 && (localStorage.adminCount && localStorage.adminCount != undefined && localStorage.adminCount != "undefined")) {
+
+        }
+        else if ((!localStorage.adminId) || localStorage.adminCount == 0 || (!localStorage.adminCount || localStorage.adminCount == undefined || localStorage.adminCount == "undefined")) {
+            document.location.replace("index.html");
+        }
+
+    }
+</script>
+</html>

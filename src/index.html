@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="app">
+<head>
+    <meta charset="utf-8"/>
+    <title>ورود به پنل مدیریت</title>
+    <link rel="icon" href="img/davatIcon.png">
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link rel="stylesheet" href="../libs/assets/animate.css/animate.css" type="text/css"/>
+    <link rel="stylesheet" href="../libs/assets/font-awesome/css/font-awesome.min.css" type="text/css"/>
+    <link rel="stylesheet" href="../libs/assets/simple-line-icons/css/simple-line-icons.css" type="text/css"/>
+    <link rel="stylesheet" href="../libs/jquery/bootstrap/dist/css/bootstrap.css" type="text/css"/>
+    <link rel="stylesheet" href="css/forScroll/app.css">
+    <link rel="stylesheet" href="css/forScroll/app.rtl.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/DataPersion/kamadatepicker.min.css">
+    <link rel="stylesheet" href="../node_modules/adm-dtp/dist/ADM-dateTimePicker.css">
+    <link rel="stylesheet" href="css/font.css" type="text/css"/>
+    <link rel="stylesheet" href="css/app.css" type="text/css"/>
+    <link rel="stylesheet" href="../libs/assets/bootstrap-rtl/dist/css/bootstrap-rtl.min.css" type="text/css"/>
+    <link rel="stylesheet" href="css/app.rtl.css" type="text/css"/>
+
+
+    <link rel="stylesheet" href="css/fileinput.css">
+
+
+    <!--    <script src="https://www.google.com/recaptcha/api.js?render=6LeaKsAUAAAAANQ1bnp0&#45;&#45;kX0I4_AosLrD7y2KaV"></script>-->
+    <!--    <script>-->
+    <!--        grecaptcha.ready(function () {-->
+    <!--            grecaptcha.execute('6LeaKsAUAAAAANQ1bnp0&#45;&#45;kX0I4_AosLrD7y2KaV', {action: 'index.html'}).then(function (token) {-->
+
+    <!--            });-->
+    <!--        });-->
+    <!--    </script>-->
+
+
+</head>
+<body ng-controller="AppCtrl" dir="rtl">
+<!--<script src="../bower_components/ngmap/build/scripts/ng-map.min.js"></script>-->
+<!--<script src="http://maps.google.com/maps/api/js"></script>-->
+
+
+<script src="../libs/jquery/jquery/dist/jquery.js"></script>
+<script src="../libs/jquery/bootstrap/dist/js/bootstrap.js"></script>
+<script src="../libs/angular/angular/angular.js"></script>
+<script src="../libs/angular/angular-animate/angular-animate.js"></script>
+<script src="../libs/angular/angular-aria/angular-aria.js"></script>
+<script src="../libs/angular/angular-cookies/angular-cookies.js"></script>
+<script src="../libs/angular/angular-messages/angular-messages.js"></script>
+<script src="../libs/angular/angular-resource/angular-resource.js"></script>
+<script src="../libs/angular/angular-sanitize/angular-sanitize.js"></script>
+<script src="../libs/angular/angular-touch/angular-touch.js"></script>
+<script src="../node_modules/chart.js/dist/Chart.js"></script>
+<script src="../node_modules/chart.js/dist/Chart.js"></script>
+<script src="../libs/angular/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="../libs/angular/ngstorage/ngStorage.js"></script>
+<script src="../libs/angular/angular-ui-utils/ui-utils.js"></script>
+<script src="../node_modules/adm-dtp/dist/ADM-dateTimePicker.js"></script>
+<script src="../libs/angular/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="../libs/angular/oclazyload/dist/ocLazyLoad.js"></script>
+<script src="../libs/angular/angular-translate/angular-translate.js"></script>
+<script src="../libs/angular/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+<script src="../libs/angular/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
+<script src="../libs/angular/angular-translate-storage-local/angular-translate-storage-local.js"></script>
+<script src="js/DataPersion/kamadatepicker.min.js"></script>
+<script src="js/app.js"></script>
+<script src="js/config.js"></script>
+<script src="js/config.lazyload.js"></script>
+<script src="js/config.router.js"></script>
+<script src="js/config.url.js"></script>
+<script src="js/config.url.js"></script>
+<script src="js/main.js"></script>
+<script src="js/services/ui-load.js"></script>
+<script src="js/filters/fromNow.js"></script>
+<script src="js/directives/setnganimate.js"></script>
+<script src="js/directives/_UploadFile.js"></script>
+<script src="js/directives/ui-butterbar.js"></script>
+<script src="js/directives/ui-focus.js"></script>
+<script src="js/directives/ui-fullscreen.js"></script>
+<script src="js/directives/ui-jq.js"></script>
+<script src="js/directives/ui-module.js"></script>
+<script src="js/directives/ui-nav.js"></script>
+<script src="js/directives/ui-scroll.js"></script>
+<script src="js/directives/ui-shift.js"></script>
+<script src="js/directives/ui-toggleclass.js"></script>
+<script src="js/controllers/bootstrap.js"></script>
+<script src="js/controllers/dirPagination.js"></script>
+<script src="js/controllers/dashboard.js"></script>
+<script src="js/controllers/OrderEdit.js"></script>
+<script src="js/controllers/neworder.js"></script>
+<script src="../node_modules/jalali-moment/dist/jalali-moment.browser.js"></script>
+<script src="../src/js/moment.js"></script>
+
+<script src="../node_modules/bootstrap-fileinput/js/fileinput.js"></script>
+
+
+<script src="../node_modules/ng-infinite-scroll/build/ng-infinite-scroll.min.js"></script>
+
+
+<div class="modal-over bg-black" ng-controller="loginCtrl">
+    <div class="modal-center animated fadeInUp text-center" style="width:200px;margin:-100px 0 0 -100px;">
+        <div class="thumb-lg">
+            <img src="../src/img/davat2.png" style="width: 100%;height: auto">
+        </div>
+        <br>
+        <br>
+        <br>
+        <div style="width: 100%">
+            <select tooltip="سمت خود را مشخص نمایید"
+                    ng-model="usertype"
+                    ng-options="type.value as type.name for type in userType"
+                    class="form-control text-sm no-border">
+                <option ng-disabled="true"
+                        ng-selected="false" value="">
+                    نوع کاربر
+                </option>
+
+            </select>
+        </div>
+        <br><br>
+        <div class="input-group" style="width: 100%">
+            <select tooltip="مدرسه خود را انتخاب نمایید."
+                    ng-model="schoole"
+                    ng-options="sch.schoolid as sch.name for sch in schools"
+                    class="form-control text-sm btn-rounded no-border">
+                <option ng-disabled="true"
+                        ng-selected="false" value="">
+                    نام مدرسه
+                </option>
+
+            </select>
+            <span class="input-group-btn"><a
+                    style="height: 34px;"
+                    tooltip="ورود به برنامه"
+                    ng-click="SignupMenu(usertype,schoole)"
+                    class="btn btn-success btn-rounded no-border"><i
+                    class="glyphicon glyphicon-log-in"></i></a></span>
+        </div>
+        <br><br>
+        <div class="alert alert-danger" ng-show="errText()">
+            <i class="icon-info"></i> &nbsp; <strong> {{errText()}}&nbsp;</strong>
+            <span ng-show="titlefunc()">{{titlefunc()}}</span>
+        </div>
+    </div>
+</div>
+
+</body>
+<script>
+    app.controller('loginCtrl', ['$scope', '$filter', '$http', function ($scope, $filter, $http, $timeout) {
+        $scope.adminProfile = [];
+        $scope.conShow = 0;
+        $scope.userAccunt = "";
+        $scope.loginNum = 0;
+        $scope.signoutNum = 0;
+        $scope.adminId = "";
+        $scope.title = "";
+        $scope.eroretext = "";
+        $scope.userType = [
+            {value: "1", name: "مدیر آموزشگاه"},
+            {value: "2", name: "معاون"},
+            {value: "3", name: "معلم"},
+            // {value: "4", name: "کاربر"},
+            // {value: "5", name: "مدیر سیستم"},
+        ];
+        var sch = {
+            ViewName: "SchoolSelect",
+            mutualTransaction: {
+                kendoDataRequest: {
+                    filter: {
+                        field: "",
+                        logic: "",
+                        operator: "",
+                        value: ""
+                    },
+                }
+            }
+        }
+        $http.post(URL_GET, JSON.stringify(sch))
+            .success(function (result, status, headers, config) {
+                $scope.schools = result.data;
+            });
+        $scope.SignupMenu = function ($type, $schoole) {
+            if ($type && $schoole) {
+                localStorage.adminId = '3';
+                localStorage.schoolId = $schoole + '';
+                localStorage.userType = $type;
+                localStorage.userId = '30';
+                var sch = {
+                    ViewName: "SchoolSelect",
+                    mutualTransaction: {
+                        kendoDataRequest: {
+                            filter: {
+                                field: "schoolid",
+                                logic: "and",
+                                operator: "eq",
+                                value: localStorage.schoolId
+                            },
+                        }
+                    }
+                }
+                $http.post(URL_GET, JSON.stringify(sch))
+                    .success(function (result, status, headers, config) {
+                        $scope.school = result.data[0];
+                        localStorage.schoolname = $scope.school.name;
+                    });
+                var trm = {
+                    ViewName: "TermSelect",
+                    mutualTransaction: {
+                        kendoDataRequest: {
+                            filter: {
+                                field: "schoolid",
+                                logic: "and",
+                                operator: "eq",
+                                value: localStorage.schoolId + ""
+                            },
+                        }
+                    }
+                }
+                $http.post(URL_GET, JSON.stringify(trm))
+                    .success(function (result, status, headers, config) {
+                        $scope.schoolTerms = result.data;
+                        if ($scope.schoolTerms.length != '0') {
+                            $scope.fullDate = moment().format("YYYY-MM-DD");
+                            for (var i = 0; i < $scope.schoolTerms.length; i++) {
+                                if ($scope.schoolTerms[i].startdate <= $scope.fullDate && $scope.schoolTerms[i].enddate >= $scope.fullDate) {
+                                    $scope.act_term_id = $scope.schoolTerms[i].termid;
+                                    $scope.act_term_name = $scope.schoolTerms[i].title;
+                                }
+                            }
+                            if ($scope.act_term_id) {
+                                localStorage.act_term_id = $scope.act_term_id;
+                                localStorage.act_term_name = $scope.act_term_name;
+                            } else {
+                                localStorage.act_term_id = 0;
+                                localStorage.act_term_name = "لطفا ترم مورد نظر خود را انتخاب نمایید.";
+                            }
+                        }
+                    });
+                var sch = {
+                    ViewName: "majorbaseschoolselect",
+                    mutualTransaction: {
+                        kendoDataRequest: {
+                            filter: {
+                                field: "schoolid",
+                                logic: "and",
+                                operator: "eq",
+                                value: localStorage.schoolId + ""
+                            },
+                        }
+                    }
+                }
+                $http.post(URL_GET, JSON.stringify(sch))
+                    .success(function (result, status, headers, config) {
+                        $scope.schoolMajorBase = result.data;
+                        $scope.baseArray = [];
+                        for (var i = 0; i < $scope.schoolMajorBase.length; i++) {
+                            $scope.baseArray.push($scope.schoolMajorBase[i].code)
+                        }
+                        localStorage.schoolBase = JSON.stringify($scope.baseArray);
+                        $scope.adminCounter();
+                        document.location.replace("Main.html");
+                        document.location.reload();
+                    });
+            } else {
+                if (!$type) {
+                    $scope.eroretext = "نوع کاربر";
+                    $scope.title = " را انتخاب نمایید.";
+                } else if (!$schoole) {
+                    $scope.eroretext = "مدرسه";
+                    $scope.title = " را انتخاب نمایید.";
+                }
+
+            }
+        }
+        $scope.adminPoro = function () {
+            return localStorage.adminNeame;
+        }
+        $scope.adminImage = function () {
+            return localStorage.adminimg;
+        }
+        $scope.showConfirim = function () {
+            if ($scope.conShow == 0) {
+                return !1
+            } else if ($scope.conShow == 1) {
+                return !0
+            }
+        }
+        $scope.adminCounter = function () {
+            if (typeof (Storage) !== "undefined") {
+                if (localStorage.adminCount) {
+                    localStorage.adminCount = Number(localStorage.adminCount) + 1
+                } else {
+                    localStorage.adminCount = 1
+                }
+            } else {
+                alert("با عرض پوزش مرورگر شما از localStorage ما پشتیبانی نمیکند \t مروگر خود را اپدیت یا تغییر دهید سپس مجددا تلاش کنید.")
+            }
+        }
+        $scope.logoutAdmin = function () {
+            var j = confirm("آیا میخواهید از حساب خود خارج شوید ؟");
+            if (j === !0) {
+                localStorage.adminCount = "";
+                $scope.showPanel();
+                $scope.showLogin();
+            }
+        }
+        $scope.errText = function () {
+            return $scope.eroretext;
+        }
+        $scope.titlefunc = function () {
+            return $scope.title;
+        }
+
+    }
+
+    ])
+    ;
+
+</script>
+<script>
+
+    myfunc();
+
+    function myfunc() {
+
+        if ((!localStorage.adminId) || localStorage.adminCount == 0 || (!localStorage.adminCount || localStorage.adminCount == undefined || localStorage.adminCount == "undefined")) {
+
+        } else if ((localStorage.adminId) && localStorage.adminCount != 0 && (localStorage.adminCount && localStorage.adminCount != undefined && localStorage.adminCount != "undefined")) {
+            document.location.replace("Main.html");
+        }
+
+    }
+</script>
+
+</html>

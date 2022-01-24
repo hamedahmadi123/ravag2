@@ -1,0 +1,127 @@
+<div>
+    <div class="bg-light lter b-b wrapper-md" ng-init="app.settings.asideFixed = true;app.settings.headerFixed = true;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+                <h1 class="m-n font-thin h3"><img src="img/icon/karname2.png" class="icnSize"> کارت دانش آموزی </h1>
+                <span ng-if="studentClass.length != '0'"> کلاس ( {{studentClass[0].classname}})</span>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="float: left">
+                    <div class="panel-body">
+                        <button style="width: 100%" type="button" class="btn btn-addon , btn btn-default"
+                                ui-sref="app.page.ClassStudents"><i class="icon-arrow-left"></i> &nbsp;بازگشت
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="line line-dashed  line-lg pull-in"></div>
+
+    <div class="container">
+        <div class="panel panel-default" style="width: 100%;padding: 20px;">
+            <div class="panel-body">
+                <form class="form-validation" method="post" name="myform">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <div id="Note">
+
+                                <div ng-if="studentClass.length == '0'" align="center">
+                                    <img src="img/notFound(404).png" style="width: 50%; ; height: auto"
+                                         align="center"/>
+                                    <p style="font-size: 20px;display: table;margin-left: auto;margin-right: auto;padding: 10px">
+                                        هیچ دانش آموزی
+                                        در این کلاس
+                                        یافت نشد . </p>
+                                </div>
+                                <div align="center" ng-if="studentClass.length != '0'">
+                                    <div class="row" align="center" dir="rtl">
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                <div class="panel-body">
+                                                    <button style="width: 85%" type="button"
+                                                            ng-click="printDiv('printableArea');"
+                                                            class="btn btn-addon , btn btn-success"><i
+                                                            class="icon-printer">&nbsp;</i>
+                                                        چاپ لیست
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                <div class="panel-body">
+                                                    <button style="width: 85%" type="button"
+                                                            class="btn btn-addon , btn btn-danger"><i
+                                                            class="fa fa-file-pdf-o"></i>
+                                                        خروجی PDF
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div id="printableArea" align="center">
+                                        <div align="right">کلاس :
+                                            <span class="m-n font-thin h4">{{studentClass[0].classname}}</span>
+                                        </div>
+                                        <br>
+                                        <div class="container" style="width: 100%">
+                                            <div>
+                                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 row-no-padding"
+                                                     ng-repeat="item in studentClass | filter:gsearch">
+                                                    <div class="panel panel-default"
+                                                         style="width: 100%;height: auto;">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title" style="color: white">
+                                                                <div class="row">
+                                                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"
+                                                                         align="right">
+                                                                        <p style="width: 100%;color: #0a1015;margin-top: 5px;margin-right: 7px;">
+                                                                            {{item.schoolname}}</p>
+                                                                    </div>
+                                                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+
+                                                                    </div>
+                                                                </div>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="collapse1" class="panel-collapse collapse in">
+
+                                                            <div class="row">
+                                                                <div class="col-xs-7 col-sm-8 col-md-8 col-lg-8">
+                                                                    <div class="panel-body">
+                                                                        <p>
+                                                                            <span>نام و نام خانوادگی :</span>&nbsp;<span>{{item.firstname + ' ' + item.lastname}}</span>
+                                                                        </p>
+                                                                        <p>
+                                                                            <span>کد ملی :</span>&nbsp;<span>{{item.studentcode}}</span>
+                                                                        </p>
+                                                                        <p>
+                                                                            <span>کلاس :</span>&nbsp;<span>{{item.classname}}</span>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xs-5 col-sm-4 col-md-4 col-lg-4">
+                                                                    <div class="panel-body">
+                                                                        <img src="{{thisSt.image || 'img/userNopic.jpg'}}"
+                                                                             class="img-circle"
+                                                                             alt="تصویر دانش آموز"
+                                                                             style="width: 80px;height: 80px;">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

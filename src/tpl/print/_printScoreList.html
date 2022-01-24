@@ -1,0 +1,152 @@
+<style>
+    .icon-bar {
+        position: fixed;
+        top: 19%;
+        margin: 20px;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+
+    .icon-bar a {
+        display: block;
+        text-align: center;
+        padding: 16px;
+        transition: all 0.3s ease;
+        color: white;
+        font-size: 20px;
+    }
+
+    .icon-bar a:hover {
+        background-color: #000;
+    }
+
+    .print {
+        background: #23b7e5;
+        color: white;
+    }
+
+    .exel {
+        background: #27c24c;
+        color: white;
+    }
+
+    .pdf {
+        background: #dd4b39;
+        color: white;
+    }
+
+
+</style>
+<!--//print-->
+<div class="icon-bar , hidenPhone">
+    <a tooltip="چاپ لیست" class="print" ng-click="printDiv('printableArea');"><i class="icon-printer"></i></a>
+    <a tooltip="خروجی PDF" href="#" class="pdf"><i class="fa fa-file-pdf-o"></i></a>
+    <a tooltip="خروجی Excel" href="#" class="exel"><i class="fa fa-file-excel-o"></i></a>
+
+</div>
+<button class="hidedesktop" id="float" tooltip="چاپ لیست" ng-click="printDiv('printableArea');"><i class="icon-printer , my-float"></i></button>
+<!--//print-->
+<div class="container">
+    <div class="main-wrapper">
+        <div class="row">
+            <div class="container panel v-middle media-middle text-center align-items-center"
+                 style="position: relative;height: 29.7cm">
+                <div align="center">
+                    <div ng-if="classSession.length == '0'">
+                        <img src="img/notFound(404).png" style="width: 40% ; height: auto" align="center"/>
+                        <h5 id="txtNoOrd">متاسفانه دانش آموزی در
+                            این کلاس یافت نشد !</h5>
+                        <a style="color: black;text-decoration: underline" href="#/app/page/ClassStudents">بازگشت
+                            به
+                            لیست
+                            کلاس ها</a>
+                        <br><br>
+                        <br><br>
+                    </div>
+                    <div style="width: 100%" ng-if="classSession.length != '0'" id="printableArea">
+                        <br><br>
+                        <table class="table table-bordered">
+                            <div class="row" style="width: 100%;text-align: right;font-size: 12px;">
+                                <div style="float: right;width: 16%;" class="v-middle  media-middle text-center">
+                                    <img src="img/amozeshLogo.png" style="width: 70%;height: 110px">
+                                </div>
+                                <div style="float: right;width: 32%;border: 1px #eaeff0 solid;padding: 5px;">
+                                    <p>اداره کل : <span>اصفهان</span></p>
+                                    <p>منطقه : <span>اصفهان - ناحیه {{thisSchool.area}}</span></p>
+                                    <p>مدرسه : <span>{{thisSchool.code}} - {{thisSchool.name}}</span></p>
+                                    <p>سال تحصیلی : <span dir="ltr">{{year}} - {{nextYear}}</span></p>
+                                </div>
+
+                                <div style="width: 50%;;float: left; border: 1px #eaeff0 solid;padding: 5px;">
+                                    <p>کد و عنوان درس :
+                                        <span>{{classSession[0].code}} - {{classSession[0].lessonName}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>نمره قبولی : </span>{{classSession[0].passinggrade}}
+                                    </p>
+                                    <p>پایه : <span>{{classSession[0].baseName}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>کلاس : </span>{{classSession[0].classtitle}}
+                                    </p>
+                                    <p>رشته تحصیلی : <span>{{classSession[0].majorbaseName}}</span></p>
+                                    <p>دبیر : <span>{{classSession[0].teacherfirstname + " " + classSession[0].teacherlastname}}</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <br>
+                            <thead>
+                            <tr align="center">
+                                <th class="v-middle  media-middle text-center" style="width:4%;" rowspan="2">ردیف</th>
+                                <th class="v-middle  media-middle text-center" style="width:10%;" rowspan="2">نام و نام
+                                    خانوادگی
+                                </th>
+                                <th class="v-middle  media-middle text-center" style="width:6%;" rowspan="2">نام پدر
+                                </th>
+                                <th class="v-middle  media-middle text-center" style="width:20%;" colspan="2">نمره مستمر
+                                    *
+                                </th>
+                                <th class="v-middle  media-middle text-center" style="width:20%;" colspan="2">نمره
+                                    شایستگی **
+                                </th>
+                                <th class="v-middle  media-middle text-center" style="width:20%;" colspan="2">ارزشیابی
+                                    مجدد ***
+                                </th>
+                                <th class="v-middle  media-middle text-center" style="width:10%;" rowspan="2">ملاحضات
+                                </th>
+                            </tr>
+                            <tr>
+                                <th class="v-middle  media-middle text-center" style="width: 6%">به عدد</th>
+                                <th class="v-middle  media-middle text-center">به حروف</th>
+                                <th class="v-middle  media-middle text-center" style="width: 6%">به عدد</th>
+                                <th class="v-middle  media-middle text-center">به حروف</th>
+                                <th class="v-middle  media-middle text-center" style="width: 6%"÷>به عدد</th>
+                                <th class="v-middle  media-middle text-center">به حروف</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="mymodel in classSession">
+                                <td scope="row" class="v-middle  media-middle text-center">
+                                    {{ mymodel.index}}
+                                </td>
+                                <td class="v-middle  media-middle text-center">
+                                    {{ mymodel.lastname + " " + mymodel.firstname }}
+                                </td>
+                                <td class="v-middle  media-middle text-center">
+                                    {{mymodel.fathername}}
+                                </td>
+                                <td class="v-middle  media-middle text-center"
+                                    ng-repeat="n in [].constructor(7) track by $index">
+
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div style="position: absolute;
+                bottom: 0;
+                width: 90%;">
+                            <p dir="ltr" style="float: right;font-size: 15px">{{dateNow}}</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

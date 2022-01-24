@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="phone">
+    <img id="img-phone" src="pic/phone2.png" align="center" style="position: fixed; margin-right: 10px;
+ left: 1px; top: 1px; width:auto;height: 100%;  z-index: 1;"/>
+
+
+</div>
+
+
+<script>
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        setTimeout(function () {
+            console.log("***" + document.getElementById("img-phone").offsetWidth,
+                "***" + document.getElementById("img-phone").offsetHeight);
+
+
+
+
+
+
+
+            var elementById = document.getElementById('phone');
+            var DIV = document.createElement("div");
+            DIV.setAttribute("scrolling", "no");
+            DIV.style.border = "none";
+            DIV.style.left = "1px";
+            DIV.style.top = "1px";
+            // DIV.style.padding="1%"
+            DIV.style.position = "fixed";
+            DIV.style.width = "" + (document.getElementById("img-phone").offsetWidth)+"px";
+            DIV.width = "" +(document.getElementById("img-phone").offsetWidth)+"px";
+            DIV.style.height = "" + (document.getElementById("img-phone").offsetHeight)+"px";
+            DIV.height = "" +(document.getElementById("img-phone").offsetHeight)+"px";
+            elementById.appendChild(DIV);
+            var makeIframe = document.createElement("iframe");
+            makeIframe.setAttribute("src", "indexmain.php");
+            makeIframe.setAttribute("scrolling", "no");
+            makeIframe.style.border = "none";
+            makeIframe.style.left = "1px";
+            makeIframe.style.top = "1px";
+            makeIframe.style.position = "absolute";
+            makeIframe.style.margin="1% 1% 1% 1%";
+            makeIframe.style.width = "95%";
+            makeIframe.width =  "95%";
+            makeIframe.style.height =  "98%";
+            makeIframe.height =  "95%";
+            makeIframe.style.borderRadius = "50px";
+            DIV.appendChild(makeIframe);
+            //your code here
+        }, 300);
+
+    }, false);
+
+
+</script>
+
+</body>
+
+
+</html>

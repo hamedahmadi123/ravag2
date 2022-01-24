@@ -1,0 +1,337 @@
+<style>
+    .divs {
+        border: 1px dotted grey;
+        padding: 5px;
+    }
+
+    .divs:hover {
+        box-shadow: 0 0 6px rgba(35, 173, 255, 1);
+    }
+</style>
+<div>
+    <div class="bg-light lter b-b wrapper-md" ng-init="app.settings.asideFixed = true;app.settings.headerFixed = true;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+                <h1 class="m-n font-thin h4"><img src="img/icon/class2.png" class="icnSize"> برنامه درسی (
+                    {{class.title}} )</h1>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="float: left">
+                    <div class="panel-body">
+                        <a href="#/app/page/students">
+                            <button style="width: 100%;" type="button" class="btn btn-addon , btn btn-default"><i
+                                    class="icon-arrow-left"></i>
+                                بازگشت
+                            </button>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="line line-dashed  line-lg pull-in"></div>
+    <div class="container">
+        <div class="panel panel-default" style="width: 100%;padding: 20px;">
+            <div class="panel-body">
+                <form class="form-validation" method="post" name="myform">
+                    <div class="form-group">
+                        <div class="form-group"><p style="font-size: 16px"> کلاس : <b>{{class.title}}</b></p>
+                            <div class="line line-dashed  line-lg pull-in"></div>
+                            <div class="row" style="font-size: 16px;">
+
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <p><span>رشته تحصیلی :</span>&nbsp;<span>{{class.majorBaseName}}</span>
+                                    </p>
+
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <p>
+                                        <span>کلاس گروهی :</span>&nbsp;<span>{{groupClass(class.isgrouping)}}</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                            <div class="row" align="center" dir="rtl">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                        <div class="panel-body">
+                                            <button style="width: 85%" type="button"
+                                                    ui-sref="app.page.weeklyschedule({classid: cls_id})"
+                                                    class="btn btn-addon , btn btn-success"><i
+                                                    class="icon-printer">&nbsp;</i>
+                                                چاپ لیست
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="table-responsive" style="border: none">
+                                <table class="table table-striped" id="mytable">
+                                    <thead>
+                                    <tr>
+                                        <th ng-repeat="item in data1" class="v-middle  media-middle text-center"
+                                            scope="col">{{ item.name }}
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="x in week">
+                                        <td ng-repeat="item in data1" class="v-middle  media-middle text-center">
+                                            <div class="divs , TabelWeekly" style=" position: relative;"
+                                                 ng-show="item.value != 0">
+                                                <div style=" position: absolute; width:100%; height: 100%"
+                                                     ng-click="resetData()"
+                                                     ng-if="item.value != 0"
+                                                     data-toggle="modal"
+                                                     data-target="#myModal">
+                                                    <div draggable="false"
+                                                         ng-show="obj[x.value + '-' + item.value]"><br
+                                                            draggable="false">
+                                                        <span draggable="false"
+                                                              ng-show="obj[x.value + '-' + item.value]['child1'].teacherid">{{obj[x.value + '-' + item.value]['child1'].teacherName + " / " + obj[x.value + '-' + item.value]['child1'].lessonName}} </span>
+                                                        <span draggable="false"
+                                                              ng-show="obj[x.value + '-' + item.value]['child2'].teacherid"
+                                                              style="width: 100%">
+                                                <span draggable="false"><hr align="center" style="width: 80%"
+                                                                            draggable="false">{{obj[x.value + '-' + item.value]['child2'].teacherName + " / " + obj[x.value + '-' + item.value]['child2'].lessonName}}</span>
+                                            </span>
+                                                    </div>
+                                                </div>
+
+                                                <div style=" position: absolute; width:100%; height: 100% ;z-index:10; "
+                                                     ng-click="resetData()"
+                                                     id="divID" ng-if="item.value != 0"
+                                                     data-toggle="modal"
+                                                     data-target="#myModal"
+                                                     onclick="setTecherLesson(this)" draggable="true"
+                                                     ondrop="drop(event)"
+                                                     ondragover="allowDrop(event)"
+                                                     zang="{{item.value}}"
+                                                     day="{{x.value}}"
+                                                     ondragstart="drag(event)" id="{{item.value+(x.value*10)}}"
+                                                     ondragenter="drogEnter(event)">
+                                                </div>
+                                            </div>
+                                            <span ng-if="item.value == 0">{{x.name}}</span>
+
+                                        </td>
+
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+            </div>
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close"
+                                    data-dismiss="modal">&times;
+                            </button>
+                            <h4 class="modal-title">
+                                <img src="img/icon/report.png" class="icnSize">
+                                برنامه ریزی کلاسی
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <div class="row">
+
+
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="panel-body">
+                                            <div class="alert alert-danger" ng-show="errText()">
+                                                <i class="icon-info"></i> &nbsp; <strong> {{errText()}}&nbsp;</strong>را
+                                                مشخص
+                                                نمایید .
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="panel-body">
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 8px;"><span
+                                                            class="starstyle">*</span>معلم :</label>
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <select tooltip="مدرس این کلاس"
+                                                                ng-model="tl_techer"
+                                                                ng-options="th.index as th.firstname + ' ' + th.lastname  for th in thechers "
+                                                                class="form-control rounded">
+                                                            <option ng-disabled="true"
+                                                                    ng-selected="false" value="">معلم مورد نظر
+                                                                را انتخاب
+                                                                نمایید.
+                                                            </option>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="panel-body">
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 8px;"><span
+                                                            class="starstyle">*</span>درس :</label>
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <select tooltip="انتخاب درس"
+                                                                ng-model="tl_drs"
+                                                                ng-options="drs.index as drs.title for drs in lessons"
+                                                                class="form-control rounded">
+                                                            <option ng-disabled="true"
+                                                                    ng-selected="false" value="">درس مورد نظر
+                                                                را انتخاب
+                                                                نمایید.
+                                                            </option>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="panel-body">
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 8px;">تگ
+                                                        زنگ
+                                                        :</label>
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <div style="margin-top: 5px">
+                                                            <input tooltip="تک زنگ درسی" id="toggle" class="checkStyle"
+                                                                   ng-model="tl_shift"
+                                                                   type="checkbox"/>
+                                                            <label for="toggle" class="labelClass"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div ng-show="tl_shift">
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                    <br>
+                                                    <div class="alert alert-info">
+                                                        <strong>اطلاعات مربوط به تگ زنگ دوم</strong>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                               style="margin-top: 8px;"><span
+                                                                class="starstyle">*</span>معلم :</label>
+                                                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                            <select tooltip="مدرس این کلاس تگ زنگ دوم"
+                                                                    ng-model="tl_techer2"
+                                                                    ng-options="th.index as th.firstname + ' ' + th.lastname  for th in thechers"
+                                                                    class="form-control rounded">
+                                                                <option ng-disabled="true"
+                                                                        ng-selected="false" value="">معلم مورد نظر
+                                                                    را انتخاب
+                                                                    نمایید.
+                                                                </option>
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="panel-body">
+                                                        <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                               style="margin-top: 8px;"><span
+                                                                class="starstyle">*</span>درس :</label>
+                                                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                            <select tooltip="انتخاب درس تگ زنگ دوم"
+                                                                    ng-model="tl_drs2"
+                                                                    ng-options="drs.index as drs.title for drs in lessons"
+                                                                    class="form-control rounded">
+                                                                <option ng-disabled="true"
+                                                                        ng-selected="false" value="">درس مورد نظر
+                                                                    را انتخاب
+                                                                    نمایید.
+                                                                </option>
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div style="width: 100%;">
+                                <br>
+                                <div class="row">
+                                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                        <button ng-click="insertTecherLesson(tl_shift,thechers[tl_techer].teacherid  , thechers[tl_techer].firstname + ' ' + thechers[tl_techer].lastname , lessons[tl_drs].lessonid  ,  lessons[tl_drs].title  , thechers[tl_techer2].teacherid  , thechers[tl_techer2].firstname + ' ' + thechers[tl_techer2].lastname , lessons[tl_drs2].lessonid  ,  lessons[tl_drs2].title )"
+                                                style="width: 100%;" type="submit" class="btn btn-success">
+                                            <i class="icon-check"></i> &nbsp; <span> تایید   </span>
+                                        </button>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                        <button ng-click="deleteTecherLesson()"
+                                                style="width: 100%;" type="submit" class="btn btn-danger">
+                                            <i class="icon-trash"></i> &nbsp; <span> حذف   </span>
+                                        </button>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="color: white">
+                                        <button data-dismiss="modal"
+                                                style="width: 100%;background-color: #6c757d"
+                                                type="submit" href="index.html"
+                                                class="btn btn-light">
+                                            <i class="icon-close"></i>
+                                            &nbsp;
+                                            <span> لغو </span></button>
+                                    </div>
+
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function allowDrop(ev) {
+                ev.preventDefault();
+            }
+
+            function drag(ev) {
+                ev.dataTransfer.setData("id", ev.target.id);
+                ev.dataTransfer.setData("zang", ev.target.getAttribute('zang'));
+                ev.dataTransfer.setData("day", ev.target.getAttribute('day'));
+            }
+
+            function setTecherLesson(event) {
+                thisday = event.getAttribute('day');
+                thiszang = event.getAttribute('zang');
+            }
+
+            function drogEnter(event) {
+
+                if (event.fromElement.id == event.toElement.id) {
+                    return;
+                }
+            }
+
+            function drop(ev) {
+                ev.preventDefault();
+                thisday = ev.target.getAttribute('day');
+                thiszang = ev.target.getAttribute('zang');
+                var oldDay = ev.dataTransfer.getData("day");
+                var oldZang = ev.dataTransfer.getData("zang");
+                var thisZang = ev.target.getAttribute('zang');
+                var thisDay = ev.target.getAttribute('day');
+                if (thisZang == null)
+                    return;
+                var oldObj = oldDay + '-' + oldZang;
+                var thisObj = thisDay + '-' + thisZang;
+                angular.element(document.getElementById('divID')).scope().TestAngularMethod(oldObj, thisObj);
+
+            }
+        </script>
+    </div>
+</div>

@@ -1,0 +1,299 @@
+<div ng-controller="jalase">
+    <div class="bg-light lter b-b wrapper-md" ng-init="app.settings.asideFixed = true;app.settings.headerFixed = true;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+                <h1 class="m-n font-thin h3"><img src="img/icon/jalase.png" class="icnSize"> لیست جلسات </h1>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="float: left">
+                    <div class="panel-body">
+                        <button type="button" class="btn btn-default" data-toggle="modal" style="width: 100%"
+                                data-target="#myModal"><i class="icon-plus"></i> &nbsp;افزودن جلسه جدید
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="line line-dashed  line-lg pull-in"></div>
+    <div class="container">
+        <div class="main-wrapper">
+            <div class="row">
+                <div class="container panel v-middle media-middle text-center align-items-center">
+                    <br>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <td
+                                    style="width:2%; text-align: center ">#
+                                </td>
+                                <td class="v-middle  media-middle text-center"
+                                    style="width:28%; text-align: center">عنوان
+                                    جلسه
+                                </td>
+                                <td class="v-middle  media-middle text-center"
+                                    style="width:20%; text-align: center">بازه
+                                    زمانی
+                                </td>
+                                <td class="v-middle  media-middle text-center"
+                                    style="width:10%; text-align: center ">ویرایش
+                                </td>
+                                <td class="v-middle  media-middle text-center"
+                                    style="width:10%; text-align: center ">حذف
+                                </td>
+                            </tr>
+                            </thead>
+                            <tbody infinite-scroll='load2()' infinite-scroll-distance='0'>
+                            <tr ng-repeat='mymodel in name | filter : gsearch'>
+                                <th scope="row">
+                                    {{mymodel.sessiontypeid}}
+                                </th>
+                                <td class="v-middle  media-middle text-center">
+                                    {{ mymodel.name || 'خالی'}}
+                                </td>
+                                <td class="v-middle  media-middle text-center">
+                                    {{stateReturn(mymodel.sessionstate)}}
+                                </td>
+                                <td class="v-middle  media-middle text-center">
+                                    <button ng-click="detial(mymodel.sessiontypeid)"
+                                            data-toggle="modal"
+                                            data-target="#update" class="btn btn-sm btn-info">
+                                        <i class="icon-pencil"></i>&nbsp;ویرایش
+                                    </button>
+                                </td>
+                                <td class="v-middle  media-middle text-center">
+
+                                    <button class="btn btn-sm btn-danger"
+                                            ng-click="deleteJalase(mymodel.sessiontypeid,mymodel.name)">
+                                        <i
+                                                class="icon-trash"></i>&nbsp;حذف
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="update" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close"
+                                    data-dismiss="modal">&times;
+                            </button>
+                            <h4 class="modal-title">
+                                <img src="img/icon/report.png" class="icnSize">
+                                ویرایش جلسه ({{jlsDetail.name}})
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="panel-body">
+                                            <div class="alert alert-danger" ng-show="errText()">
+                                                <i class="icon-info"></i> &nbsp; <strong>
+                                                {{errText()}}&nbsp;</strong>
+                                                &nbsp; را مشخص نمایید.
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="panel-body">
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 8px;">شناسه: </label>
+                                                   <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <input ng-model="jls_id"
+                                                               class="form-control rounded"
+                                                               ng-disabled="true" tooltip="شناسه"
+                                                               placeholder="شناسه...."
+                                                               ng-required="true" type="text"
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="panel-body">
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 8px;"><span
+                                                            class="starstyle">*</span>عنوان:</label>
+                                                   <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <input ng-model="jls_nameE"
+                                                               class="form-control rounded"
+                                                               placeholder="عنوان جلسه  ...."
+                                                               tooltip="عنوان جلسه"
+                                                               ng-required="true" type="text"
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="panel-body">
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 8px;"><span
+                                                            class="starstyle">*</span>بازه
+                                                        زمانی:</label>
+                                                   <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <select ng-required="true"
+                                                                tooltip="بازه زمانی جلسه"
+                                                                ng-model="jls_vaziatE"
+                                                                ng-options="vaz.value as vaz.name for vaz in vaziat "
+                                                                class="form-control rounded">
+                                                            <option ng-disabled="true"
+                                                                    ng-selected="false" value="">
+                                                                بازه زمانی
+                                                                جلسه
+                                                                مورد
+                                                                نظر را انتخاب
+                                                                نمایید.
+                                                            </option>
+
+                                                        </select>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <div style="width: 100%;margin-right: 20px;">
+                                <br>
+                                <div class="row">
+
+                                    <div class="col-xs-4 col-sm-2 col-md-4 col-lg-2"
+                                         style="float: right;margin-right: 20px;color: white">
+                                        <button data-dismiss="modal"
+                                                style="width: 100%;background-color: #6c757d"
+                                                type="submit" href="index.html"
+                                                class="btn btn-light">
+                                            <i class="icon-close"></i>&nbsp;<span> لغو </span>
+                                        </button>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4"
+                                         style="float: right;color: white">
+                                        <button ng-click="updateJlase(jlsDetail.sessiontypeid)"
+                                                style="width: 105%;background-color: #0F9E5E;"
+                                                type="submit" class="btn btn-light">
+                                            <i class="icon-pencil"></i> &nbsp; <span
+                                                style="color: white"> ویرایش   </span>
+                                        </button>
+                                    </div>
+
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close"
+                                    data-dismiss="modal">&times;
+                            </button>
+                            <h4 class="modal-title">
+                                <img src="img/icon/jalase.png" class="icnSize">
+                                افزودن جلسه جدید
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="panel-body">
+                                            <div class="alert alert-danger" ng-show="errText()">
+                                                <i class="icon-info"></i> &nbsp; <strong>
+                                                {{errText()}}&nbsp;</strong> را مضخص
+                                                نمایید. &nbsp;
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="panel-body">
+
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 8px;"><span
+                                                            class="starstyle">*</span>عنوان:</label>
+                                                   <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <input ng-model="jls_name"
+                                                               class="form-control rounded"
+                                                               tooltip="عنوان جلسه"
+                                                               placeholder="عنوان جلسه  ...."
+                                                               ng-required="true" type="text"
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="panel-body">
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 8px;"><span
+                                                            class="starstyle">*</span>بازه زمانی
+                                                        : </label>
+                                                   <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <select ng-required="true"
+                                                                tooltip="بازه زمانی جلسه"
+                                                                ng-model="jls_vaziat"
+                                                                ng-options="vaz.value as vaz.name for vaz in vaziat "
+                                                                class="form-control rounded">
+                                                            <option ng-disabled="true"
+                                                                    ng-selected="false" value="">
+                                                                بازه زمانی
+                                                                جلسه
+                                                                مورد
+                                                                نظر را انتخاب
+                                                                نمایید.
+                                                            </option>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div style="width: 100%;margin-right: 20px;">
+                                <br>
+                                <div class="row">
+
+                                    <div class="col-xs-4 col-sm-2 col-md-4 col-lg-2"
+                                         style="float: right;margin-right: 20px;color: white">
+                                        <button data-dismiss="modal"
+                                                style="width: 100%;background-color: #6c757d"
+                                                type="submit" href="index.html"
+                                                class="btn btn-light">
+                                            <i class="icon-close"></i>&nbsp;<span> لغو </span>
+                                        </button>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4"
+                                         style="float: right;color: white">
+                                        <button ng-click="insertJalase()"
+                                                style="width: 105%;background-color: #0F9E5E;"
+                                                type="submit" class="btn btn-light">
+                                            <i class="icon-pencil"></i> &nbsp; <span
+                                                style="color: white"> درج   </span>
+                                        </button>
+                                    </div>
+
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

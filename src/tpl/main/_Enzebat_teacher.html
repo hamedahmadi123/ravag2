@@ -1,0 +1,171 @@
+<div ng-controller="Enzebat_teacher">
+    <div class="bg-light lter b-b wrapper-md" ng-init="app.settings.asideFixed = true;app.settings.headerFixed = true;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-7">
+                <h1 class="m-n font-thin h3"><img src="img/icon/diagram.png" class="icnSize">عملکرد کاری / رفتاری معلمین</h1>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-5">
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="panel-body">
+                        <button style="width: 100%" type="button" class="btn btn-addon , btn btn-default"
+                                ui-sref="app.page.Enzebat_teacher_insert"><i class="icon-plus"></i> &nbsp;ثبت انضباط
+                            جدید
+                        </button>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="panel-body">
+                        <button style="width: 100%" type="button" class="btn btn-addon , btn btn-default"
+                                ng-click="deleteAll()" ><i class="icon-trash"></i> &nbsp;حذف موارد
+                            انتخاب شده
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="line line-dashed  line-lg pull-in"></div>
+    <div class="container">
+        <div class="main-wrapper">
+            <div class="row">
+                <div class="container panel v-middle media-middle text-center align-items-center">
+                    <br>
+                    <div class="panel panel-default" style="width: 100%;">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                        <div class="panel-body">
+                                            <h4 align="right">لیست {{filterText}}</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="float: left">
+                                            <div class="panel-body">
+                                                <input id="gsearch" ng-model="gsearch"
+                                                       class="form-control rounded" style="width: 100%;"
+                                                       placeholder="جستجو ..." type="text"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2"
+                                             style="margin-top: 3px;float: left">
+                                            <div class="panel-body" style="float: left">
+                                                <button style="width: 100%;" class="btn btn-link"
+                                                        onclick="tableToExcel('tblExport' , 'لیست دانش آموزان')">
+                                                    <i class="fa fa-file-excel-o"></i>
+                                                    خروجی Excel
+                                                </button>
+                                            </div>
+                                        </div>
+                                        &nbsp;
+                                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2" style="margin-top: 3px;">
+                                            <div class="panel-body" style="float: left">
+                                                <button style="width: 100%;" class="btn btn-link"
+                                                        ng-click="printDiv('tblExport');">
+                                                    <i class="fa fa-print"></i>
+                                                    چاپ لیست
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped" id="tblExport">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">انتخاب</th>
+                                                <th scope="col" class="v-middle  media-middle text-center ">#</th>
+                                                <th scope="col" class="v-middle  media-middle text-center ">مورد انظباطی</th>
+                                                <th scope="col" class="v-middle  media-middle text-center ">تاریخ ثبت</th>
+                                                <th scope="col" class="v-middle  media-middle text-center ">نام دبیر</th>
+                                                <th scope="col" class="v-middle  media-middle text-center ">کلاس</th>
+                                                <th scope="col" class="v-middle  media-middle text-center ">درس</th>
+                                                <th scope="col" class="v-middle  media-middle text-center ">روز</th>
+                                                <th scope="col" class="v-middle  media-middle text-center ">زنگ</th>
+                                                <th scope="col" class="v-middle  media-middle text-center ">ویرایش</th>
+                                                <th scope="col" class="v-middle  media-middle text-center ">حذف</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody infinite-scroll='load2()' infinite-scroll-distance='0' >
+                                            <tr ng-repeat='mymodel in name | filter : gsearch' ng-click="itemArray(mymodel.teacherdisciplineid,(!checkbox1))">
+                                                <td class="v-middle  media-middle text-center" scope="row">
+                                                    <label class="containerCheckBox">
+                                                        <br>
+                                                        <input type="checkbox" ng-model="obj_clt[mymodel.teacherdisciplineid]" id="{{mymodel.teacherdisciplineid}}"
+                                                               ng-change="itemArray(mymodel.teacherdisciplineid,checkbox1)">
+                                                        <span class="checkmark2"
+                                                              style="margin-left: 5px;margin-top: 5px"></span>
+                                                    </label>
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    {{mymodel.teacherdisciplineid}}
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    {{ mymodel.disciplineName}}
+                                                </td>
+                                                <td class="v-middle  media-middle text-center" dir="ltr">
+                                                    {{crDate( mymodel.createdAt)}}
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    {{mymodel.firstname + ' ' + mymodel.lastname}}
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    {{mymodel.className}}
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    {{mymodel.lessonName}}
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    {{returnDay(mymodel.day)}}
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                <span>زنگ </span>    {{mymodel.zang}}
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    <button class="btn btn-sm btn-info"  ui-sref="app.page.Enzebat_teacher_update({disid: mymodel.teacherdisciplineid})">
+                                                        <i class="icon-trash"></i>&nbsp;ویرایش
+                                                    </button>
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    <button class="btn btn-sm btn-danger" ng-click="deleteDis(mymodel.teacherdisciplineid,mymodel.firstname + ' ' + mymodel.lastname)">
+                                                        <i class="icon-trash"></i>&nbsp;حذف
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var tableToExcel = (function () {
+            var uri = 'data:application/vnd.ms-excel;base64,'
+                ,
+                template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+                , base64 = function (s) {
+                    return window.btoa(unescape(encodeURIComponent(s)))
+                }
+                , format = function (s, c) {
+                    return s.replace(/{(\w+)}/g, function (m, p) {
+                        return c[p];
+                    })
+                }
+            return function (table, name) {
+                if (!table.nodeType) table = document.getElementById(table)
+                var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+                window.location.href = uri + base64(format(template, ctx))
+            }
+        })()
+    </script>
+</div>

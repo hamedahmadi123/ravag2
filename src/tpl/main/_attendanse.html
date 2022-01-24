@@ -1,0 +1,143 @@
+<div ng-controller="attendanse">
+    <div class="bg-light lter b-b wrapper-md" ng-init="app.settings.asideFixed = true;app.settings.headerFixed = true;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+                <h1 class="m-n font-thin h3"><img src="img/icon/report2.png" class="icnSize"> لیست غیبت های دانش آموزان
+                </h1>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="float: left">
+                    <div class="panel-body">
+                        <a ng-click="BackToHistory()">
+                            <button style="width: 100%;" type="button" class="btn btn-addon , btn btn-default"><i
+                                    class="icon-arrow-left"></i>
+                                بازگشت
+                            </button>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="line line-dashed  line-lg pull-in"></div>
+    <div class="container">
+        <div class="panel panel-default" style="width: 100%;padding: 20px;">
+            <div class="m-n font-thin h3">
+                <h5></h5>
+            </div>
+            <div class="panel-body">
+                <form class="form-validation" method="post" name="myform">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="panel-heading font-bold" style="background-color: #f6f8f8">
+                                <i class="glyphicon glyphicon-info-sign"></i>&nbsp;<span>برای مشاهده غیبت های دانش آموزان ابتدا بازه زمانی تاریخ غیبت مورد نظر را وارد نمایید.</span>
+                            </div>
+                            <br>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="panel-body">
+                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                           style="margin-top: 8px;"><span
+                                            class="starstyle">*</span>از تاریخ :</label>
+                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" >
+                                        <adm-dtp ng-model="absndateAz" ng-required="true"
+                                                 options="{calType: 'jalali', format: 'YYYY-MM-DD',autoClose:true,default: 'today'}"></adm-dtp>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="panel-body">
+                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                           style="margin-top: 8px;"><span
+                                            class="starstyle">*</span>تا تاریخ :</label>
+                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" >
+                                        <adm-dtp ng-model="absndateTa" ng-required="true"
+                                                 options="{calType: 'jalali', format: 'YYYY-MM-DD',autoClose:true,default: 'today'}"></adm-dtp>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="line line-dashed b-b line-lg pull-in"></div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4"
+                             ng-repeat="item in absent_st | filter:gsearch">
+                            <div class="panel panel-default" style="width: 100%;height: auto;">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title" style="color: white">
+                                        <div class="row">
+                                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                                <p style="width: 100%;color: #0a1015;margin-top: 10px;">
+                                                    {{item.stFname + ' ' + item.stLname}} </p>
+                                            </div>
+                                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                                <h5 ng-show="item.isillegal == 1" tooltip="نوع غیبت (غیر مجاز)"
+                                                    style="float: left;padding: 5px;color: red">غ.م</h5>
+                                                <h5 ng-show="item.isillegal == 0" tooltip="نوع غیبت (مجاز)"
+                                                    style="float: left;padding: 5px;color: green">م</h5>
+                                            </div>
+                                        </div>
+                                    </h4>
+                                </div>
+                                <div id="collapse1" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <p><span>کلاس :</span>&nbsp;<span>{{item.className}}</span></p>
+                                        <p><span>درس :</span>&nbsp;<span>{{item.lessonName}}</span></p>
+                                        <p><span>تاریخ غیبت :</span>&nbsp;<span dir="ltr">{{crDate(item.createdAt)}}</span></p>
+                                        <div class="line line-dashed line-lg pull-in"></div>
+                                        <div class="row">
+                                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                                <label class="containerCheckBox"><span
+                                                        style="font-size: 13px;">مجاز</span>
+                                                    <input type="radio" name="radio" id="mojaz" ng-model="mojaz"
+                                                           ng-click="checkAbsen('0' , item.studentid)"
+                                                           ng-value="false">
+                                                    <span class="checkmark2"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                                <label class="containerCheckBox"><span
+                                                        style="font-size: 13px;">غیر مجاز</span>
+                                                    <input type="radio" name="radio" id="g_mojaz" ng-model="g_mojaz"
+                                                           ng-click="checkAbsen('1',item.studentid)"
+                                                           ng-value="false">
+                                                    <span class="checkmark2"></span>
+                                                </label>
+                                            </div>
+                                            <div class="line line-dashed line-lg pull-in" ng-show="!absn_note_show[item.studentid]"></div>
+                                            <div class="panel-body" ng-show="absn_note_show[item.studentid]">
+                                                    <textarea rows="3"
+                                                              style="width:100%;"
+                                                              ng-model="absn_note"
+                                                              ui-validate=""
+                                                              placeholder="یادداشت..."
+                                                              type="text">
+                                                    </textarea>
+                                            </div>
+                                            <div class="row" ng-show="showBTN">
+                                                <div class="panel-body">
+                                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                                        <button style="width: 80%;" type="button" ng-click="cancelAbsent(item.studentid)"
+                                                                class="btn btn-addon , btn btn-default"><i
+                                                                class="fa fa-times"></i>
+                                                           لغو
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                                        <button style="width: 80%;" type="button" ng-click="absentUpdate(item.studentid,item.createdAt,absn_note)"
+                                                                class="btn btn-addon , btn btn-success"><i
+                                                                class="fa fa-check"></i>
+                                                            تایید
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

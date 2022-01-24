@@ -1,0 +1,257 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>webAR video presenter | webAR</title>
+    <meta name="keywords" content="AR VR XR webAR browser XR+ XR.+ xr.plus">
+    <meta name="description" content="green screen video example | AR on web">
+
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport"
+          content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, shrink-to-fit=no">
+    <meta name="mobile-web-app-capable" content="yes"> <!-- fullscreen if added in homescreen -->
+    <meta name="google" value="notranslate">
+
+    <meta name="theme-color" content="#000000">
+
+    <meta property="og:updated_time" content="1572091811">
+
+    <meta property="og:image" content="https://xr.plus/s/201804/jsv/p512.jpg">
+    <meta property="og:image:secure_url" content="https://xr.plus/s/201804/jsv/p512.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="500">
+    <meta property="og:image:height" content="500">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="webAR video presenter">
+    <meta property="og:description" content="Create and publish AR &amp; VR projects directly in web browsers">
+    <meta property="og:site_name" content="XR.+">
+    <meta property="og:url" content="https://xr.plus/jsv">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@XRdotplus">
+    <meta name="twitter:creator" content="@XRdotplus">
+    <meta name="twitter:title" content="webAR video presenter">
+    <meta name="twitter:description" content="Create and publish AR &amp; VR projects directly in web browsers">
+    <meta name="twitter:image" content="https://xr.plus/s/201804/jsv/p512.jpg">
+
+    <link rel="stylesheet" type="text/css" href="https://xr.plus/fonts/inter/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="par/css/default.css">
+
+    <style>
+        #preloader {
+            z-index: 101;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #e0e0e0;
+        }
+
+        #preloader > div {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #preloader .spinner {
+            margin: auto;
+            width: 160px;
+            height: 160px;
+            position: relative;
+            border-radius: 50%;
+            border: 5px solid white;
+            border-right: 5px solid red;
+            border-bottom: 5px solid red;
+            border-left: 5px solid red;
+            animation: spin 1s ease infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotateZ(0);
+            }
+            100% {
+                transform: rotateZ(359deg);
+            }
+        }
+
+        #access, #noAccess, #noCamera, #desktop {
+            display: none;
+        }
+
+    </style>
+
+
+</head>
+
+<body class="ar defaultBranding fid landscape m" cz-shortcut-listen="true">
+<!-- https://xr.plus/ -->
+
+
+<canvas id="threejs" width="1035" height="776" style="width: 1035px; height: 776px;"></canvas>
+
+
+<div id="sceneLoader" class="brandingBg" style="display: none;">
+    <div>
+        <h1>webAR video presenter</h1>
+        <p data-text="loadingTheMagic">loading the magic</p>
+        <div class="filler">
+            <div id="fill" class="fill" style="width: 83%;"></div>
+        </div>
+    </div>
+</div>
+
+<div id="playPanel" class="brandingBg" style="display: none;">
+    <div></div>
+    <p data-text="start">start</p>
+</div>
+
+
+<div id="noAccess">
+    <div>
+        <h3 data-text="noAccess">No camera access</h3>
+        <p data-text="yesCamera" id="yesCamera">Accessing your device camera is required for augmented reality
+            experiences</p>
+        <div id="noCamera"><p data-text="noCamera">Sorry, but it seems you have no camera plugged-in. Plug a camera and
+            try again</p></div>
+        <p><a data-text="tryAgain" class="button" id="tryAgain" target="_self" href="https://xr.plus/jsv">try again</a>
+        </p>
+
+    </div>
+</div>
+
+
+<div id="logo"><img src="https://xr.plus/assets/logo.png" alt=""></div>
+<div id="social">
+        <span data-index="0" style="display: none;">
+</span>
+</div>
+
+<div class="pattern">
+    <div class="brandingBg">
+        <p data-text="direct">Point the camera to this image</p>
+        <img class="patternPreview" src="https://xr.plus/assets/xrplus-marker-512.png" alt="">
+        <span class="button" id="b_marker" data-text="help">Help</span>
+
+    </div>
+</div>
+
+<footer class="brandingBg">
+    <div id="mainButton"></div>
+    <div id="pages" style="display: none;"></div>
+    <div class="modules">
+        <div class="module statesModule brandingBg activeScene" data-scene="0"><h3>interactions</h3>
+            <div class="buttons" style="text-align: left;"><span class="button" style="visibility: hidden;"></span>
+            </div>
+        </div>
+    </div>
+    <div id="sceneSelector"></div>
+    <div id="orientation">
+        <ul style="display: block;">
+            <li id="h" data-text="flat" class="active">flat</li>
+            <li id="v" data-text="vertical">vertical</li>
+        </ul>
+    </div>
+
+    <div id="tools">
+        <div id="toolsButtonsWrapper"></div>
+    </div>
+    <div class="title brandingBg">
+        <div>
+        </div>
+    </div>
+</footer>
+
+<div id="help" class="brandingBg">
+
+    <div class="image"><img class="help" src="par/assets/help.jpg" alt=""></div>
+    <div class="text mobile">
+        <p data-text="onAnother">On another phone or on a computer, <br>visit <span
+                class="link">https://xr.plus/p</span> <br>to display the AR tracking image.</p>
+    </div>
+    <div class="text desktop">
+        <p class="url"><span class="link">xr.plus/jsv</span></p>
+        <p data-text="visitThisLink">Visit this link with your phone browser<br>and point the phone camera here.</p>
+        <!-- <p><a data-text="displayThePattern" class="button" href="xr.plus/p" target="self">display the AR pattern</a></p> -->
+    </div>
+    <ul class="patternPreviews">
+        <li data-img="https://xr.plus/assets/xrplus-marker-512.png" data-index="0"><img
+                src="https://xr.plus/assets/xrplus-marker-512.png" alt=""></li>
+    </ul>
+    <span class="b_close" id="b_close_help"></span>
+</div>
+
+<div id="patternLarge" class="brandingBg">
+    <div class="image"><img class="patternPreview" src="https://xr.plus/assets/xrplus-marker-512.png" alt="ar marker">
+    </div>
+    <span class="b_close" id="b_close_patternLarge"></span>
+</div>
+
+<div id="more" class="brandingBg">
+    <h1></h1>
+    <span class="by"></span>
+    <span class="description"></span>
+    <div>
+        <p data-text="discoverMoreOnTheHome" class="discover">Discover more</p>
+        <div class="items">
+            <a class="item" href="https://xr.plus/"><img src="https://xr.plus/s/201812/3x9/p256.jpg" alt="Vika + Miśu"></a>
+            <a class="item" href="https://xr.plus/"><img src="https://xr.plus/s/201810/u8s/p256.jpg"
+                                                         alt="Birds slideshow"></a>
+            <a class="item" href="https://xr.plus/"><img src="https://xr.plus/s/201810/saj/p256.jpg"
+                                                         alt="Perfume bottle"></a>
+        </div>
+        <p data-text="joinTheCommunity">Join the community to publish <br>3d models and images in augmented reality</p>
+        <a data-text="joinNow" class="button join" target="_top" href="https://xr.plus/register">Join now</a>
+    </div>
+    <span class="b_close" id="b_close_more"></span>
+</div>
+
+<div id="redirection" class="brandingBg">
+    <h1></h1>
+    <span class="by"></span>
+    <span class="description"></span>
+    <div>
+        <p id="p_redirection"></p>
+        <p><a class="button" id="b_redirection" href="" target="_top"></a></p>
+    </div>
+    <span class="b_close" id="b_close_redirection"></span>
+</div>
+
+
+<video id="bgVideo" autoplay="" muted="" playsinline="" width="640" height="480"></video>
+
+<script>
+    var _language = navigator.language || navigator.userLanguage;
+    const _domainMin = "xr.plus";
+    const _rootDirectory = "https://xr.plus/";
+    const _projectURL = "jsv";
+    const _folder = "par/";
+    const _preview = "https://xr.plus/s/201804/jsv/p512.jpg";
+    var _patternPageURL = 'https://xr.plus/p';
+    var _isVertical = false;
+    const _desktopEnabled = true;
+    const _skipDesktopAR = false;
+    const _isNFT = false;
+    const _isDebug = false;
+    var stats = null;
+</script>
+
+
+<script src="https://xr.plus/js/is.min.js"></script>
+<script src="https://xr.plus/js/jszip315.min.js"></script>
+<script src="https://xr.plus/js/jszip-utils.fork.js"></script>
+<script src="https://xr.plus/js/3-105.js"></script>
+<script>var artoolkit_wasm_url = "https://xr.plus/js/wasm/artoolkit_wasm.wasm";</script>
+<script src="https://xr.plus/js/wasm/artoolkit_wasm.js"></script>
+<script src="par/js/process-ars-dist.js"></script>
+
+
+<video loaded="true" class="videoTexture" height="128" width="128" data-scene="0" data-mat="0" loop="" playsinline="">
+    <source src="https://xr.plus/s/201804/jsv/color-upload-0.mp4" type="video/mp4">
+</video>
+<div id="loadingTools"><p>please wait...</p></div>
+</body>
+</html>
