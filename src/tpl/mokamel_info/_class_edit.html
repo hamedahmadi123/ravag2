@@ -35,7 +35,7 @@
                         <div class="panel-body">
 
                             <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label" style="margin-top: 8px;">شناسه:</label>
-                           <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                                 <input ng-model="cls_id" class="form-control rounded"
                                        tooltip="شناسه ترم" ng-disabled="true"
                                        type="text">
@@ -45,10 +45,11 @@
                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                         <div class="panel-body">
 
-                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label" style="margin-top: 8px;"><span
+                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                   style="margin-top: 8px;"><span
                                     class="starstyle">*</span>نام
                                 کلاس :</label>
-                           <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                                 <input ng-model="cls_name" class="form-control rounded" tooltip="نام کلاس"
                                        placeholder="نام..."
                                        ng-required="true" type="text">
@@ -59,9 +60,10 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                             <div class="panel-body">
-                                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label" style="margin-top: 8px;"><span
+                                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                       style="margin-top: 8px;"><span
                                         class="starstyle">*</span>ترم :</label>
-                               <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                                     <select ng-required="true"
                                             ng-model="cls_term" tooltip="ترم تحصیلی"
                                             ng-options="trm.termid as trm.title for trm in terms "
@@ -75,9 +77,10 @@
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                             <div class="panel-body">
-                                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label" style="margin-top: 8px;"><span
+                                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                       style="margin-top: 8px;"><span
                                         class="starstyle">*</span>کلاس گروهی :</label>
-                               <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                                     <div style="margin-top: 5px">
                                         <input tooltip="گروهی" id="toggle" class="checkStyle" ng-model="cls_isgrouping"
                                                type="checkbox"/>
@@ -91,11 +94,12 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                             <div class="panel-body">
-                                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label" style="margin-top: 8px;"><span
+                                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                       style="margin-top: 8px;"><span
                                         class="starstyle">*</span>پایه تحصیلی:</label>
-                               <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                                     <select ng-required="true" tooltip="پایه تحصیلی"
-                                            ng-model="cls_base"  ng-show="isMajor"
+                                            ng-model="cls_base" ng-show="isMajor"
                                             ng-options="pyh.majorbaseid  as pyh.description  for pyh in majorbase"
                                             class="form-control rounded" ng-change="setMajorBase(cls_base)">
                                         <option ng-disabled="true"
@@ -106,8 +110,8 @@
                                         </option>
 
                                     </select>
-                                   <select ng-required="true" tooltip="پایه تحصیلی"
-                                            ng-model="cls_base"  ng-show="!isMajor"
+                                    <select ng-required="true" tooltip="پایه تحصیلی"
+                                            ng-model="cls_base" ng-show="!isMajor"
                                             ng-options="pyh.majorbaseid  as pyh.description  for pyh in majorbase"
                                             class="form-control rounded" ng-change="selectStudent(cls_base)">
                                         <option ng-disabled="true"
@@ -121,11 +125,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"  ng-show="isMajor">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-show="isMajor">
                             <div class="panel-body">
-                                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label" style="margin-top: 8px;"><span
+                                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                       style="margin-top: 8px;"><span
                                         class="starstyle">*</span>رشته تحصیلی:</label>
-                               <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                                     <select ng-required="true" tooltip="رشته تحصیلی"
                                             ng-model="cls_major" ng-change="selectStudent(cls_major)"
                                             ng-options="mjr.majorbaseid as mjr.title  for mjr in majors"
@@ -202,13 +207,15 @@
                                         {{mymodel.studentid}}
                                     </td>
                                     <td class="v-middle  media-middle text-center">
-                                        <img width="50px" height="40px" class="thumb-sm avatar" ng-if="mymodel.image  != ' '"
+                                        <img width="50px" height="40px" class="thumb-sm avatar"
+                                             ng-if="mymodel.image  != ' '"
                                              src="{{mymodel.image || 'img/userNopic.jpg'}}">
-                                        <img width="50px" height="40px" class="thumb-sm avatar" ng-if="mymodel.image  == ' '"
+                                        <img width="50px" height="40px" class="thumb-sm avatar"
+                                             ng-if="mymodel.image  == ' '"
                                              src="img/userNopic.jpg">
                                     </td>
                                     <td class="v-middle  media-middle text-center">
-                                        {{ mymodel.firstname + " " + mymodel.lastname|| 'خالی' }}
+                                        {{ mymodel.firstname + " " + mymodel.lastname || 'خالی' }}
                                     </td>
                                     <td class="v-middle  media-middle text-center">
                                         {{ mymodel.studentcode || 'خالی'}}

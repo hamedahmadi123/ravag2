@@ -133,12 +133,12 @@ app.controller('class_edit', ['$scope', '$filter', '$http', function ($scope, $f
         ViewName: "majorbaseschoolselect",
         mutualTransaction: {
             kendoDataRequest: {
-                filter: {
-                    field: "schoolid",
-                    logic: "and",
-                    operator: "eq",
-                    value: localStorage.schoolId
-                },
+                // filter: {
+                //     field: "schoolid",
+                //     logic: "and",
+                //     operator: "eq",
+                //     value: localStorage.schoolId
+                // },
             }
         }
     }
