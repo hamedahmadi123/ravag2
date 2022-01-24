@@ -1,6 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/user/public_html/amozesh/panel
-    - /bin/cp -R api $DEPLOYPATH
-    - /bin/cp -R src $DEPLOYPATH
+    - export DEPLOYPATH=/home/ravaghesf/public_html/amozesh/panel
+    - /bin/cp * $DEPLOYPATH
