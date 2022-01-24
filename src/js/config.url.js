@@ -6,6 +6,8 @@ const URL_upload = '/amozesh/api/upload.php';
 
 const URL_SendSMS= '/amozesh/api/sendSms.php';
 const URL_login= 'api/login.php';
+const BaseAddress= 'https://ravaaghesf.ir/amozesh/';
+const BaseApiAddress= 'https://ravaaghesf.ir/amozesh/api/';
 
 // szd
 // const URL_GET = 'http://panaj.ir/feyz/api/getData.php';
