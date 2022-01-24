@@ -1,7 +1,0 @@
----
-deployment:
-  tasks:
-    - export DEPLOYPATH=/home/ravaghesf/public_html/amozesh/panel
-    - /bin/cp * $DEPLOYPATH
-    - /bin/cp -R api $DEPLOYPATH
-    - /bin/cp -R src $DEPLOYPATH
