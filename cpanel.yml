@@ -3,4 +3,3 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home/user/public_html/amozesh/panel
     - /bin/cp * $DEPLOYPATH
-    - /bin/cp * $DEPLOYPATH
