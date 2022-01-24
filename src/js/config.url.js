@@ -7,7 +7,7 @@ const URL_upload = '/amozesh/api/upload';
 const URL_SendSMS= '/amozesh/api/sendSms';
 const URL_login= 'api/login';
 
-
+// szd
 // const URL_GET = 'http://panaj.ir/feyz/api/getData.php';
 // const URL_INSERT = 'http://panaj.ir/feyz/api/insert.php';
 // const URL_ARRAY_INSERT = 'http://panaj.ir/feyz/api/array/insert.php';
