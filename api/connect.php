@@ -3,8 +3,8 @@ header("Access-Control-Allow-Origin: *");
 
 header('Content-Type: application/json');
 $server="localhost";
-$user="hamed";
-$pass="123456";
+$user="ravaghesf_amoozesh";
+$pass="N^xrmmG(8!Yl";
 $dbname="ravaghesf_amoozesh";
 $dsn="mysql:host=$server;dbname=$dbname;port=3307";
 try {
