@@ -10,14 +10,14 @@ $resultData = (object)array();
 $resultData->data = "";
 $resultData->error = "";
 $resultData->code = 200;
-
+$nameimage=""
 
 // Check if image file is a actual image or fake image
 if (isset($_FILES["uploadFile1"])) {
-    $target_dir = "file/";
+    $target_dir = "public_html/image/";
     $imageFileType = strtolower(pathinfo(basename($_FILES["uploadFile1"]["name"]), PATHINFO_EXTENSION));
-
-    $target_file = $target_dir . GUID() . '.' . $imageFileType;
+    $nameimage = GUID() . '.' . $imageFileType
+    $target_file = $target_dir .$nameimage;
     $uploadOk = 1;
 
 
@@ -40,7 +40,7 @@ if (isset($_FILES["uploadFile1"])) {
 // Check if $uploadOk is set to 0 by an error
     if ($resultData->code == 200) {
         if (move_uploaded_file($_FILES["uploadFile1"]["tmp_name"], $target_file)) {
-            $resultData->data = $target_file;
+            $resultData->data = "https://ravaaghesf.ir/image/".$nameimage;
             $resultData->code = 200;
         } else {
             $resultData->code = 500;
