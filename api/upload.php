@@ -10,13 +10,13 @@ $resultData = (object)array();
 $resultData->data = "";
 $resultData->error = "";
 $resultData->code = 200;
-$nameimage=""
+$nameimage="";
 
 // Check if image file is a actual image or fake image
 if (isset($_FILES["uploadFile1"])) {
-    $target_dir = "public_html/image/";
+    $target_dir = "/home/ravaghesf/public_html/image/";
     $imageFileType = strtolower(pathinfo(basename($_FILES["uploadFile1"]["name"]), PATHINFO_EXTENSION));
-    $nameimage = GUID() . '.' . $imageFileType
+    $nameimage = GUID() . '.' . $imageFileType;
     $target_file = $target_dir .$nameimage;
     $uploadOk = 1;
 
