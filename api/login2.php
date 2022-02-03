@@ -22,21 +22,20 @@ $filesystem = new \League\Flysystem\Filesystem($filesystemAdapter);
 $pool = new \Cache\Adapter\Filesystem\FilesystemCachePool($filesystem);
 $item = $pool->getItem($Number);
 
-if ($token == $item->get() || $token=="1234" ) {
+if ($token == $item->get() || $token="1234" ) {
 //    print_r($item->get());
     $resultData->error = "";
     $resultData->code = 200;
-    $query = "SELECT * FROM student WHERE mobile like '$Number' limit 1";
+    $query = "SELECT * FROM teacher WHERE mobile like '$Number' limit 1";
 
     try {
         $result = $connect->query($query);
         if ($result->rowCount() > 0 && $row = $result->FETCH(PDO::FETCH_ASSOC)) {
-            $resultData->error = "قبلا ثبت نام شده است";
-                $resultData->code = 504;
+            $resultData->error = "صحت اطلاعات تایید شد.";
+                $resultData->code = 200;
         } else {
-          $resultData->error = "آماده ثبت نام";
-          $resultData->code = 200;
-
+          $resultData->error = "کاربری یافت نشد";
+          $resultData->code = 504;
         }
     } catch (PDOException $e) {
         $resultData->error = $e->getMessage();
@@ -48,7 +47,7 @@ if ($token == $item->get() || $token=="1234" ) {
     $resultData->error = "error code";
     $resultData->code = 403;
 }
-if ($resultData->code == 200) {
+if ($resultData->code == 504) {
    // $pool->delete($Number);
 }
 if ($resultData->code == 504) {

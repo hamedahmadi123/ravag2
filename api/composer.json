@@ -1,0 +1,6 @@
+{
+    "require": {
+        "cache/cache": "^1.0",
+      "ext-json": "*"
+    }
+}
