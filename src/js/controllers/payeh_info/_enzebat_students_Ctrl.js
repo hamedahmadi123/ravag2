@@ -107,7 +107,6 @@ app.controller('enzebat_students', ['$scope', '$filter', '$http', function ($sco
                 };
                 $http.post(URL_INSERT, JSON.stringify(ins_enzS))
                     .success(function (result, status, headers, config) {
-                        alert("انضباط دانش آموز جدیدی با عنوان " + $scope.enzSt_name + " با موفقیت درج شد.");
                         document.location.reload();
                     }).error(function (result, status, header, config) {
                     alert("درج انضباط دانش آموز با خطا مواجه شد.");
@@ -238,7 +237,7 @@ app.controller('enzebat_students', ['$scope', '$filter', '$http', function ($sco
         var del_Item = {
             ViewName: "DisciplineTypeDelete",
             parameters: [
-                {key: "%disciplinetypeid ", value: $id + ''},
+                {key: "%disciplinetypeid", value: $id + ''},
             ]
         };
 

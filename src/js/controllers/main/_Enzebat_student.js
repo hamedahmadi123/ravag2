@@ -23,7 +23,6 @@ app.controller('Enzebat_student', ['$scope', '$filter', '$http', function ($scop
     $http.post(URL_GET, JSON.stringify(scl))
         .success(function (result, status, headers, config) {
             $scope.classLesson = result.data;
-            console.log($scope.classLesson);
             for (var i = 0; i < $scope.classLesson.length; i++) {
                 $scope.obj_clt[$scope.classLesson[i].classlessonteacherid] = $scope.classLesson[i].className;
             }
@@ -56,7 +55,7 @@ app.controller('Enzebat_student', ['$scope', '$filter', '$http', function ($scop
         };
         $http.post(URL_GET, JSON.stringify(msg))
             .success(function (result, status, headers, config) {
-                console.log(result.data);
+
                 if (result.data.length === 0) {
                     isem = true;
 
@@ -111,7 +110,6 @@ app.controller('Enzebat_student', ['$scope', '$filter', '$http', function ($scop
             }
             var j = confirm("آیا برای حذف موارد انضباطی انتخاب شده اطمینان دارید ؟ ");
             if (j === true) {
-                alert(JSON.stringify(dataArray));
                 $http.post(URL_ARRAY_INSERT, JSON.stringify(dataArray))
                     .success(function (result, status, headers, config) {
                         document.location.reload();

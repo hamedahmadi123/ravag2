@@ -175,10 +175,17 @@ app.controller('majorbase_insert', ['$scope', '$filter', '$http', function ($sco
                     }
                     $scope.parrent1 = $scope.path.pop();
                 }
+
                 if ($scope.status == 0) {
                     $scope.major = 0;
                 } else if ($scope.status == 1) {
                     $scope.major = 1;
+                }
+                $scope.enz_type = 0;
+                if ($scope.tosify == true) {
+                    $scope.enz_type = 0;
+                } else if ($scope.nomrei == true) {
+                    $scope.enz_type = 1;
                 }
                 var ins_mb = {
                     ViewName: "majorbaseInsert",
@@ -190,9 +197,15 @@ app.controller('majorbase_insert', ['$scope', '$filter', '$http', function ($sco
                         {key: "%pathname", value: $scope.pathName1 + ''},
                         {key: "%parent", value: $scope.parrent1 + ''},
                         {key: "%ismajor", value: $scope.major  + ''},
+                        {key: "%enz_type", value: $scope.enz_type  + ''},
+                        {key: "%shahriye", value: $scope.shahriye  + ''},
                     ]
                 };
+
                 $http.post(URL_INSERT, JSON.stringify(ins_mb))
+                debugger
+                    window.alert(JSON.stringify(ins_mb))
+
                     .success(function (result, status, headers, config) {
                         alert($scope.titleHeader + " جدیدی با عنوان " + $scope.mb_name + " با موفقیت درج شد.");
                         document.location.replace("#/app/page/majorbase");

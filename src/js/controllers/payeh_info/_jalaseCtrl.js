@@ -53,6 +53,7 @@ app.controller('jalase', ['$scope', '$filter', '$http', function ($scope, $filte
             });
 
     };
+
     $scope.vaziat = [
         {value: "1", name: "عادی"},
         {value: "2", name: "مستمر"},
@@ -86,7 +87,6 @@ app.controller('jalase', ['$scope', '$filter', '$http', function ($scope, $filte
                 };
                 $http.post(URL_INSERT, JSON.stringify(ins_jls))
                     .success(function (result, status, headers, config) {
-                        alert("جلسه جدیدی با عنوان " + $scope.jls_name + " با موفقیت درج شد.");
                         document.location.reload();
                     }).error(function (result, status, header, config) {
                     alert("درج جلسه با خطا مواجه شد.");

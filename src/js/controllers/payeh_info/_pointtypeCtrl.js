@@ -76,7 +76,6 @@ app.controller('pointtype', ['$scope', '$filter', '$http', function ($scope, $fi
                 };
                 $http.post(URL_INSERT, JSON.stringify(ins_point))
                     .success(function (result, status, headers, config) {
-                        alert("امتیاز جدیدی با عنوان " + $scope.point_name + " با موفقیت درج شد.");
                         document.location.reload();
                     }).error(function (result, status, header, config) {
                     alert("درج امتیاز با خطا مواجه شد.");

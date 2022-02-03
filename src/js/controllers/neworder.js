@@ -20,7 +20,7 @@ app.controller('NewOrderCtrl', ['$scope', '$filter', '$http',
                 ]
             }
 
-            console.log(data);
+
             $http.post(URL_INSERT, JSON.stringify(data))
                 .success(function (result, status, headers, config) {
                     alert("آگهی با عنوان " + $scope.ordername + " با موفقیت ثبت شد. ");

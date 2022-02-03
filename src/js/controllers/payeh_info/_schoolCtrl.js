@@ -38,7 +38,7 @@ app.controller('schoolCtrl', ['$scope', '$filter', '$http', function ($scope, $f
         };
         $http.post(URL_GET, JSON.stringify(msg))
             .success(function (result, status, headers, config) {
-                console.log(result.data);
+
                 if (result.data.length === 0) {
                     isem = true;
                 }
@@ -52,6 +52,7 @@ app.controller('schoolCtrl', ['$scope', '$filter', '$http', function ($scope, $f
             });
 
     };
+
     // delete******************************
     $scope.deleteSchool = function ($id, $name) {
         var del_Item = {
@@ -72,6 +73,10 @@ app.controller('schoolCtrl', ['$scope', '$filter', '$http', function ($scope, $f
             });
         }
     }
+
+
+
+
 
 }])
 ;

@@ -61,6 +61,7 @@ app.controller('school_update', ['$scope', '$filter', '$http', function ($scope,
                 $scope.sch_tel = $scope.school.phone;
                 $scope.sch_note = $scope.school.note;
                 $scope.zanghLenth = parseInt($scope.school.zanghLenth);
+                $scope.sch_latin = $scope.school.latin_name;
             });
     }
 
@@ -71,7 +72,7 @@ app.controller('school_update', ['$scope', '$filter', '$http', function ($scope,
         }
         if ((localStorage.adminId) && localStorage.adminCount != 0 && (localStorage.adminCount && localStorage.adminCount != undefined && localStorage.adminCount != "undefined")) {
 
-            if (($scope.sch_id) && ($scope.sch_name) && ($scope.sch_type) && ($scope.sch_city) && ($scope.zanghLenth)) {
+            if (($scope.sch_id) && ($scope.sch_name) && ($scope.sch_type) && ($scope.sch_city) && ($scope.zanghLenth) && ($scope.sch_latin)) {
                 var upd_sch = {
                     ViewName: "SchoolUpdate",
                     parameters: [
@@ -87,9 +88,9 @@ app.controller('school_update', ['$scope', '$filter', '$http', function ($scope,
                         {key: "%jensiyat", value: $scope.sch_type + ''},
                         {key: "%difftime", value: $scope.sch_difftime + ''},
                         {key: "%zanghLenth", value: $scope.zanghLenth + ''},
+                        {key: "%latin_name", value: $scope.sch_latin + ''},
                     ]
                 };
-                alert(JSON.stringify(upd_sch));
                 var j = confirm("آیا برای ویرایش آموزشگاه با عنوان " + $scope.sch_name + " اطمینان دارید ؟ ");
                 if (j === true) {
                     $http.post(URL_INSERT, JSON.stringify(upd_sch))
@@ -110,6 +111,9 @@ app.controller('school_update', ['$scope', '$filter', '$http', function ($scope,
                     $scope.eroretext = "شهر";
                 } else if (!$scope.province) {
                     $scope.eroretext = "استان";
+                }
+                else if (!$scope.sch_latin) {
+                    $scope.eroretext = "نام لاتین آموزشگاه";
                 }
             }
         } else if ((!localStorage.adminId) || localStorage.adminCount == 0 || (!localStorage.adminCount || localStorage.adminCount == undefined || localStorage.adminCount == "undefined")) {

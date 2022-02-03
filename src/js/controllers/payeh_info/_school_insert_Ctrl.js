@@ -1,4 +1,7 @@
 app.controller('school_insert', ['$scope', '$filter', '$http', function ($scope, $filter, $http, $timeout) {
+    $scope.showMajor = false;
+    $scope.majorArray = [];
+    $scope.majorArrayName = [];
     //s1
     $scope.arr1Path = [];
     $scope.arr1PathName = [];
@@ -60,6 +63,86 @@ app.controller('school_insert', ['$scope', '$filter', '$http', function ($scope,
             });
     }
 
+    $scope.selectMajor = function () {
+        if ($scope.arr4Path.length != 0) {
+            for (var j = 0; j < $scope.arr4Path.length; j++) {
+                $scope.arrayMB[j] = $scope.arr4Path[j];
+            }
+        } else if ($scope.arr3Path.length != 0) {
+            for (var c = 0; c < $scope.arr3Path.length; c++) {
+                $scope.arrayMB[c] = $scope.arr3Path[c];
+            }
+        } else if ($scope.arr2Path.length != 0) {
+            for (var i = 0; i < $scope.arr2Path.length; i++) {
+                $scope.arrayMB[i] = $scope.arr2Path[i];
+            }
+        } else if ($scope.arr1Path.length != 0) {
+            for (var e = 0; e < $scope.arr1Path.length; e++) {
+                $scope.arrayMB[e] = $scope.arr1Path[e];
+            }
+        }
+        var mbs1 = {
+            ViewName: "majorbaseSelect",
+            mutualTransaction: {
+                kendoDataRequest: {
+                    filter: {
+                        field: "majorbaseid",
+                        logic: "and",
+                        operator: "in",
+                        value: $scope.arrayMB + ''
+                    },
+                }
+            }
+        }
+        $http.post(URL_GET, JSON.stringify(mbs1))
+            .success(function (result, status, headers, config) {
+                $scope.bases = result.data;
+            });
+        console.log($scope.arrayMB);
+        var mbs = {
+            ViewName: "allmajor",
+            mutualTransaction: {
+                kendoDataRequest: {
+                    filter: {
+                        field: "parent",
+                        logic: "and",
+                        operator: "in",
+                        value: $scope.arrayMB + ''
+                    },
+                    skip: 0,
+                    take: 1000,
+                }
+            }
+        }
+        $http.post(URL_GET, JSON.stringify(mbs))
+            .success(function (result, status, headers, config) {
+                $scope.majors = result.data;
+            });
+
+        $("#myModal2").modal()
+
+    }
+    $scope.setMajor = function ($id, $name, $bool) {
+        if ($bool == true) {
+            $scope.majorArray.push($id);
+            $scope.majorArrayName.push($name);
+
+            for (var j = 0; j < $scope.majors.length; j++) {
+                if ($scope.majors[j].title == $name) {
+                    console.log($scope.majors[j].title);
+                    document.getElementById($name).select = true;
+                }
+            }
+        } else {
+            for (var i = 0; i < $scope.majorArray.length; i++) {
+                if ($scope.majorArray[i] == $id) {
+                    $scope.majorArray.splice(i, 1);
+                    $scope.majorArrayName.splice(i, 1);
+                    break;
+                }
+            }
+        }
+    }
     $scope.seleteChild1 = function ($parrentId, $title) {
         if ($parrentId && $parrentId != null && $parrentId != undefined) {
             $scope.path[0] = $parrentId;
@@ -166,7 +249,7 @@ app.controller('school_insert', ['$scope', '$filter', '$http', function ($scope,
     }
 
     $scope.checkstep1 = function () {
-        if (($scope.sch_id) && ($scope.sch_name) && ($scope.sch_type)) {
+        if (($scope.sch_id) && ($scope.sch_name) && ($scope.sch_type) && ($scope.sch_latin)) {
             return false;
         } else {
             return true;
@@ -225,50 +308,25 @@ app.controller('school_insert', ['$scope', '$filter', '$http', function ($scope,
         }
 
     }
-    $scope.moveprogss = function ($value, $name) {
 
-        if ($value == 100 && width == 100) {
-            $scope.insertStudentsFunc();
-        }
-        if (i == 0) {
-            i = 1;
-            var elem = document.getElementById("myBar");
-            var id = setInterval(frame, 10);
-
-            function frame() {
-                if (width >= $value) {
-                    clearInterval(id);
-                    i = 0;
-                } else {
-                    width++;
-                    elem.style.width = width + "%";
-                    if (width == 100) {
-                        $scope.insertStudentsFunc();
-                    }
-                }
-            }
-        }
-    }
     $scope.resetmyData = function () {
-        $scope.arr1Path = [];
-        $scope.arr1PathName = [];
-        //s2
-        $scope.arr2Path = [];
-        $scope.arr2PathName = [];
-        //s3
-        $scope.arr3Path = [];
-        $scope.arr3PathName = [];
-        //s4
-        $scope.arr4Path = [];
-        $scope.arr4PathName = [];
-        //
-        $scope.arrayMB = [];
+
     }
     $scope.setS1 = function ($id, $name, $bool) {
         if ($bool == true) {
             $scope.arr1Path.push($id);
             $scope.arr1PathName.push($name);
+            for (var a = 0; a < $scope.arr1Path.length; a++) {
+                if ($scope.arr1Path[a] == '12') {
+                    $scope.showMajor = true;
+                }
+            }
         } else {
+            for (var b = 0; b < $scope.arr1Path.length; b++) {
+                if ($scope.arr1Path[b] == '12') {
+                    $scope.showMajor = false;
+                }
+            }
             for (var i = 0; i < $scope.arr1Path.length; i++) {
                 if ($scope.arr1Path[i] == $id) {
                     $scope.arr1Path.splice(i, 1);
@@ -276,7 +334,9 @@ app.controller('school_insert', ['$scope', '$filter', '$http', function ($scope,
                     break;
                 }
             }
+
         }
+
     }
     $scope.checkS1 = function () {
         if ($scope.arr1Path.length == 0) {
@@ -287,7 +347,6 @@ app.controller('school_insert', ['$scope', '$filter', '$http', function ($scope,
     }
     $scope.selectMB1 = function () {
         var stingarry1 = $scope.arr1Path.toString();
-        console.log("stingarry1", stingarry1);
         var mbs = {
             ViewName: "majorbaseSelect",
             mutualTransaction: {
@@ -304,7 +363,7 @@ app.controller('school_insert', ['$scope', '$filter', '$http', function ($scope,
         $http.post(URL_GET, JSON.stringify(mbs))
             .success(function (result, status, headers, config) {
                 $scope.s2 = result.data;
-                console.log("s2",$scope.s2);
+
             });
     }
 
@@ -331,7 +390,6 @@ app.controller('school_insert', ['$scope', '$filter', '$http', function ($scope,
     }
     $scope.selectMB2 = function () {
         var stingarry2 = $scope.arr2Path.toString();
-        console.log("stingarry2", stingarry2);
         var mbs = {
             ViewName: "majorbaseSelect",
             mutualTransaction: {
@@ -348,7 +406,7 @@ app.controller('school_insert', ['$scope', '$filter', '$http', function ($scope,
         $http.post(URL_GET, JSON.stringify(mbs))
             .success(function (result, status, headers, config) {
                 $scope.s3 = result.data;
-                console.log("  $scope.s3 ",   $scope.s3 );
+
             });
     }
     $scope.setS3 = function ($id, $name, $bool) {
@@ -374,7 +432,7 @@ app.controller('school_insert', ['$scope', '$filter', '$http', function ($scope,
     }
     $scope.selectMB3 = function () {
         var stingarry3 = $scope.arr3Path.toString();
-        console.log("  stingarry3 ",   stingarry3 );
+
         var mbs = {
             ViewName: "majorbaseSelect",
             mutualTransaction: {
@@ -391,7 +449,6 @@ app.controller('school_insert', ['$scope', '$filter', '$http', function ($scope,
         $http.post(URL_GET, JSON.stringify(mbs))
             .success(function (result, status, headers, config) {
                 $scope.s4 = result.data;
-                console.log("  $scope.s4 ",   $scope.s4 );
             });
     }
 
@@ -411,65 +468,129 @@ app.controller('school_insert', ['$scope', '$filter', '$http', function ($scope,
     $scope.insert_school = function () {
         if ((localStorage.adminId) && localStorage.adminCount != 0 && (localStorage.adminCount && localStorage.adminCount != undefined && localStorage.adminCount != "undefined")) {
             if (($scope.sch_id) && ($scope.sch_name) && ($scope.sch_type) && ($scope.sch_city) && ($scope.arr2Path.length != 0 || $scope.arr3Path.length != 0 || $scope.arr4Path.length != 0)) {
-                if ($scope.arr4Path.length != 0) {
-                    for (var j = 0; j < $scope.arr4Path.length; j++) {
-                        $scope.arrayMB[j] = $scope.arr4Path[j];
-                    }
-                } else if ($scope.arr3Path.length != 0) {
-                    for (var c = 0; c < $scope.arr3Path.length; c++) {
-                        $scope.arrayMB[c] = $scope.arr3Path[c];
-                    }
-                } else if ($scope.arr2Path.length != 0) {
-                    for (var i = 0; i < $scope.arr2Path.length; i++) {
-                        $scope.arrayMB[i] = $scope.arr2Path[i];
-                    }
-                } else if ($scope.arr1Path.length != 0) {
-                    for (var e = 0; e < $scope.arr1Path.length; e++) {
-                        $scope.arrayMB[e] = $scope.arr1Path[e];
-                    }
-                }
-                console.log($scope.arrayMB);
-                if ($scope.sch_shift == '0') {
-                    $scope.sch_difftime = '0';
-                }
-                var dataArray = [];
-                var ins_sch = {
-                    ViewName: "SchoolInsert",
-                    parameters: [
-                        {key: "%code", value: $scope.sch_id + ''},
-                        {key: "%name", value: $scope.sch_name + ''},
-                        {key: "%phone", value: $scope.sch_tel || '' + ''},
-                        {key: "%note", value: $scope.sch_note || '' + ''},
-                        {key: "%province", value: $scope.sch_province || '' + ''},
-                        {key: "%city", value: $scope.sch_city + ''},
-                        {key: "%address", value: $scope.sch_address || '' + ''},
-                        {key: "%area", value: $scope.sch_area || '' + ''},
-                        {key: "%jensiyat", value: $scope.sch_type + ''},
-                        {key: "%difftime", value: $scope.sch_difftime || '0' + ''},
-                        {key: "%zanghLenth", value: $scope.zanghLenth + ''},
-                    ]
-                };
-                dataArray.push(ins_sch);
-                for (var i = 0; i < $scope.arrayMB.length; i++) {
+                if ($scope.showMajor == true) {
+                    if ($scope.majorArray.length != 0) {
+                        if ($scope.arr4Path.length != 0) {
+                            for (var j = 0; j < $scope.arr4Path.length; j++) {
+                                $scope.arrayMB[j] = $scope.arr4Path[j];
+                            }
+                        } else if ($scope.arr3Path.length != 0) {
+                            for (var c = 0; c < $scope.arr3Path.length; c++) {
+                                $scope.arrayMB[c] = $scope.arr3Path[c];
+                            }
+                        } else if ($scope.arr2Path.length != 0) {
+                            for (var i = 0; i < $scope.arr2Path.length; i++) {
+                                $scope.arrayMB[i] = $scope.arr2Path[i];
+                            }
+                        } else if ($scope.arr1Path.length != 0) {
+                            for (var e = 0; e < $scope.arr1Path.length; e++) {
+                                $scope.arrayMB[e] = $scope.arr1Path[e];
+                            }
+                        }
+                        for (let j = 0; j < $scope.majorArray.length; j++) {
+                            $scope.arrayMB.push($scope.majorArray[j]);
+                        }
+                        if ($scope.sch_shift == '0') {
+                            $scope.sch_difftime = '0';
+                        }
+                        var dataArray = [];
+                        var ins_sch = {
+                            ViewName: "SchoolInsert",
+                            parameters: [
+                                {key: "%code", value: $scope.sch_id + ''},
+                                {key: "%name", value: $scope.sch_name + ''},
+                                {key: "%phone", value: $scope.sch_tel || '' + ''},
+                                {key: "%note", value: $scope.sch_note || '' + ''},
+                                {key: "%province", value: $scope.sch_province || '' + ''},
+                                {key: "%city", value: $scope.sch_city + ''},
+                                {key: "%address", value: $scope.sch_address || '' + ''},
+                                {key: "%area", value: $scope.sch_area || '' + ''},
+                                {key: "%jensiyat", value: $scope.sch_type + ''},
+                                {key: "%difftime", value: $scope.sch_difftime || '0' + ''},
+                                {key: "%zanghLenth", value: $scope.zanghLenth + ''},
+                                {key: "%latin_name", value: $scope.sch_latin + ''},
+                            ]
+                        };
+                        dataArray.push(ins_sch);
+                        for (var i = 0; i < $scope.arrayMB.length; i++) {
 
-                    var ins_smb = {
-                        ViewName: "majorbaseSchoolInsert",
+                            var ins_smb = {
+                                ViewName: "majorbaseSchoolInsert",
+                                parameters: [
+                                    {key: "%majorbaseid", value: $scope.arrayMB[i] + ''},
+                                ]
+                            };
+                            dataArray.push(ins_smb);
+                        }
+                        $http.post(URL_ARRAY_INSERT, JSON.stringify(dataArray))
+                            .success(function (result, status, headers, config) {
+                                alert("آموزشگاه جدیدی با عنوان " + $scope.sch_name + " با موفقیت درج شد.");
+                                document.location.replace("#/app/page/schoolCtrl");
+                            }).error(function (result, status, header, config) {
+                            alert("درج آموزشگاه با خطا مواجه شد.");
+                            document.location.reload();
+                        });
+                    } else {
+                        $scope.eroretext = "رشته های تحصیلی";
+                    }
+                } else {
+                    if ($scope.arr4Path.length != 0) {
+                        for (var j = 0; j < $scope.arr4Path.length; j++) {
+                            $scope.arrayMB[j] = $scope.arr4Path[j];
+                        }
+                    } else if ($scope.arr3Path.length != 0) {
+                        for (var c = 0; c < $scope.arr3Path.length; c++) {
+                            $scope.arrayMB[c] = $scope.arr3Path[c];
+                        }
+                    } else if ($scope.arr2Path.length != 0) {
+                        for (var i = 0; i < $scope.arr2Path.length; i++) {
+                            $scope.arrayMB[i] = $scope.arr2Path[i];
+                        }
+                    } else if ($scope.arr1Path.length != 0) {
+                        for (var e = 0; e < $scope.arr1Path.length; e++) {
+                            $scope.arrayMB[e] = $scope.arr1Path[e];
+                        }
+                    }
+                    if ($scope.sch_shift == '0') {
+                        $scope.sch_difftime = '0';
+                    }
+                    var dataArray = [];
+                    var ins_sch = {
+                        ViewName: "SchoolInsert",
                         parameters: [
-                            {key: "%majorbaseid", value: $scope.arrayMB[i] + ''},
+                            {key: "%code", value: $scope.sch_id + ''},
+                            {key: "%name", value: $scope.sch_name + ''},
+                            {key: "%phone", value: $scope.sch_tel || '' + ''},
+                            {key: "%note", value: $scope.sch_note || '' + ''},
+                            {key: "%province", value: $scope.sch_province || '' + ''},
+                            {key: "%city", value: $scope.sch_city + ''},
+                            {key: "%address", value: $scope.sch_address || '' + ''},
+                            {key: "%area", value: $scope.sch_area || '' + ''},
+                            {key: "%jensiyat", value: $scope.sch_type + ''},
+                            {key: "%difftime", value: $scope.sch_difftime || '0' + ''},
+                            {key: "%zanghLenth", value: $scope.zanghLenth + ''},
                         ]
                     };
-                    dataArray.push(ins_smb);
-                }
-                alert(JSON.stringify(dataArray));
-                $http.post(URL_ARRAY_INSERT, JSON.stringify(dataArray))
-                    .success(function (result, status, headers, config) {
-                        alert("آموزشگاه جدیدی با عنوان " + $scope.sch_name + " با موفقیت درج شد.");
-                        document.location.replace("#/app/page/schoolCtrl");
-                    }).error(function (result, status, header, config) {
-                    alert("درج آموزشگاه با خطا مواجه شد.");
-                    document.location.reload();
-                });
+                    dataArray.push(ins_sch);
+                    for (var i = 0; i < $scope.arrayMB.length; i++) {
 
+                        var ins_smb = {
+                            ViewName: "majorbaseSchoolInsert",
+                            parameters: [
+                                {key: "%majorbaseid", value: $scope.arrayMB[i] + ''},
+                            ]
+                        };
+                        dataArray.push(ins_smb);
+                    }
+                    $http.post(URL_ARRAY_INSERT, JSON.stringify(dataArray))
+                        .success(function (result, status, headers, config) {
+                            alert("آموزشگاه جدیدی با عنوان " + $scope.sch_name + " با موفقیت درج شد.");
+                            document.location.replace("#/app/page/schoolCtrl");
+                        }).error(function (result, status, header, config) {
+                        alert("درج آموزشگاه با خطا مواجه شد.");
+                        document.location.reload();
+                    });
+                }
             } else {
                 if (!$scope.sch_id) {
                     $scope.eroretext = "کد اموزشگاه";
@@ -490,7 +611,30 @@ app.controller('school_insert', ['$scope', '$filter', '$http', function ($scope,
         }
     }
 
+    $scope.moveprogss = function ($value, $name) {
 
+        if ($value == 100 && width == 100) {
+            $scope.insert_school();
+        }
+        if (i == 0) {
+            i = 1;
+            var elem = document.getElementById("myBar");
+            var id = setInterval(frame, 10);
+
+            function frame() {
+                if (width >= $value) {
+                    clearInterval(id);
+                    i = 0;
+                } else {
+                    width++;
+                    elem.style.width = width + "%";
+                    if (width == 100) {
+                        $scope.insert_school();
+                    }
+                }
+            }
+        }
+    }
     $scope.errText = function () {
         return $scope.eroretext;
     }

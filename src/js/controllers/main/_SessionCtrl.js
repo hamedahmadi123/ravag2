@@ -95,7 +95,9 @@ app.controller('Session', ['$scope', '$filter', '$http', function ($scope, $filt
                         filter: {
                             field: "owner", logic: "and", operator: "eq", value: "3"
                             , filters: [
-                                {field: "roleid", logic: "and", operator: "eq", value: "1"}
+                                {field: "roleid", logic: "and", operator: "eq", value: "1"},
+                                {field: "roleid", logic: "and", operator: "eq", value: "1"},
+                                {field: "schoolid", logic: "and", operator: "eq", value: localStorage.schoolId + ""}
                             ]
 
                         },
@@ -112,7 +114,10 @@ app.controller('Session', ['$scope', '$filter', '$http', function ($scope, $filt
                 mutualTransaction: {
                     kendoDataRequest: {
                         filter: {
-                            field: "roleid", logic: "and", operator: "eq", value: "2"
+                            field: "roleid", logic: "and", operator: "eq", value: "2",
+                            filters: [
+                                {field: "schoolid", logic: "and", operator: "eq", value:localStorage.schoolId+""}
+                            ]
                         },
                     }
                 }
@@ -120,7 +125,7 @@ app.controller('Session', ['$scope', '$filter', '$http', function ($scope, $filt
             $http.post(URL_GET, JSON.stringify(point))
                 .success(function (result, status, headers, config) {
                     $scope.teacherPoints = result.data;
-                    console.log($scope.teacherPoints);
+
                 });
 
         }
@@ -134,7 +139,10 @@ app.controller('Session', ['$scope', '$filter', '$http', function ($scope, $filt
                             field: "weeklyscheduleid",
                             logic: "and",
                             operator: "eq",
-                            value: $scope.weekly_id + ''
+                            value: $scope.weekly_id + '',
+                            filters: [
+                                {field: "schoolid", logic: "and", operator: "eq", value:localStorage.schoolId+""}
+                            ]
                         },
                     }
                 }
@@ -181,7 +189,7 @@ app.controller('Session', ['$scope', '$filter', '$http', function ($scope, $filt
             $http.post(URL_GET, JSON.stringify(wsl))
                 .success(function (result, status, headers, config) {
                     $scope.lessonTeachers = result.data;
-                    console.log($scope.lessonTeachers);
+
                 });
         }
         $scope.returnDate = function ($date) {
@@ -280,7 +288,7 @@ app.controller('Session', ['$scope', '$filter', '$http', function ($scope, $filt
             $http.post(URL_GET, JSON.stringify(sessionSt))
                 .success(function (result, status, headers, config) {
                     $scope.sessionStudent = result;
-                    console.log($scope.sessionStudent);
+
                     //نمره
                     try {
                         $scope.this_st_score = result.ScoreSelect.data[0];
@@ -353,7 +361,7 @@ app.controller('Session', ['$scope', '$filter', '$http', function ($scope, $filt
                     //مقدار امتیاز
                     try {
                         $scope.this_st_pointValue = result.SelectPointValue.data[0];
-                        console.log($scope.this_st_pointValue);
+
                         var gifts = {
                             ViewName: "SelectGiftpoint",
                             mutualTransaction: {
@@ -370,7 +378,7 @@ app.controller('Session', ['$scope', '$filter', '$http', function ($scope, $filt
                         $http.post(URL_GET, JSON.stringify(gifts))
                             .success(function (result, status, headers, config) {
                                 $scope.gifts = result.data;
-                                console.log($scope.gifts);
+
                             });
                     } catch (e) {
 
@@ -530,7 +538,6 @@ app.controller('Session', ['$scope', '$filter', '$http', function ($scope, $filt
                         {key: "%sessionid", value: $scope.sessionId || '0' + ''},
                     ]
                 };
-                alert(JSON.stringify(ins_Discipline));
                 $http.post(URL_INSERT, JSON.stringify(ins_Discipline))
                     .success(function (result, status, headers, config) {
                         $scope.showAlert("انضباط برای دانش آموز");
@@ -587,7 +594,6 @@ app.controller('Session', ['$scope', '$filter', '$http', function ($scope, $filt
                         {key: "%type", value: 1},
                     ]
                 };
-                alert(JSON.stringify(ins_gif));
                 $http.post(URL_INSERT, JSON.stringify(ins_gif))
                     .success(function (result, status, headers, config) {
                         $scope.sesseionStudents();

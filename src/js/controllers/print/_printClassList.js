@@ -39,7 +39,7 @@ app.controller('printClassList', ['$scope', '$filter', '$http', function ($scope
                             result.data[i].index = i + 1;
                         }
                         $scope.classSession = result.data;
-                        console.log($scope.classSession);
+
                     } catch (e) {
 
                     }
@@ -60,7 +60,7 @@ app.controller('printClassList', ['$scope', '$filter', '$http', function ($scope
             $http.post(URL_GET, JSON.stringify(sch))
                 .success(function (result, status, headers, config) {
                     $scope.thisSchool = result.data[0];
-                    console.log($scope.thisSchool);
+
                 });
         }
 

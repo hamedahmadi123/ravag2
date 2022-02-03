@@ -354,7 +354,7 @@
                 <fieldset>
                     <div style="background-color: white">
                         <div class="modal-body" align="center">
-                            <div dir="rtl" style="background-color: #f6fffc"> <!-- featureds -->
+                            <div dir="rtl" style="background-color: #fafafa"> <!-- featureds -->
                                 <div class="section featureds" style="background-color: white ; ">
                                     <section style="background:#ffffff;width: 100% ;">
                                         <div class="container" style="width: 100%;">
@@ -402,7 +402,7 @@
                                                                 <br><br>
                                                                 <div class="row" style="width:100% ">
                                                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                                                        <div class="panel-body">
+                                                                        <div class="panel-body" align="right">
                                                                             <label><span class="starstyle">*</span><b>کد
                                                                                 آموزشگاه :</b></label>&nbsp;
                                                                             <input ng-model="sch_id"
@@ -412,8 +412,9 @@
                                                                                    ng-required="true" type="number">
                                                                         </div>
                                                                     </div>
+                                                                    <div class="line line-dashed  line-lg pull-in"></div>
                                                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                                                        <div class="panel-body">
+                                                                        <div class="panel-body" align="right">
                                                                             <label><span class="starstyle">*</span><b>نام
                                                                                 آموزشگاه :</b></label> &nbsp;
                                                                             <input ng-model="sch_name"
@@ -424,7 +425,20 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                                                        <div class="panel-body">
+                                                                        <div class="panel-body" align="right">
+                                                                            <label><span class="starstyle">*</span><b>نام
+                                                                                آموزشگاه به لاتین (URL
+                                                                                Name):</b></label> &nbsp;
+                                                                            <input type="text" id="firstName"
+                                                                                   ng-model="sch_latin"
+                                                                                   class="form-control rounded"
+                                                                                   dir="ltr" placeholder="name ..."
+                                                                                   ng-required="true"
+                                                                                   onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 48 && event.charCode <= 57)"/>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                        <div class="panel-body" align="right">
                                                                             <label><span class="starstyle">*</span><b>پسرانه
                                                                                 / دخترانه :</b></label> &nbsp;
                                                                             <select ng-required="true"
@@ -444,7 +458,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                                                        <div class="panel-body">
+                                                                        <div class="panel-body" align="right">
                                                                             <label><b>شیفت آموزشگاه :</b></label> &nbsp;
                                                                             <select ng-required="true" tooltip="دونوبته"
                                                                                     ng-model="sch_shift"
@@ -463,7 +477,7 @@
                                                                     </div>
                                                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
                                                                          ng-show="sch_shift == '1'">
-                                                                        <div class="panel-body">
+                                                                        <div class="panel-body" align="right">
                                                                             <label><b>اختلاف زمانی :</b></label> &nbsp;
                                                                             <input ng-model="sch_difftime"
                                                                                    class="form-control rounded"
@@ -500,7 +514,7 @@
                                                                 <br><br>
                                                                 <div class="row">
                                                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                                                        <div class="panel-body">
+                                                                        <div class="panel-body" align="right">
                                                                             <label><span
                                                                                     class="starstyle">*</span><b>استان:</b></label>&nbsp;
                                                                             <select ng-required="true" tooltip="استان"
@@ -520,7 +534,7 @@
                                                                     </div>
                                                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
                                                                          ng-show="sch_city">
-                                                                        <div class="panel-body">
+                                                                        <div class="panel-body" align="right">
                                                                             <label><b>شهر:</b></label>&nbsp;
                                                                             <select ng-required="true" tooltip="شهر"
                                                                                     ng-model="sch_province"
@@ -537,7 +551,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                                                        <div class="panel-body">
+                                                                        <div class="panel-body" align="right">
                                                                             <label><b>نشانی :</b></label>&nbsp;
                                                                             <input ng-model="sch_address"
                                                                                    class="form-control rounded"
@@ -547,7 +561,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                                                        <div class="panel-body">
+                                                                        <div class="panel-body" align="right">
                                                                             <label><b>ناحیه :</b></label>&nbsp;
                                                                             <input ng-model="sch_area"
                                                                                    class="form-control rounded"
@@ -557,7 +571,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                                                        <div class="panel-body">
+                                                                        <div class="panel-body" align="right">
                                                                             <label><span
                                                                                     class="starstyle">*</span><b>تعداد
                                                                                 زنگ :</b></label>&nbsp;
@@ -604,7 +618,7 @@
                                                                 </div>
                                                                 <br> <br>
                                                             </div>
-                                                            <div class="tab-pane fade" id="step3">
+                                                            <div class="tab-pane fade in active" id="step3">
                                                                 <br><br>
                                                                 <div class="row">
                                                                     <div class="alert alert-danger" ng-show="errText()">
@@ -624,8 +638,9 @@
                                                                                        value="{{arr1PathName.toString()}} - {{arr2PathName.toString()}} - {{arr3PathName.toString()}}"
                                                                                        class="form-control text-sm btn-rounded no-border">
                                                                                 <span class="input-group-btn"><a
-                                                                                        style="height: 34px;" ng-click="resetmyData()"
-                                                                                        tooltip="ویرایش"
+                                                                                        style="height: 34px;"
+                                                                                        ng-click="resetmyData()"
+                                                                                        tooltip="ویرایش پایه"
                                                                                         data-toggle="modal"
                                                                                         data-target="#myModal"
                                                                                         class="btn btn-success btn-rounded no-border"><i
@@ -633,9 +648,28 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-
+                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                                                         ng-show="showMajor">
+                                                                        <div class="panel-body"
+                                                                             style="margin-top: 3px;">
+                                                                            <label><span
+                                                                                    class="starstyle">*</span><b>رشته
+                                                                                تحصیلی :</b></label>&nbsp;
+                                                                            <div class="input-group">
+                                                                                <input ng-disabled="true"
+                                                                                       value=" رشته  های انتخاب شده"
+                                                                                       class="form-control text-sm btn-rounded no-border">
+                                                                                <span class="input-group-btn"><a
+                                                                                        style="height: 34px;"
+                                                                                        ng-click="selectMajor()"
+                                                                                        tooltip="ویرایش رشته"
+                                                                                        class="btn btn-success btn-rounded no-border"><i
+                                                                                        class="glyphicon glyphicon-pencil"></i></a></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                                                        <div class="panel-body">
+                                                                        <div class="panel-body" align="right">
                                                                             <label><b>شماره تلفن تماس:</b></label>&nbsp;
                                                                             <input ng-model="sch_tel"
                                                                                    class="form-control rounded"
@@ -645,7 +679,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                                                        <div class="panel-body">
+                                                                        <div class="panel-body" align="right">
                                                                             <label><b>یادداشت :</b></label>&nbsp;
                                                                             <textarea rows="12"
                                                                                       style="width:100%;height:auto; "
@@ -750,7 +784,8 @@
                                                                 </div>
                                                                 <br>
                                                                 <div class="row , marginBtnNext2" align="center">
-                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="float: left">
+                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                                                         style="float: left">
                                                                         <div class="panel-body">
                                                                             <a>
                                                                                 <input ng-click="selectMB1()"
@@ -891,7 +926,7 @@
                                                                 <div class="row , marginBtnNext2" align="center">
                                                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                                                         <div class="panel-body">
-                                                                            <button  href="insertOrder/#s3"
+                                                                            <button href="insertOrder/#s3"
                                                                                     data-toggle="tab"
                                                                                     type="submit" style="width: 100%"
                                                                                     class="btn btn-danger">
@@ -903,11 +938,11 @@
                                                                         <div class="panel-body">
                                                                             <a>
                                                                                 <input
-                                                                                       type="submit"
-                                                                                       value="تایید"
-                                                                                       class="btn btn-success"
-                                                                                       style="width: 100%"
-                                                                                       data-dismiss="modal">
+                                                                                        type="submit"
+                                                                                        value="تایید"
+                                                                                        class="btn btn-success"
+                                                                                        style="width: 100%"
+                                                                                        data-dismiss="modal">
                                                                             </a>
                                                                         </div>
                                                                     </div>
@@ -939,6 +974,75 @@
                                         <span> لغو </span></button>
                                 </div>
 
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="myModal2" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal">&times;
+                        </button>
+                        <h4 class="modal-title">
+                            <img src="img/icon/report.png" class="icnSize">
+                            انتخاب رشته ها
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                                    <div class="panel-body">
+                                        <div ng-repeat="bse in bases">
+                                            <div class="panel-body" class="panel-heading font-bold"
+                                                 style="background-color: #f6f8f8">
+                                                پایه {{bse.title}} :
+                                            </div>
+                                            <br>
+                                            <div ng-repeat="mjr in majors" class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                                 ng-if="mjr.parent == bse.majorbaseid">
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                        <h5 style="margin-top: 10px;">{{mjr.title}}</h5>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                        <label class="containerCheckBox"><br>
+                                                            <input type="checkbox"
+                                                                   ng-model="checkbox2"
+                                                                   ng-click="setMajor(mjr.majorbaseid,mjr.title,checkbox2)">
+                                                            <span class="checkmark2"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="line line-dashed  line-lg pull-in"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div style="width: 100%;margin-right: 20px;">
+                            <div class="row">
+                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"
+                                     style="float: right;margin-right: 20px;color: white">
+                                    <button data-dismiss="modal"
+                                            style="width: 100%;"
+                                            type="submit" href="index.html"
+                                            class="btn btn-info">
+                                        <i class="icon-note"></i>
+                                        &nbsp;
+                                        <span> تایید </span></button>
+                                </div>
                             </div>
                             <br>
                         </div>

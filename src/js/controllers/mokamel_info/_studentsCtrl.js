@@ -16,7 +16,8 @@ app.controller('students', ['$scope', '$filter', '$http', function ($scope, $fil
                     field: "schoolid",
                     logic: "and",
                     operator: "eq",
-                    value: localStorage.schoolId+""
+                    value: localStorage.schoolId+"",
+
                 },
             }
         }
@@ -42,7 +43,10 @@ app.controller('students', ['$scope', '$filter', '$http', function ($scope, $fil
                 Columns: [],
                 kendoDataRequest: {
                     filter: {
-                        field: "", logic: "", operator: "", value: ""
+                        field: "", logic: "", operator: "", value: "",
+                        filters: [
+                            {field: "isactive", logic: "and", operator: "eq", value: '1'}
+                        ]
 
                     },
                     skip: skip,
@@ -66,6 +70,7 @@ app.controller('students', ['$scope', '$filter', '$http', function ($scope, $fil
             });
 
     };
+
     $scope.filterByClass = function ($classId, $name) {
         $scope.filterText = "دانش آموزان کلاس " + $name;
         $scope.name = [];
@@ -78,7 +83,7 @@ app.controller('students', ['$scope', '$filter', '$http', function ($scope, $fil
             take = 15;
             objects = 0;
             isem = false;
-            $scope.load2();
+
         } else {
             if (isem)
                 return;

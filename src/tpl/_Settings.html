@@ -10,7 +10,7 @@
                 <h1 class="m-n font-thin h3"><img src="img/icon/setting2.png" class="icnSize">تنظیمات</h1>
             </div>
             <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="float: left">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="float: left">
                     <div class="panel-body">
                         <button style="width: 100%" type="button" class="btn btn-addon , btn btn-default"
                                 ui-sref="app.page.insertStudent"><i class="icon-plus"></i> &nbsp; بازگشت به داشبورد
@@ -35,11 +35,17 @@
                                          style="font-size: 25px;display: table;margin-right: auto;margin-left: auto;margin-bottom: 12px;">
                                     مشخصات آموزشگاه</a></li>
 
-                                <li><a data-toggle="tab" href="/#design">
-                                    <img src="img/icon/design.png"
+                                <!--                                <li><a data-toggle="tab" href="/#design">-->
+                                <!--                                    <img src="img/icon/design.png"-->
+                                <!--                                         class="icnSize"-->
+                                <!--                                         style="font-size: 25px;display: table;margin-right: auto;margin-left: auto;margin-bottom: 12px;">تنظیمات-->
+                                <!--                                    ظاهری پنل</a></li> -->
+                                <li><a data-toggle="tab" href="/#major" ng-show="isMajor">
+                                    <img src="img/icon/workflow.png"
                                          class="icnSize"
-                                         style="font-size: 25px;display: table;margin-right: auto;margin-left: auto;margin-bottom: 12px;">تنظیمات
-                                    ظاهری پنل</a></li>
+                                         style="font-size: 25px;display: table;margin-right: auto;margin-left: auto;margin-bottom: 12px;">رشته
+                                    های آموزشگاه
+                                </a></li>
 
                             </ul>
                         </div>
@@ -48,7 +54,7 @@
                                 <div class="panel panel-default" style="width: 100%;">
                                     <div class="tab-content ">
                                         <!--order-->
-                                        <div class="tab-pane fade in active , panel-body" id="school">
+                                        <div class="tab-pane fade  in active   , panel-body" id="school">
                                             <br>
                                             <div class="row">
                                                 <div class="col-sm-12 col-md-12 col-sm-12 col-xs-12">
@@ -57,7 +63,7 @@
                                                         {{errText()}}&nbsp;</strong>
                                                         را وارد نمایید.
                                                     </div>
-                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                                         <div class="panel-body">
                                                             <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
                                                                    style="margin-top: 8px;"><span
@@ -72,7 +78,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                                         <div class="panel-body">
                                                             <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
                                                                    style="margin-top: 8px;">شیفت:</label>
@@ -91,7 +97,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"
                                                          ng-show="sch_shift == '1'">
                                                         <div class="panel-body">
                                                             <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
@@ -106,7 +112,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                                         <div class="panel-body">
                                                             <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
                                                                    style="margin-top: 8px;"><span
@@ -128,7 +134,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                                         <div class="panel-body">
                                                             <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
                                                                    style="margin-top: 8px;"><span
@@ -149,7 +155,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"
                                                          ng-show="sch_city">
                                                         <div class="panel-body">
                                                             <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
@@ -170,7 +176,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                                         <div class="panel-body">
                                                             <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
                                                                    style="margin-top: 8px;">نشانی :</label>
@@ -183,7 +189,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                                         <div class="panel-body">
                                                             <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
                                                                    style="margin-top: 8px;">ناحیه :</label>
@@ -196,7 +202,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                                         <div class="panel-body">
                                                             <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
                                                                    style="margin-top: 8px;">شماره تلفن : </label>
@@ -209,7 +215,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                                         <div class="panel-body">
                                                             <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
                                                                    style="margin-top: 8px;"><span
@@ -223,7 +229,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                                         <div class="panel-body">
                                                             <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
                                                                    style="margin-top: 8px;">یادداشت:</label>
@@ -269,8 +275,67 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
+                                        <div class="tab-pane fade, panel-body" id="major">
+                                            <div class="row">
+                                                <h5 class="panel-body" style="text-align: right;color: #2C50EF">
+                                                    امکان حذف یا ویرایش رشته های ثبت شده برای آموزشگاه شما وجود ندارد در
+                                                    صورت نیاز به تغییر در رشته های موجود با پشتیبانی تماس حاصل فرمایید.
+                                                </h5>
+                                                <div class="col-sm-12 col-md-12 col-sm-12 col-xs-12"
+                                                     ng-repeat="base in schoolBase">
+                                                    <div class="panel-body" class="panel-heading font-bold"
+                                                         style="background-color: #f6f8f8">
+                                                        <div style="text-align: right"
+                                                             class="col-xs-6 col-sm-8 col-md-9 col-lg-9">
+                                                            <h4> پایه {{base.title}}</h4>
+                                                        </div>
+                                                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3"
+                                                             style="float: left">
+                                                            <button class="btn btn-default"
+                                                                    ng-click="addMajor(base.majorbaseid)">افزودن رشته در
+                                                                این پایه
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped">
+                                                            <thead>
+                                                            <tr>
+                                                                <th scope="col"
+                                                                    class="v-middle  media-middle text-center ">
+                                                                    #
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="v-middle  media-middle text-center ">
+                                                                    نام رشته
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="v-middle  media-middle text-center ">
+                                                                    آدرس
+                                                                </th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr ng-repeat="major in schoolMajor"
+                                                                ng-show="major.parent == base.majorbaseid">
+                                                                <td class="v-middle  media-middle text-center">
+                                                                    {{major.majorbaseid}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center">
+                                                                    {{major.title}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center">
+                                                                    {{major.description}}
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                        </div>
                                         <div class="tab-pane fade , panel-body" id="design">
                                             <div class="row">
                                                 <div class="col-sm-12 col-md-12 col-sm-12 col-xs-12">
@@ -298,22 +363,22 @@
                                                     </div>
                                                     <br><br>
                                                     <div class="row">
-                                                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" >
-                                                                <p align="right">پیش نمایش : </p>
-                                                                <div class="row">
-                                                                    <div class="panel-body">
-                                                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
-                                                                             style="background-color: {{obj_colore['h_menu_color'] || '#4caf50'}};height: 15px;">
-                                                                        </div>
-                                                                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"
-                                                                             style="background-color: {{obj_colore['r_menu_color'] || '#ffffff'}};height: 100px;border: 1px #dfe5e7 solid;border-top: none">
-                                                                        </div>
-                                                                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10"
-                                                                             style="background-color: {{obj_colore['r_back_color'] || '#f0f3f4'}};height: 100px;border: 1px #dfe5e7 solid;border-right: none;border-top: none">
-                                                                        </div>
+                                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                                                            <p align="right">پیش نمایش : </p>
+                                                            <div class="row">
+                                                                <div class="panel-body">
+                                                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                                                         style="background-color: {{obj_colore['h_menu_color'] || '#4caf50'}};height: 15px;">
+                                                                    </div>
+                                                                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"
+                                                                         style="background-color: {{obj_colore['r_menu_color'] || '#ffffff'}};height: 100px;border: 1px #dfe5e7 solid;border-top: none">
+                                                                    </div>
+                                                                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10"
+                                                                         style="background-color: {{obj_colore['r_back_color'] || '#f0f3f4'}};height: 100px;border: 1px #dfe5e7 solid;border-right: none;border-top: none">
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                        </div>
                                                     </div>
                                                     <br>
                                                     <br>
@@ -354,4 +419,112 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">&times;
+                    </button>
+                    <h4 class="modal-title">
+                        <img src="img/icon/report.png" class="icnSize">
+                        افزودن رشته به آموزشگاه
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="row">
+                            <div class="panel-default" style="width: 100%;">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+                                                <div class="panel-body">
+                                                    <h5 style="margin-top: 17px">رشته های قابل انتخاب برای شما</h5>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                                                <div class="panel-body">
+                                                    <h5 style="line-height: 25px">
+                                                        <span>رشته های فعال:</span>
+                                                        <span style="color: red">{{majorInBase.length}}&nbsp;رشته</span>
+                                                    </h5>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </h4>
+                                </div>
+                                <div id="collapse4" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="panel-body">
+                                                <div class="panel-body" class="panel-heading font-bold"
+                                                     style="background-color: #f6f8f8">
+                                                    <span style="color: green">( {{baseMajor.length}} )</span>
+                                                    رشته قابل انتخاب برای شما یافت شد.
+                                                </div>
+                                                <div class="line line-dashed  line-lg pull-in"></div>
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                    <div ng-repeat="mjr in baseMajor">
+                                                        <div class="row">
+                                                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                                                                <h5 style="margin-top: 7px;">{{mjr.title}}</h5>
+                                                            </div>
+                                                            <div class="col-xs-12 col-sm-6 col-md-8 col-lg-8">
+                                                                <label class="containerCheckBox"><br>
+                                                                    <input type="checkbox"
+                                                                           ng-model="checkbox2"
+                                                                           ng-click="setMajor(mjr.majorbaseid,checkbox2)">
+                                                                    <span class="checkmark2"></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <Br>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="width: 100%;margin-right: 20px;">
+                        <br>
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4" style="float: right;color: white">
+                                <button ng-click="addMajorToSchool()"
+                                        style="width: 105%;background-color: #0F9E5E;" data-dismiss="modal"
+                                        type="submit" class="btn btn-light">
+                                    <i class=" icon-plus"></i> &nbsp; <span
+                                        style="color: white"> افزودن   </span>
+                                </button>
+                            </div>
+
+                            <div class="col-xs-4 col-sm-2 col-md-4 col-lg-2"
+                                 style="float: right;margin-right: 20px;color: white">
+                                <button data-dismiss="modal"
+                                        style="width: 100%;background-color: #6c757d"
+                                        type="submit" href="index.html"
+                                        class="btn btn-light">
+                                    <i
+                                            class="icon-close"></i>
+                                    &nbsp;
+                                    <span> لغو </span></button>
+                            </div>
+
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

@@ -53,6 +53,7 @@ app.controller('enzebat_teacher', ['$scope', '$filter', '$http', function ($scop
             });
 
     };
+
     $scope.users = [
         {value: "1", name: "مدیر آموزشگاه"},
         {value: "2", name: "معاون"},
@@ -110,7 +111,6 @@ app.controller('enzebat_teacher', ['$scope', '$filter', '$http', function ($scop
 
                 $http.post(URL_INSERT, JSON.stringify(ins_enzS))
                     .success(function (result, status, headers, config) {
-                        alert("انضباط معلم جدیدی با عنوان " + $scope.enzTh_name + " با موفقیت درج شد.");
                         document.location.reload();
                     }).error(function (result, status, header, config) {
                     alert("درج انضباط معلم با خطا مواجه شد.");
@@ -236,7 +236,7 @@ app.controller('enzebat_teacher', ['$scope', '$filter', '$http', function ($scop
         var del_Item = {
             ViewName: "DisciplineTypeDelete",
             parameters: [
-                {key: "%disciplinetypeid ", value: $id + ''},
+                {key: "%disciplinetypeid", value: $id + ''},
             ]
         };
 

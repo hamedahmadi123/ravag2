@@ -65,7 +65,6 @@ app.controller('reshteh', ['$scope', '$filter', '$http', function ($scope, $filt
 
                     $http.post(URL_INSERT, JSON.stringify(ins_rsh))
                         .success(function (result, status, headers, config) {
-                            alert("رشته جدیدی با عنوان " + $scope.rsh_name + " با موفقیت درج شد.");
                             document.location.reload();
                         }).error(function (result, status, header, config) {
                         alert("درج رشته با خطا مواجه شد.");

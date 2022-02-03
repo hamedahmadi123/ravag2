@@ -31,9 +31,10 @@
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                         <div class="panel-body">
-                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label" style="margin-top: 8px;"><span
+                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                   style="margin-top: 8px;"><span
                                     class="starstyle">*</span>عنوان:</label>
-                           <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                                 <input ng-model="mb_name" class="form-control rounded" tooltip="عنوان مقطع جدید"
                                        placeholder="عنوان مقطع ...."
                                        ng-required="true" type="text">
@@ -42,8 +43,9 @@
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                         <div class="panel-body">
-                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label" style="margin-top: 8px;">کد {{titleHeader}} :</label>
-                           <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label" style="margin-top: 8px;">کد
+                                {{titleHeader}} :</label>
+                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                                 <input ng-model="mb_code" class="form-control rounded" tooltip="کد {{titleHeader}}"
                                        placeholder="کد {{titleHeader}}...."
                                        type="number">
@@ -121,6 +123,57 @@
                         <!--                            </div>-->
                         <!--                        </div>-->
                         <!--                    </div>-->
+                    </div>
+                </div>
+
+                <br>
+<!--                By Mohsen Shahriye-->
+
+                <div class="row" style="border:  1px #f0f3f4 solid">
+                    <div align="right" style="padding: 10px;">
+                <div align="right" style="padding: 10px;">
+                        <label class="control-label"><span class="starstyle"></span>شهریه:</label>
+                    </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div class="panel-body">
+                                <input ng-model="shahriye"
+                                       class="form-control rounded"
+                                       tooltip=" شهریه این پایه / رشته"
+                                       placeholder="400000000"
+                                       ng-requiredShow="false"
+                                       type="text"
+                                       oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                       currency-mask="R$:2"
+                                       ui-money-mask="3"
+
+
+                                       >
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+<!--By Mohsen End Shahriye-->
+                <br>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="panel-body" style="text-align: right">
+                        <label>نوع انضباط:</label>&nbsp;
+                        <br>
+                        <br>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <label class="containerCheckBox">توصیفی
+                                <input type="radio" name="rdi1" checked="checked" ng-model="tosify">
+                                <span class="checkmark2"></span>
+                            </label>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <label class="containerCheckBox">نمره ای
+                                <input type="radio" name="rdi1" ng-model="nomrei">
+                                <span class="checkmark2"></span>
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>

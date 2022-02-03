@@ -17,6 +17,12 @@ app.controller('student_option', ['$scope', '$filter', '$http', function ($scope
     $scope.enz_bad = 0;
     $scope.splitPath = "";
     $scope.this_student = "";
+
+
+    var skip = -15;
+    var take = 15;
+    var objects = 0;
+    var isem = false;
     myfunc();
 
     function myfunc() {
@@ -44,16 +50,17 @@ app.controller('student_option', ['$scope', '$filter', '$http', function ($scope
             mutualTransaction: {
                 kendoDataRequest: {
                     filter: {
-                        field: "",
-                        logic: "",
-                        operator: "",
-                        value: ""
+                        field: "schoolid",
+                        logic: "and",
+                        operator: "eq",
+                        value: localStorage.schoolId + ''
                     },
                 }
             }
         }
         $http.post(URL_GET, JSON.stringify(cls))
             .success(function (result, status, headers, config) {
+                debugger
                     $scope.class = result.data;
                 }
             );
@@ -90,10 +97,11 @@ app.controller('student_option', ['$scope', '$filter', '$http', function ($scope
                         Columns: [],
                         kendoDataRequest: {
                             filter: {
-                                field: "classid",
-                                logic: "and",
-                                operator: "eq",
-                                value: $classId + ""
+                                field: "classid", logic: "and", operator: "eq", value: $classId + ""
+                                , filters: [
+                                    {field: "schoolid", logic: "and", operator: "eq", value: localStorage.schoolId},
+                                    {field: "isactive", logic: "and", operator: "eq", value: "1"}]
+
                             },
                             skip: skip,
                             take: take,
@@ -141,10 +149,11 @@ app.controller('student_option', ['$scope', '$filter', '$http', function ($scope
                 Columns: [],
                 kendoDataRequest: {
                     filter: {
-                        field: field,
-                        logic: logic,
-                        operator: operator,
-                        value: value
+                        field: field, logic: logic, operator: operator, value:value
+                        , filters: [
+                            {field: "schoolid", logic: "and", operator: "eq", value: localStorage.schoolId},
+                            {field: "isactive", logic: "and", operator: "eq", value: "1"}]
+
                     },
                     skip: skip,
                     take: take,
@@ -167,6 +176,7 @@ app.controller('student_option', ['$scope', '$filter', '$http', function ($scope
             });
 
     }
+
     $scope.selectTMPSt = function ($id, $name) {
         document.getElementById($id).checked = true;
         $scope.tmp_st_id = $id;
@@ -194,7 +204,7 @@ app.controller('student_option', ['$scope', '$filter', '$http', function ($scope
         $http.post(URL_GET, JSON.stringify(stuSelect))
             .success(function (result, status, headers, config) {
                 $scope.this_student = result.data[0];
-                console.log($scope.this_student);
+
                 $scope.st_classid = $scope.this_student.classid;
                 var RankAvgStudentInBase = {
                     ViewName: "RankAvgLessonPerBase",
@@ -239,7 +249,7 @@ app.controller('student_option', ['$scope', '$filter', '$http', function ($scope
 
     }
     $scope.selecScore = function () {
-        console.log($scope.st_classid);
+
         $scope.show_Score = !$scope.show_Score;
         var msg = {
             ViewName: "OneStudentScoreLessonAvg",
@@ -256,11 +266,11 @@ app.controller('student_option', ['$scope', '$filter', '$http', function ($scope
                 },
             }
         }
-        console.log(JSON.stringify(msg));
+
         $http.post(URL_GET, JSON.stringify(msg))
             .success(function (result, status, headers, config) {
                 $scope.score_st = result.data;
-                console.log($scope.score_st);
+
             });
     }
     $scope.selectEnzSt = function () {

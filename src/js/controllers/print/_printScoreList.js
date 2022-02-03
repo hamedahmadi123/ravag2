@@ -35,7 +35,7 @@ app.controller('printScoreList', ['$scope', '$filter', '$http', function ($scope
         }
         $http.post(URL_GET, JSON.stringify(ClS))
             .success(function (result, status, headers, config) {
-                console.log(result.data);
+
 var t=1;
                 for (let i = 0; i < result.data.length; i++) {
                     result.data[i].index = i;
@@ -47,7 +47,7 @@ var t=1;
                     }
 
                     if (result.data[i].sessionid) {
-                    console.log(result.data[i].sessionid);
+
                     if (!$scope.classSession[result.data[i].studentid][result.data[i].sessionid])
                         $scope.classSession[result.data[i].studentid][result.data[i].sessionid] = {};
 
@@ -56,7 +56,7 @@ var t=1;
                     $scope.classSession[result.data[i].studentid][result.data[i].sessionid] = result.data[i];
                 }
             }
-        console.log($scope.classSession);
+
         // $scope.classSession = result.data;
 
     }
@@ -78,7 +78,7 @@ var sch = {
 $http.post(URL_GET, JSON.stringify(sch))
     .success(function (result, status, headers, config) {
         $scope.thisSchool = result.data[0];
-        console.log($scope.thisSchool);
+
     });
 }
 

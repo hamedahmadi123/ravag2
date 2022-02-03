@@ -1,6 +1,22 @@
 app.controller('Setting', ['$scope', '$filter', '$http', function ($scope, $filter, $http, $timeout) {
     $scope.obj_colore = {};
+    $scope.schoolBase = [];
+    $scope.baseMajor = [];
+    $scope.schoolMajor = [];
+    $scope.majorArray = [];
     $scope.tem_id = "";
+    $scope.isMajor = false;
+    $scope.scholtype = JSON.parse(localStorage.schoolBase);
+    for (var i = 0; i < $scope.scholtype.length; i++) {
+        if ($scope.scholtype[i] >= 1 && $scope.scholtype[i] <= 6) {
+            $scope.isMajor = false;
+        } else if ($scope.scholtype[i] >= 7 && $scope.scholtype[i] <= 9) {
+            $scope.isMajor = false;
+        } else if ($scope.scholtype[i] >= 10 && $scope.scholtype[i] <= 12) {
+            $scope.isMajor = true;
+        }
+    }
+
     $scope.jensiat = [
         {value: "0", name: "پسرانه"},
         {value: "1", name: "دخترانه"},
@@ -30,15 +46,44 @@ app.controller('Setting', ['$scope', '$filter', '$http', function ($scope, $filt
             $scope.obj_colore = JSON.parse($scope.panel_disgen.colore);
 
         });
+
+    var mbs1 = {
+        ViewName: "majorbaseschoolselect",
+        mutualTransaction: {
+            kendoDataRequest: {
+                filter: {
+                    field: "schoolid",
+                    logic: "and",
+                    operator: "eq",
+                    value: localStorage.schoolId + ''
+                },
+                skip: 0,
+                take: 1000,
+            }
+        }
+    }
+    $http.post(URL_GET, JSON.stringify(mbs1))
+        .success(function (result, status, headers, config) {
+            $scope.schoolMajorbase = result.data;
+            for (var i = 0; i < $scope.schoolMajorbase.length; i++) {
+                if ($scope.schoolMajorbase[i].ismajor == '0') {
+                    $scope.schoolBase.push($scope.schoolMajorbase[i]);
+
+                } else {
+                    $scope.schoolMajor.push($scope.schoolMajorbase[i]);
+                }
+            }
+        });
+
     var sch = {
         ViewName: "SchoolSelect",
         mutualTransaction: {
             kendoDataRequest: {
                 filter: {
-                    // field: "schoolid",
-                    // logic: "and",
-                    // operator: "eq",
-                    // value: localStorage.schoolId + ""
+                    field: "schoolid",
+                    logic: "and",
+                    operator: "eq",
+                    value: localStorage.schoolId + ""
                 },
             }
         }
@@ -62,6 +107,7 @@ app.controller('Setting', ['$scope', '$filter', '$http', function ($scope, $filt
             $scope.sch_tel = $scope.school.phone;
             $scope.sch_note = $scope.school.note;
             $scope.zanghLenth = parseInt($scope.school.zanghLenth);
+            $scope.sch_latin = $scope.school.latin_name;
         });
     $scope.update_school = function ($id) {
         if ($scope.sch_shift == '0') {
@@ -85,6 +131,7 @@ app.controller('Setting', ['$scope', '$filter', '$http', function ($scope, $filt
                         {key: "%jensiyat", value: $scope.sch_type + ''},
                         {key: "%difftime", value: $scope.sch_difftime + ''},
                         {key: "%zanghLenth", value: $scope.zanghLenth + ''},
+                        {key: "%latin_name", value: $scope.sch_latin + ''},
                     ]
                 };
                 var j = confirm("آیا برای ویرایش آموزشگاه با عنوان " + $scope.sch_name + " اطمینان دارید ؟ ");
@@ -134,7 +181,6 @@ app.controller('Setting', ['$scope', '$filter', '$http', function ($scope, $filt
 
                 ]
             };
-            alert(JSON.stringify(upd_sch));
             $http.post(URL_INSERT, JSON.stringify(upd_sch))
                 .success(function (result, status, headers, config) {
                     document.location.reload();
@@ -149,6 +195,83 @@ app.controller('Setting', ['$scope', '$filter', '$http', function ($scope, $filt
         }
     }
 
+    $scope.addMajor = function ($baseid) {
+        $scope.baseMajor = [];
+        $scope.majorInBase = [];
+        $scope.majorArray = [];
+        var mbs1 = {
+            ViewName: "LikeMajor",
+            mutualTransaction: {
+                kendoDataRequest: {
+                    filter: {
+                        field: "parent",
+                        logic: "and",
+                        operator: "eq",
+                        value: $baseid + ''
+                    },
+                }
+            }
+        }
+        $http.post(URL_GET, JSON.stringify(mbs1))
+            .success(function (result, status, headers, config) {
+                    $scope.majorInBase = [];
+                    for (var j = 0; j < $scope.schoolMajor.length; j++) {
+                        if ($scope.schoolMajor[j].parent == $baseid) {
+                            $scope.majorInBase.push($scope.schoolMajor[j])
+                        }
+                    }
+                    for (var i = 0; i < result.data.length; i++) {
+                        if (result.data[i].schoolid != localStorage.schoolId) {
+                            $scope.baseMajor.push(result.data[i]);
+                        }
+                    }
+                    if ($scope.baseMajor.length != 0) {
+                        $('#myModal').modal();
+                    } else {
+                        alert("متاسفانه هیچ رشته قابل انتخابی برای شما در این پایه یافت نشد.")
+                    }
+                }
+            );
+
+    }
+
+    $scope.setMajor = function ($id, $bool) {
+        if ($bool == true) {
+            $scope.majorArray.push($id);
+        } else {
+            for (var i = 0; i < $scope.majorArray.length; i++) {
+                if ($scope.majorArray[i] == $id) {
+                    $scope.majorArray.splice(i, 1);
+                    break;
+                }
+            }
+        }
+    }
+    $scope.addMajorToSchool = function () {
+        var dataArray = [];
+        if ($scope.majorArray.length != 0) {
+            for (var i = 0; i < $scope.majorArray.length; i++) {
+                var ins_smb = {
+                    ViewName: "InsertMajorBaseSchool",
+                    parameters: [
+                        {key: "%majorbaseid", value: $scope.majorArray[i]+''},
+                        {key: "%schoolid", value: localStorage.schoolId + ''},
+
+                    ]
+                };
+                dataArray.push(ins_smb);
+            }
+            $http.post(URL_ARRAY_INSERT, JSON.stringify(dataArray))
+                .success(function (result, status, headers, config) {
+                    document.location.reload();
+                }).error(function (result, status, header, config) {
+                alert("خطا در ارسال اطلاعات");
+                document.location.reload();
+            });
+        } else {
+            alert("هیچ رشته ای انتخاب نشده است.")
+        }
+    }
+
 }])
-;
 ;

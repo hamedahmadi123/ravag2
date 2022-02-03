@@ -50,6 +50,7 @@ app.controller('termha', ['$scope', '$filter', '$http', function ($scope, $filte
             });
 
     };
+
     $scope.detial = function ($id) {
         var trm = {
             ViewName: "TermSelect",

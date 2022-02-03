@@ -133,12 +133,15 @@ app.controller('class_edit', ['$scope', '$filter', '$http', function ($scope, $f
         ViewName: "majorbaseschoolselect",
         mutualTransaction: {
             kendoDataRequest: {
-                // filter: {
-                //     field: "schoolid",
-                //     logic: "and",
-                //     operator: "eq",
-                //     value: localStorage.schoolId
-                // },
+                filter: {
+                    field: "schoolid",
+                    logic: "and",
+                    operator: "eq",
+                    value: localStorage.schoolId,
+                    filters: [
+                        {field: "ismajor", logic: "and", operator: "eq", value: '0'},
+                    ]
+                },
             }
         }
     }
@@ -170,32 +173,52 @@ app.controller('class_edit', ['$scope', '$filter', '$http', function ($scope, $f
     $scope.selectStudent = function ($major) {
         document.getElementById("myDetails").open = true;
         var stu = {
-            ViewName: "SelectStudentInClass",
+            ViewName: "StudentSelect",
             mutualTransaction: {
                 kendoDataRequest: {
                     filter: {
                         field: "schoolid", logic: "and", operator: "eq", value: localStorage.schoolId + ''
                         , filters: [
                             {field: "majorbaseid", logic: "and", operator: "eq", value: $major},
-                            {field: "classid", logic: "and", operator: "in", value: "0," + $scope.class_id}
+                            {field: "isactive", logic: "and", operator: "eq", value: '1'},
                         ]
 
                     },
                 }
             }
         };
-        console.log(JSON.stringify(stu));
         $http.post(URL_GET, JSON.stringify(stu))
             .success(function (result, status, headers, config) {
-                $scope.student = result.data;
+                $scope.allstudent = result.data;
                 $scope.showSt = true;
-                for (var i = 0; i < $scope.student.length; i++) {
-                    $scope.stId[$scope.student[i].studentid] = ($scope.class_id == $scope.student[i].classid && $scope.student[i].isInClass == 1);
+                var stu = {
+                    ViewName: "SelectStudentInClass",
+                    mutualTransaction: {
+                        kendoDataRequest: {
+                            filter: {
+                                field: "schoolid", logic: "and", operator: "eq", value: localStorage.schoolId + ''
+                                , filters: [
+                                    {field: "majorbaseid", logic: "and", operator: "eq", value: $major},
+                                    {field: "classid", logic: "and", operator: "in", value: "0," + $scope.class_id}
+                                ]
 
-                    if ($scope.class_id == $scope.student[i].classid && $scope.student[i].isInClass == 1)
-                        stId1[$scope.student[i].studentid] = true;
-                }
+                            },
+                        }
+                    }
+                };
+                $http.post(URL_GET, JSON.stringify(stu))
+                    .success(function (result, status, headers, config) {
+                        $scope.student = result.data;
+                        for (var i = 0; i < $scope.student.length; i++) {
+                            $scope.stId[$scope.student[i].studentid] = ($scope.class_id == $scope.student[i].classid && $scope.student[i].isInClass == 1);
+
+                            if ($scope.class_id == $scope.student[i].classid && $scope.student[i].isInClass == 1)
+                                stId1[$scope.student[i].studentid] = true;
+                        }
+                    });
+
             });
+
 
     }
     $scope.setStudent = function () {
@@ -257,6 +280,7 @@ app.controller('class_edit', ['$scope', '$filter', '$http', function ($scope, $f
                 }
                 var j = confirm("آیا برای ویرایش کلاس با عنوان " + $scope.cls_name + " اطمینان دارید ؟ ");
                 if (j === true) {
+
                     $http.post(URL_ARRAY_INSERT, JSON.stringify(dataArray))
                         .success(function (result, status, headers, config) {
                             document.location.replace("#/app/page/Class_Ctrl");

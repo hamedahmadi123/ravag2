@@ -10,10 +10,16 @@ app.controller('permission', ['$scope', '$filter', '$http', function ($scope, $f
             mutualTransaction: {
                 kendoDataRequest: {
                     filter: {
-                        field: "teacherid",
+                        field: "schoolid",
                         logic: "and",
                         operator: "eq",
-                        value: localStorage.userId + ""
+                        value: localStorage.schoolId + ""
+                        , filters: [{
+                            field: "teacherid",
+                            logic: "and",
+                            operator: "eq",
+                            value: localStorage.userId + ""
+                        }],
                     },
                 }
             },
@@ -29,10 +35,10 @@ app.controller('permission', ['$scope', '$filter', '$http', function ($scope, $f
                     Columns: [],
                     kendoDataRequest: {
                         filter: {
-                            // field: "schoolid",
-                            // logic: "and",
-                            // operator: "eq",
-                            // value: localStorage.schoolId + ""
+                            field: "schoolid",
+                            logic: "and",
+                            operator: "eq",
+                            value: localStorage.schoolId + ""
                         },
                     }
                 },
@@ -114,10 +120,16 @@ app.controller('permission', ['$scope', '$filter', '$http', function ($scope, $f
             mutualTransaction: {
                 kendoDataRequest: {
                     filter: {
-                        field: "teacherid",
+                        field: "schoolid",
                         logic: "and",
                         operator: "eq",
-                        value: $userid + ""
+                        value: localStorage.schoolId + ""
+                        , filters: [{
+                            field: "teacherid",
+                            logic: "and",
+                            operator: "eq",
+                            value: $userid + ""
+                        }],
                     },
                 }
             },

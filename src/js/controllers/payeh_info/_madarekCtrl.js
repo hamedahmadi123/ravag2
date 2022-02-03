@@ -50,6 +50,7 @@ app.controller('madarek', ['$scope', '$filter', '$http', function ($scope, $filt
             });
 
     };
+
     // insert******************************
     $scope.insertMadrak = function () {
         if ((localStorage.adminId) && localStorage.adminCount != 0 && (localStorage.adminCount && localStorage.adminCount != undefined && localStorage.adminCount != "undefined")) {

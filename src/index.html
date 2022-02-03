@@ -87,6 +87,7 @@
 <script src="js/directives/ui-toggleclass.js"></script>
 <script src="js/controllers/bootstrap.js"></script>
 <script src="js/controllers/dirPagination.js"></script>
+
 <script src="js/controllers/dashboard.js"></script>
 <script src="js/controllers/OrderEdit.js"></script>
 <script src="js/controllers/neworder.js"></script>
@@ -96,47 +97,65 @@
 <script src="../node_modules/bootstrap-fileinput/js/fileinput.js"></script>
 
 
-<script src="../node_modules/ng-infinite-scroll/build/ng-infinite-scroll.min.js"></script>
+<script src="../node_modules/ng-infinite-scroll/build/ng-infinite-scroll.js"></script>
 
 
-<div class="modal-over bg-black" ng-controller="loginCtrl">
-    <div class="modal-center animated fadeInUp text-center" style="width:200px;margin:-100px 0 0 -100px;">
+<div class="modal-over bg-black" style="background-image: url('img/bg/010.jpg'); max-width: 100%; background-color: #cccccc; /* Used if the image is unavailable */
+  height: 100%; /* You must set a specified height */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; " ng-controller="loginCtrl">
+    <div class="modal-center animated fadeInUp text-center"
+         style="width:300px;padding: 10px;margin:-100px 0 0 -150px;background: rgba(0,0,0,0.5)">
         <div class="thumb-lg">
-            <img src="../src/img/davat2.png" style="width: 100%;height: auto">
+            <!--            <img src="../src/img/davat2.png" style="width: 100%;height: auto">-->
         </div>
         <br>
+        <br>
+        <h4 style="color: white">ورود به حساب کاربری</h4>
         <br>
         <br>
         <div style="width: 100%">
-            <select tooltip="سمت خود را مشخص نمایید"
-                    ng-model="usertype"
-                    ng-options="type.value as type.name for type in userType"
-                    class="form-control text-sm no-border">
-                <option ng-disabled="true"
-                        ng-selected="false" value="">
-                    نوع کاربر
-                </option>
-
-            </select>
-        </div>
-        <br><br>
-        <div class="input-group" style="width: 100%">
             <select tooltip="مدرسه خود را انتخاب نمایید."
                     ng-model="schoole"
                     ng-options="sch.schoolid as sch.name for sch in schools"
-                    class="form-control text-sm btn-rounded no-border">
+                    class="form-control text-sm no-border">
                 <option ng-disabled="true"
                         ng-selected="false" value="">
                     نام مدرسه
                 </option>
 
             </select>
-            <span class="input-group-btn"><a
-                    style="height: 34px;"
-                    tooltip="ورود به برنامه"
-                    ng-click="SignupMenu(usertype,schoole)"
-                    class="btn btn-success btn-rounded no-border"><i
-                    class="glyphicon glyphicon-log-in"></i></a></span>
+        </div>
+        <br><br>
+        <div style="width: 100%">
+            <input ng-model="username"
+                   class="form-control"
+                   tooltip="نام کاربری" id="user"
+                   ng-required="true"
+                   placeholder="نام کاربری..."
+                   type="text">
+        </div>
+        <br><br>
+        <div style="width: 100%">
+            <input ng-model="password"
+                   class="form-control"
+                   tooltip="کلمه عبور" id="paswd"
+                   ng-required="true"
+                   placeholder="کلمه عبور..."
+                   type="password">
+        </div>
+        <br>
+        <a ng-show="showForgetPass" data-toggle="modal" data-target="#forgetPass">رمز عبور خود را فراموش کرده اید
+            ؟ </a>
+        <br>
+        <br>
+        <div style="width: 100%">
+            <button style="width: 100%;" type="button" class="btn btn-addon , btn btn-success"
+                    ng-click="SignupMenu(username,password,schoole)"><i
+                    class="icon-login"></i>
+                ورود
+            </button>
         </div>
         <br><br>
         <div class="alert alert-danger" ng-show="errText()">
@@ -145,10 +164,245 @@
         </div>
     </div>
 </div>
+<div ng-controller="loginCtrl" class="modal fade bd-example-modal-lg" id="forgetPass" tabindex="-1" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">&times;
+                    </button>
+                    <h4 class="modal-title">
+                        <img src="img/icon/class.png" class="icnSize">
+                        فراموشی رمز عبور
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div style="width: 100%;" ng-show="form1">
+                            <div id="collapse1" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="panel-body">
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" align="center">
+                                                    <div class="panel-body">
+                                                        <h3>بازیابی حساب کاربری شما</h3>
+                                                        <br>
+                                                        <h4>
+                                                            را برای یافتن حساب خود
+                                                            بخش های زیر را پر نمایید .
+                                                        </h4>
+                                                        <br>
+                                                        <br>
+                                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                                             align="center">
+                                                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                                <div class="panel-body">
+                                                                    <select tooltip="مدرسه خود را انتخاب نمایید."
+                                                                            ng-model="schoole"
+                                                                            ng-options="sch.schoolid as sch.name for sch in schools"
+                                                                            class="form-control text-sm">
+                                                                        <option ng-disabled="true"
+                                                                                ng-selected="false" value="">
+                                                                            نام مدرسه
+                                                                        </option>
 
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                                <div class="panel-body">
+                                                                    <input ng-model="user_info"
+                                                                           tooltip="برای یافتن حساب خود نام کاربری یا شماره تلفن همراه خود یا کدملیتان که در حسابتان وارد کرده اید را وارد نمایید."
+                                                                           placeholder="نام کاربری یا کد ملی یا شماره تلفن همراه...."
+                                                                           style="width: 100%;border-radius: 5px;"
+                                                                           class="form-control text-sm ">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"
+                                                                 style="float: left">
+                                                                <div class="panel-body">
+                                                                    <button style="float: left;border-radius: 5px;"
+                                                                            type="button"
+                                                                            ng-click="findAccount(user_info)"
+                                                                            class="btn btn-info"><i
+                                                                            class="fa fa-search"></i>
+                                                                        جستجو
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width: 100%;" ng-show="form2">
+                            <div id="collapse2" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="panel-body">
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" align="center">
+                                                    <div class="panel-body">
+                                                        <h3>نام کاربری :
+                                                            {{accuont.firstname + ' ' + accuont.lastname}}</h3>
+                                                        <br>
+                                                        <h4>
+                                                            برای اهراز هویت کد تایید 4 رقمی ارسال شده بروی شماره تلفن
+                                                            <span dir="ltr"> ( {{phone_Code}} ) </span>&nbsp;
+                                                            را وارد نمایید.
+                                                        </h4>
+                                                        <br>
+                                                        <br>
+                                                        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9">
+                                                            <div class="panel-body">
+                                                                <input
+                                                                        tooltip="کد تایید ارسال شده بروی شماره تلفن خود را در این بخش وارد نمایید سپس دکمه تایید را کلیک نمایید."
+                                                                        style="width: 100%;border-radius: 5px;"
+                                                                        ng-model="confirmCode"
+                                                                        type="text" class="form-control text-sm "
+                                                                        ui-mask="9999">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-3">
+                                                            <div class="panel-body">
+                                                                <button style="float: left;border-radius: 5px;width: 100%"
+                                                                        type="button"
+                                                                        ng-click="confrimCode(confirmCode)"
+                                                                        class="btn btn-success"><i
+                                                                        class="fa fa-edit"></i>
+                                                                    تایید
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width: 100%;" ng-show="form3">
+                            <div id="collapse3" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="panel-body">
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" align="center">
+                                                    <div class="panel-body">
+                                                        <h3>نام کاربری :
+                                                            {{accuont.firstname + ' ' + accuont.lastname}}</h3>
+                                                        <br>
+                                                        <h4 style="color: green">
+                                                            اهراز هویت شما با موفقیت انجام شد.
+                                                        </h4>
+                                                        <br>
+                                                        <br>
+                                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                                             align="center">
+                                                            <div class="panel-body">
+
+                                                                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                                       style="margin-top: 8px;"> نام کاربری :</label>
+                                                                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                                    <input ng-readonly="true"
+                                                                           tooltip="نام کاربری حساب شما"
+                                                                           style="width: 100%;border-radius: 5px;"
+                                                                           ng-model="username"
+                                                                           type="text" class="form-control text-sm "
+                                                                    >
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                                             align="center">
+                                                            <div class="panel-body">
+                                                                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                                       style="margin-top: 8px;"> رمز عبور :</label>
+                                                                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                                    <input ng-readonly="true"
+                                                                           tooltip="رمز عبور حساب شما"
+                                                                           style="width: 100%;border-radius: 5px;"
+                                                                           ng-model="pass"
+                                                                           type="text" class="form-control text-sm ">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"
+                                                             style="float: left">
+                                                            <div class="panel-body">
+                                                                <button data-dismiss="modal"
+                                                                        style="width: 90%;"
+                                                                        type="submit"
+                                                                        ng-click="SignupMenu(username,pass,schoole)"
+                                                                        class="btn btn-success">
+                                                                    <i class="icon-login"></i>&nbsp;<span> ورود به حساب </span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="width: 100%;margin-right: 20px;">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                    <div class="panel-body">
+                                        <button data-dismiss="modal"
+                                                style="width: 100%;"
+                                                type="submit"
+                                                class="btn btn-dark">
+                                            <i class="icon-close"></i>&nbsp;<span> لغو </span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 <script>
     app.controller('loginCtrl', ['$scope', '$filter', '$http', function ($scope, $filter, $http, $timeout) {
+
+        $("#user").keypress(function (event) {
+            if (event.which == 13) {
+                $scope.SignupMenu($scope.username, $scope.password, $scope.schoole)
+            }
+        });
+        $("#paswd").keypress(function (event) {
+            if (event.which == 13) {
+                $scope.SignupMenu($scope.username, $scope.password, $scope.schoole)
+
+            }
+        });
+        //$scope.username = "admin";
+       // $scope.password = "admin";
+
+
+        $scope.form1 = true;
+        $scope.form2 = false;
+        $scope.form3 = false;
+        $scope.phone_Code = "";
         $scope.adminProfile = [];
         $scope.conShow = 0;
         $scope.userAccunt = "";
@@ -157,10 +411,11 @@
         $scope.adminId = "";
         $scope.title = "";
         $scope.eroretext = "";
+        $scope.showForgetPass = false;
         $scope.userType = [
             {value: "1", name: "مدیر آموزشگاه"},
             {value: "2", name: "معاون"},
-            {value: "3", name: "معلم"},
+            {value: "3", name: "پرسنل"},
             // {value: "4", name: "کاربر"},
             // {value: "5", name: "مدیر سیستم"},
         ];
@@ -180,93 +435,135 @@
         $http.post(URL_GET, JSON.stringify(sch))
             .success(function (result, status, headers, config) {
                 $scope.schools = result.data;
+                $scope.schoole = $scope.schools[0].schoolid;
+
             });
-        $scope.SignupMenu = function ($type, $schoole) {
-            if ($type && $schoole) {
-                localStorage.adminId = '3';
-                localStorage.schoolId = $schoole + '';
-                localStorage.userType = $type;
-                localStorage.userId = '30';
-                var sch = {
-                    ViewName: "SchoolSelect",
+        $scope.SignupMenu = function ($user, $pass, $schoole) {
+            if ($user && $pass && $schoole) {
+                var login = {
+                    ViewName: "LoginPanel",
+                    parameters: [
+                        {key: "%username", value: $user + ''},
+                        {key: "%password", value: $pass + ''},
+                        {key: "%schoolid", value: $schoole + ''},
+                    ],
                     mutualTransaction: {
                         kendoDataRequest: {
                             filter: {
-                                // field: "schoolid",
-                                // logic: "and",
-                                // operator: "eq",
-                                // value: localStorage.schoolId
+                                field: "",
+                                logic: "",
+                                operator: "",
+                                value: ""
                             },
                         }
                     }
                 }
-                $http.post(URL_GET, JSON.stringify(sch))
+                $http.post(URL_GET, JSON.stringify(login))
                     .success(function (result, status, headers, config) {
-                        $scope.school = result.data[0];
-                        localStorage.schoolname = $scope.school.name;
-                    });
-                var trm = {
-                    ViewName: "TermSelect",
-                    mutualTransaction: {
-                        kendoDataRequest: {
-                            filter: {
-                                // field: "schoolid",
-                                // logic: "and",
-                                // operator: "eq",
-                                // value: localStorage.schoolId + ""
-                            },
-                        }
-                    }
-                }
-                $http.post(URL_GET, JSON.stringify(trm))
-                    .success(function (result, status, headers, config) {
-                        $scope.schoolTerms = result.data;
-                        if ($scope.schoolTerms.length != '0') {
-                            $scope.fullDate = moment().format("YYYY-MM-DD");
-                            for (var i = 0; i < $scope.schoolTerms.length; i++) {
-                                if ($scope.schoolTerms[i].startdate <= $scope.fullDate && $scope.schoolTerms[i].enddate >= $scope.fullDate) {
-                                    $scope.act_term_id = $scope.schoolTerms[i].termid;
-                                    $scope.act_term_name = $scope.schoolTerms[i].title;
+                        $scope.techerInfo = result.data[0];
+                        if ($scope.techerInfo) {
+                            localStorage.adminId = $scope.techerInfo.teacherid;
+                            localStorage.schoolId = $schoole + '';
+                            localStorage.userType = $scope.techerInfo.teachertype;
+                            localStorage.userId = $scope.techerInfo.teacherid;
+                            localStorage.localmenu = $scope.techerInfo.permission;
+                            console.log($scope.techerInfo);
+                            if ($scope.techerInfo.schoolid == '0') {
+                                localStorage.operator = true;
+                            }
+                            var sch = {
+                                ViewName: "SchoolSelect",
+                                mutualTransaction: {
+                                    kendoDataRequest: {
+                                        filter: {
+                                            field: "schoolid",
+                                            logic: "and",
+                                            operator: "eq",
+                                            value: localStorage.schoolId
+                                        },
+                                    }
                                 }
                             }
-                            if ($scope.act_term_id) {
-                                localStorage.act_term_id = $scope.act_term_id;
-                                localStorage.act_term_name = $scope.act_term_name;
-                            } else {
-                                localStorage.act_term_id = 0;
-                                localStorage.act_term_name = "لطفا ترم مورد نظر خود را انتخاب نمایید.";
+                            $http.post(URL_GET, JSON.stringify(sch))
+                                .success(function (result, status, headers, config) {
+                                    $scope.school = result.data[0];
+                                    localStorage.schoolname = $scope.school.name;
+                                });
+                            var trm = {
+                                ViewName: "TermSelect",
+                                mutualTransaction: {
+                                    kendoDataRequest: {
+                                        filter: {
+                                            field: "schoolid",
+                                            logic: "and",
+                                            operator: "eq",
+                                            value: localStorage.schoolId + ""
+                                        },
+                                    }
+                                }
                             }
+                            $http.post(URL_GET, JSON.stringify(trm))
+                                .success(function (result, status, headers, config) {
+                                    $scope.schoolTerms = result.data;
+                                    if ($scope.schoolTerms.length != '0') {
+                                        $scope.fullDate = moment().format("YYYY-MM-DD");
+                                        for (var i = 0; i < $scope.schoolTerms.length; i++) {
+                                            if ($scope.schoolTerms[i].startdate <= $scope.fullDate && $scope.schoolTerms[i].enddate >= $scope.fullDate) {
+                                                $scope.act_term_id = $scope.schoolTerms[i].termid;
+                                                $scope.act_term_name = $scope.schoolTerms[i].title;
+                                            }
+                                        }
+                                        if ($scope.act_term_id) {
+                                            localStorage.act_term_id = $scope.act_term_id;
+                                            localStorage.act_term_name = $scope.act_term_name;
+                                        } else {
+                                            localStorage.act_term_id = 0;
+                                            localStorage.act_term_name = "لطفا ترم مورد نظر خود را انتخاب نمایید.";
+                                        }
+                                    }
+                                });
+                            var sch = {
+                                ViewName: "majorbaseschoolselect",
+                                mutualTransaction: {
+                                    kendoDataRequest: {
+                                        filter: {
+                                            field: "schoolid",
+                                            logic: "and",
+                                            operator: "eq",
+                                            value: localStorage.schoolId + "",
+                                            filters: [
+                                                {field: "ismajor", logic: "and", operator: "eq", value: '0'},
+                                            ]
+                                        },
+                                    }
+                                }
+                            }
+                            $http.post(URL_GET, JSON.stringify(sch))
+                                .success(function (result, status, headers, config) {
+                                    $scope.schoolMajorBase = result.data;
+                                    $scope.baseArray = [];
+                                    for (var i = 0; i < $scope.schoolMajorBase.length; i++) {
+                                        $scope.baseArray.push($scope.schoolMajorBase[i].code)
+                                    }
+                                    localStorage.schoolBase = JSON.stringify($scope.baseArray);
+                                    $scope.adminCounter();
+                                    document.location.replace("Main.html");
+                                    document.location.reload();
+                                });
+                        } else {
+                            alert("نام کاربری یا رمز عبور صحیح نمیباشد.");
+                            $scope.showForgetPass = true;
+                            $scope.eroretext = "";
+                            $scope.title = "";
                         }
-                    });
-                var sch = {
-                    ViewName: "majorbaseschoolselect",
-                    mutualTransaction: {
-                        kendoDataRequest: {
-                            filter: {
-                                // field: "schoolid",
-                                // logic: "and",
-                                // operator: "eq",
-                                // value: localStorage.schoolId + ""
-                            },
-                        }
-                    }
-                }
-                $http.post(URL_GET, JSON.stringify(sch))
-                    .success(function (result, status, headers, config) {
-                        $scope.schoolMajorBase = result.data;
-                        $scope.baseArray = [];
-                        for (var i = 0; i < $scope.schoolMajorBase.length; i++) {
-                            $scope.baseArray.push($scope.schoolMajorBase[i].code)
-                        }
-                        localStorage.schoolBase = JSON.stringify($scope.baseArray);
-                        $scope.adminCounter();
-                        document.location.replace("Main.html");
-                        document.location.reload();
                     });
             } else {
-                if (!$type) {
-                    $scope.eroretext = "نوع کاربر";
-                    $scope.title = " را انتخاب نمایید.";
+                if (!$user) {
+                    $scope.eroretext = "نام کاربری";
+                    $scope.title = " را وارد نمایید.";
+                } else if (!$pass) {
+                    $scope.eroretext = "رمز عبور";
+                    $scope.title = " را وارد نمایید.";
                 } else if (!$schoole) {
                     $scope.eroretext = "مدرسه";
                     $scope.title = " را انتخاب نمایید.";
@@ -312,7 +609,85 @@
         $scope.titlefunc = function () {
             return $scope.title;
         }
+        $scope.findAccount = function ($user_info) {
+            if (($user_info && $user_info != " " && $user_info != null && $user_info != "null" && $user_info != "" && $user_info != undefined && $user_info != 'undefined') && ($scope.schoole)) {
+                var sch = {
+                    ViewName: "ForgetPass",
+                    parameters: [
+                        {key: "%username", value: $user_info + ''},
+                        {key: "%mobile", value: $user_info + ''},
+                        {key: "%codemeli", value: $user_info + ''},
+                        {key: "%schoolid", value: $scope.schoole + ''},
+                    ],
+                    mutualTransaction: {
+                        kendoDataRequest: {
+                            filter: {
+                                field: "",
+                                logic: "",
+                                operator: "",
+                                value: ""
+                            },
+                        }
+                    }
+                }
+                $http.post(URL_GET, JSON.stringify(sch))
+                    .success(function (result, status, headers, config) {
+                        if (result.data.length != '0') {
+                            $scope.accuont = result.data[0];
+                            $scope.form1 = false;
+                            if ($scope.accuont.mobile) {
+                                var tel = {key: $scope.accuont.mobile + "", value: ""};
+                                $http.post(URL_SendSMS, JSON.stringify(tel)).success(function (result, status, headers, config) {
+                                }).error(function (result, status, header, config) {
+                                    $scope.eroretext = "ارسال کد تایید با خطا مواجه شد";
+                                    $scope.title = "لطفا دقایقی دیگر مجددا تلاش نمایید.";
+                                })
+                                $scope.form2 = true;
+                                var acc_mobile = $scope.accuont.mobile;
+                                for (var i = 0; i < acc_mobile.length; i++) {
+                                    if (i == 5 || i == 6 || i == 7 || i == 8) {
+                                        console.log(i);
+                                        $scope.phone_Code += "*";
+                                    } else {
+                                        $scope.phone_Code += acc_mobile[i];
+                                    }
+                                }
+                            } else {
+                                alert("متاسفانه در حساب کاربریتان شماره همراه یافت نشد وامکان بازیابی رمز شما از این طریق امکان پذیر نمیباشد . برای بازیابی رمز عبور از طریق مدیر مدرسه اقدام نمایید.");
+                                document.location.reload();
+                            }
+                        } else {
+                            alert("متاسفانه کاربری یافت نشد .با روش دیگری مجددا امتحان نمایید.")
+                        }
 
+                    });
+            } else {
+                if (!$scope.schoole) {
+                    alert("لطفا مدرسه خود را مشخص نمایید.")
+                } else {
+                    alert("لطفا نام کاربری یا کد ملی یا شماره تلفن خود را وارد نمایید.");
+                }
+            }
+        }
+        $scope.confrimCode = function ($code) {
+            if ($scope.accuont.mobile && $code) {
+                var con = {key: $scope.accuont.mobile + "", value: $scope.confirmCode + ""};
+                $http.post(URL_login2, JSON.stringify(con))
+                    .success(function (result, status, headers, config) {
+                        $scope.form2 = false;
+                        $scope.form3 = true;
+                        $scope.username = $scope.accuont.username;
+                        $scope.pass = $scope.accuont.password;
+                    }).error(function (result, status, header, config) {
+                    alert("کد تایید وارد شده صحیح نمیباشد.");
+                });
+            } else {
+                if (!$code)
+                    alert("کد تایید 4 رقمی را وارد نمایید.");
+                else if ($scope.accuont.mobile)
+                    alert("شماره تلفن یافت نشد");
+            }
+        }
     }
 
     ])

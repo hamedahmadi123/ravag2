@@ -354,7 +354,7 @@
                 <fieldset>
                     <div style="background-color: white">
                         <div class="modal-body" align="center">
-                            <div dir="rtl" style="background-color: #f6fffc"> <!-- featureds -->
+                            <div dir="rtl" style="background-color: #fafafa"> <!-- featureds -->
                                 <div class="section featureds" style="background-color: white ; ">
                                     <section style="background:#ffffff;width: 100% ;">
                                         <div class="container" style="width: 100%;">
@@ -409,6 +409,20 @@
                                                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                                                         <div class="panel-body">
                                                                             <label><b><span
+                                                                                    style="color: blue;margin: 5px">*</span>کد
+                                                                                پرسنلی :</b></label>&nbsp;
+                                                                            <input ng-model="th_prscode"
+                                                                                   class="form-control rounded"
+                                                                                   tooltip="کد پرسنلی"
+                                                                                   placeholder="کد پرسنلی..."
+                                                                                   type="text">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="line line-dashed line-lg pull-in"></div>
+
+                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                        <div class="panel-body">
+                                                                            <label><b><span
                                                                                     class="starstyle">*</span>نام
                                                                                 :</b></label> &nbsp;
                                                                             <input ng-model="th_fitstname"
@@ -447,7 +461,7 @@
                                                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                                                         <div class="panel-body">
                                                                             <label><b><span
-                                                                                    style="color: blue;margin: 5px">*</span>کد
+                                                                                    style="color:red;margin: 5px">*</span>کد
                                                                                 ملی :</b></label>&nbsp;
                                                                             <input ng-model="th_codemeli"
                                                                                    class="form-control rounded"
@@ -589,6 +603,8 @@
                                                                             </select>
                                                                         </div>
                                                                     </div>
+                                                                    <div class="line line-dashed line-lg pull-in"></div>
+
                                                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                                                         <div class="panel-body">
                                                                             <label><b><span
@@ -602,7 +618,25 @@
                                                                                         ng-required="true"
                                                                                         ng-selected="false"
                                                                                         value="">سمت
-                                                                                    را
+                                                                                    را مشخص
+                                                                                    نمایید.
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                        <div class="panel-body">
+                                                                            <label><b><span
+                                                                                    class="starstyle">*</span>گروه دسترسی
+                                                                                :</b></label>&nbsp;
+                                                                            <select tooltip="ئسترسی به بخش های پنل (برای ایجاد گروه دسترسی خود وارد بخش تنظیمات / گروه دسترسی شوید.)"
+                                                                                    ng-model="th_roleid"
+                                                                                    ng-options="role.role_id as role.role_name for role in roles"
+                                                                                    class="form-control rounded">
+                                                                                <option ng-disabled="true"
+                                                                                        ng-required="true"
+                                                                                        ng-selected="false"
+                                                                                        value="">گروه دسترسی
                                                                                     را مشخص
                                                                                     نمایید.
                                                                                 </option>
@@ -633,18 +667,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                                                        <div class="panel-body">
-                                                                            <label><b><span
-                                                                                    style="color: blue;margin: 5px">*</span>کد
-                                                                                پرسنلی :</b></label>&nbsp;
-                                                                            <input ng-model="th_prscode"
-                                                                                   class="form-control rounded"
-                                                                                   tooltip="کد پرسنلی"
-                                                                                   placeholder="کد پرسنلی..."
-                                                                                   type="text">
-                                                                        </div>
-                                                                    </div>
+
                                                                 </div>
                                                                 <div class="alert alert-danger" ng-show="errText()">
                                                                     <i class="icon-info"></i> &nbsp; <strong>

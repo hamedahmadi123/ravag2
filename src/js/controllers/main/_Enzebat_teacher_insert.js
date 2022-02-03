@@ -1,6 +1,9 @@
 app.controller('Enzebat_teacher_insert', ['$scope', '$filter', '$http', function ($scope, $filter, $http, $timeout) {
     $scope.eroretext = "";
     //temp
+    $scope.tmp_the_dis_Id = "";
+    $scope.tmp_the_dis_Name = "";
+
     $scope.temp_classlessonteacher_id = "";
     $scope.temp_lessonid = "";
     $scope.temp_classLessonName = "";
@@ -39,10 +42,10 @@ app.controller('Enzebat_teacher_insert', ['$scope', '$filter', '$http', function
             mutualTransaction: {
                 kendoDataRequest: {
                     filter: {
-                        field: "",
-                        logic: "",
-                        operator: "",
-                        value: ""
+                        field: "schoolid",
+                        logic: "and",
+                        operator: "eq",
+                        value: localStorage.schoolId+""
                     },
                 }
             }
@@ -62,7 +65,10 @@ app.controller('Enzebat_teacher_insert', ['$scope', '$filter', '$http', function
                         field: "roleid",
                         logic: "and",
                         operator: "eq",
-                        value: "2"
+                        value: "2",
+                        filters: [
+                            {field: "schoolid", logic: "and", operator: "eq", value:localStorage.schoolId+""}
+                        ]
                     },
                 }
             },
@@ -71,7 +77,7 @@ app.controller('Enzebat_teacher_insert', ['$scope', '$filter', '$http', function
             .success(function (result, status, headers, config) {
                 $scope.enz_types = result.data;
                 for (var i = 0; i < $scope.enz_types.length; i++) {
-                    if ($scope.enz_types[i].owner == 2) {
+                    if ($scope.enz_types[i].owner ==  localStorage.userType) {
                         $scope.obj_disType[$scope.enz_types[i].disciplinetypeid] = true;
                     }
                 }
@@ -181,7 +187,7 @@ app.controller('Enzebat_teacher_insert', ['$scope', '$filter', '$http', function
         $http.post(URL_GET, JSON.stringify(wkly))
             .success(function (result, status, headers, config) {
                 $scope.Weeklyschedules = result.data;
-                console.log($scope.Weeklyschedules);
+
             });
     }
     $scope.selectWeekly = function ($Id, $day, $zang) {
@@ -242,7 +248,7 @@ app.controller('Enzebat_teacher_insert', ['$scope', '$filter', '$http', function
                     if ($scope.showAlltype == true) {
                         $scope.obj_disType[$scope.enz_types[i].disciplinetypeid] = true;
                     } else {
-                        if ($scope.enz_types[i].owner == 2) {
+                        if ($scope.enz_types[i].owner ==  localStorage.userType) {
                             $scope.obj_disType[$scope.enz_types[i].disciplinetypeid] = true;
                         }
                     }
@@ -263,11 +269,11 @@ app.controller('Enzebat_teacher_insert', ['$scope', '$filter', '$http', function
     $scope.setDisclineType = function () {
         $scope.obj_disType = {};
         for (var i = 0; i < $scope.enz_types.length; i++) {
-            if ($scope.enz_types[i].owner == 2)
+            if ($scope.enz_types[i].owner ==  localStorage.userType)
                 $scope.obj_disType[$scope.enz_types[i].disciplinetypeid] = true;
         }
     }
-    $scope.selectgrp = function ($Id, $name) {
+    $scope.selectgrp = function ($id, $name) {
         if ($scope.tmp_the_dis_Id && $scope.tmp_the_dis_Id != "" && $scope.tmp_the_dis_Id != undefined && $scope.tmp_the_dis_Id != "undefined") {
             document.getElementById($scope.tmp_the_dis_Id).style.border = "none";
             document.getElementById($Id).style.border = "2px #27c24c solid";
@@ -291,7 +297,6 @@ app.controller('Enzebat_teacher_insert', ['$scope', '$filter', '$http', function
                         {key: "%schoolid", value: localStorage.schoolId + ''},
                     ]
                 };
-                alert(JSON.stringify(ins_dis));
                 $http.post(URL_INSERT, JSON.stringify(ins_dis))
                     .success(function (result, status, headers, config) {
                         alert("درج انضباط معلم با موفقیت انجام شد. ");

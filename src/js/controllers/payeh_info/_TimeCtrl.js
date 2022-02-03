@@ -68,7 +68,6 @@ app.controller('TimeCtrl', ['$scope', '$filter', '$http', function ($scope, $fil
 
                 $http.post(URL_INSERT, JSON.stringify(ins_zmn))
                     .success(function (result, status, headers, config) {
-                        alert("زمان جدیدی با عنوان " + $scope.zmn_name + " با موفقیت درج شد.");
                         document.location.reload();
                     }).error(function (result, status, header, config) {
                     alert("درج زمان با خطا مواجه شد.");

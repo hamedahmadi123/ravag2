@@ -93,7 +93,7 @@ app.controller('quizSchedule_exam', ['$scope', '$filter', '$http', function ($sc
                     };
                     dataArray.push(ins_smb);
                 }
-                console.log(dataArray);
+
                 return;
                 $http.post(URL_INSERT, JSON.stringify(ins_exam))
                     .success(function (result, status, headers, config) {

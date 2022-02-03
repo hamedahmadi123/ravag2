@@ -1,7 +1,49 @@
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <style>
     .td {
         border: 1px solid #d4d6d6;
     }
+
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+    }
+
+    /* Style the buttons inside the tab */
+    .tab button {
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+        font-size: 17px;
+    }
+
+    /* Change background color of buttons on hover */
+    .tab button:hover {
+        background-color: #ddd;
+    }
+
+    /* Create an active/current tablink class */
+    .tab button.active {
+        background-color: #ccc;
+    }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+    }
+
+    /*.ng-hide { display: none !important; }*/
+    @media print {
+   .ng-hide {
+     display: none !important;
+   }
+}
 </style>
 <div ng-controller="pre_students">
     <div class="bg-light lter b-b wrapper-md" ng-init="app.settings.asideFixed = true;app.settings.headerFixed = true;">
@@ -11,7 +53,14 @@
                 </h1>
             </div>
             <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
-
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                    <div class="panel-body">
+                        <button style="width: 100%;" type="button" class="btn btn-addon , btn btn-info"
+                                ng-click="smsTemp()"><i
+                                class="fa fa-paper-plane"></i> &nbsp;ارسال دعوت نامه
+                        </button>
+                    </div>
+                </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="float: left">
                     <div class="panel-body">
                         <button style="width: 100%;" type="button" class="btn btn-addon , btn btn-default"
@@ -34,31 +83,72 @@
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 <div class="row">
-                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
                                         <div class="panel-body">
                                             <h4 align="right">لیست {{filterText}}</h4>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="float: left">
-                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
-                                             style="margin-top: 3px;float: left">
-                                            <div class="panel-body" style="float: left">
-                                                <button style="width: 100%;" class="btn btn-link"
-                                                        onclick="tableToExcel('tblExport' , 'لیست دانش آموزان')">
-                                                    <i class="fa fa-file-excel-o"></i>
-                                                    خروجی Excel
+                                    <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2" style="float: left">
+                                        <div class="panel-body" style="float: left">
+                                            <button style="width: 100%;" class="btn btn-link"
+                                                    onclick="tableToExcel('tblExport' , 'لیست دانش آموزان')">
+                                                <i class="fa fa-file-excel-o"></i>
+                                                خروجی Excel
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2" style="float: left">
+                                        <div class="panel-body" style="float: left">
+                                            <button style="width: 100%;" class="btn btn-link"
+                                                    ng-click="printDiv('tblExport');">
+                                                <i class="fa fa-print"></i>
+                                                چاپ لیست
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+                                            <div class="panel-body">
+                                                <select id="filterByBaseSelect" tooltip="فیلتر دانش آموزان بر اساس پایه انتخابی"
+                                                        style="width: 100%"
+                                                        ng-model="filterBase"
+                                                        ng-change="filterByBase(filterBase.majorbaseid , filterBase.title)"
+                                                        ng-options="pyh  as pyh.title  for pyh in schoolMajorBase"
+                                                        class="form-control rounded">
+                                                    <option ng-selected="true" value="">فیلتر بر اساس پایه انتخابی
+                                                    </option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4" ng-show="filterBase && isMajor">
+                                            <div class="panel-body">
+                                                <select id="filterByMajorSelect" tooltip="فیلتر دانش آموزان بر اساس رشته انتخابی"
+                                                        style="width: 100%"
+                                                        ng-model="filterMajor"
+                                                        ng-options="mjr  as mjr.title  for mjr in majors"
+                                                        ng-change="filterByMajor(filterMajor.majorbaseid , filterMajor.title)"
+                                                        class="form-control rounded">
+                                                    <option ng-selected="true" value="">فیلتر بر اساس رشته انتخابی
+                                                    </option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" style="float: left">
+                                            <div class="panel-body">
+                                                <button data-toggle="modal" data-target="#myModal3"
+                                                        class="form-control btn btn-sm btn-addon"
+                                                        ng-show="userType == '1' || userType == '2'"
+                                                        ng-click="selectAllresult()">
+                                                    نتیجه گیری کلی <i
+                                                        class="icon-bar-chart"></i>&nbsp;
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="margin-top: 3px;">
-                                            <div class="panel-body" style="float: left">
-                                                <button style="width: 100%;" class="btn btn-link"
-                                                        ng-click="printDiv('tblExport');">
-                                                    <i class="fa fa-print"></i>
-                                                    چاپ لیست
-                                                </button>
-                                            </div>
-                                        </div>
+
                                     </div>
                                 </div>
                             </h4>
@@ -67,14 +157,17 @@
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="table-responsive">
-                                        <table class="table table-striped" id="tblExport">
+                                        <table class="table table-striped" id="tblExportOld">
                                             <thead>
                                             <tr>
+                                                <th scope="col">ردیف</th>
                                                 <th scope="col">انتخاب</th>
-                                                <th scope="col" class="v-middle  media-middle text-center ">#</th>
+<!--                                                <th scope="col" class="v-middle  media-middle text-center ">#</th>-->
+                                                <th scope="col" class="v-middle  media-middle text-center ">تصویر</th>
                                                 <th scope="col" class="v-middle  media-middle text-center "> نام و نام
                                                     خانوادگی
                                                 </th>
+                                                <th scope="col" class="v-middle  media-middle text-center ">پایه/رشته</th>
                                                 <th scope="col" class="v-middle  media-middle text-center ">کد دانش
                                                     آموز
                                                 </th>
@@ -84,26 +177,84 @@
                                                 <th scope="col" class="v-middle  media-middle text-center ">نتایج</th>
                                             </tr>
                                             </thead>
-                                            <tbody infinite-scroll='load2()' infinite-scroll-distance='0'>
-                                            <tr ng-repeat='mymodel in name | filter : gsearch'>
+                                            <tbody infinite-scroll='load2()' infinite-scroll-distance='1'>
+
+                                             <tr>
+                                                 <td class="col-md-1">
+                                                    &nbsp;
+                                                </td>
+                                                <td class="col-md-1">
+                                                   &nbsp;
+                                                </td>
+                                                <td class="col-md-1">
+                                                    &nbsp;
+                                                </td>
+                                                <td class="col-md-4">
+                                                    <input type="text" ng-model="mymodel.lastname" class="form-control"
+                                                           placeholder="نام خانوادگی">
+                                                </td>
+                                                <td class="col-md-4">
+                                                    &nbsp;
+<!--                                                    <input type="text" ng-model="mymodel.title" class="form-control"-->
+<!--                                                           placeholder="رشته/پایه">-->
+                                                </td>
+                                                <td class="col-md-4">
+                                                    <input type="text" ng-model="mymodel.studentcode" class="form-control"
+                                                           placeholder="کد">
+                                                </td>
+                                                <td class="col-md-1">
+                                                    &nbsp;
+                                                </td>
+                                                <td class="col-md-1">
+                                                   &nbsp;
+                                                </td>
+                                                <td class="col-md-1">
+                                                    &nbsp;
+                                                </td>
+                                                <td class="col-md-1">
+                                                    &nbsp;
+                                                </td>
+                                            </tr>
+
+
+                                            <tr ng-repeat='mymodel in name | filter : filterByBaseSelect
+                                            | filter : mymodel.title  | filter : mymodel.lastname | filter : mymodel.studentcode  '>
+
+
+
+
+<!--                                            <tr ng-repeat='mymodel in name | filter : filterByBaseSelect  '>-->
+                                                <td>{{$index+1}}</td>
                                                 <td class="v-middle  media-middle text-center" scope="row">
                                                     <label class="containerCheckBox">
                                                         <br>
                                                         <input type="checkbox" ng-model="checkbox1"
-                                                               ng-change="itemArray(mymodel.studentid,checkbox1)">
+                                                               ng-change="itemArray(mymodel.studentid,mymodel.mobile,checkbox1)">
                                                         <span class="checkmark2"
                                                               style="margin-left: 5px;margin-top: 5px"></span>
                                                     </label>
                                                 </td>
+<!--                                                <td class="v-middle  media-middle text-center">-->
+<!--                                                    {{mymodel.studentid}}-->
+<!--                                                </td>-->
                                                 <td class="v-middle  media-middle text-center">
-                                                    {{mymodel.studentid}}
+                                                    <img style="width: 50px;height: 60px"
+                                                         class="thumb-sm avatar" ng-if="mymodel.image  != ' '"
+                                                         src="{{mymodel.image || 'img/userNopic.jpg'}}">
+                                                    <img style="width: 50px;height: 50px"
+                                                         class="thumb-sm avatar" ng-if="mymodel.image  == ' '"
+                                                         src="img/userNopic.jpg">
                                                 </td>
                                                 <td class="v-middle  media-middle text-center">
                                                     {{ mymodel.firstname + " " + mymodel.lastname|| 'خالی' }}
                                                 </td>
                                                 <td class="v-middle  media-middle text-center">
-                                                    {{ mymodel.studentcode }}
+                                                    {{mymodel.title}}
                                                 </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    {{ mymodel.studentcode }}
+                                                </td >
+
                                                 <td class="v-middle  media-middle text-center">
                                                     <button class="btn btn-sm btn-danger"
                                                             ng-click="deleteStudent((mymodel.studentid),(mymodel.firstname + ' ' +  mymodel.lastname) )">
@@ -129,14 +280,84 @@
                                                 <td class="v-middle  media-middle text-center">
                                                     <button data-toggle="modal" data-target="#myModal2"
                                                             class="btn btn-sm btn-dark"
+                                                            ng-show="userType == '1'  || userType == '2'"
                                                             ng-click="precommentSelect(mymodel.studentid ,(mymodel.firstname + ' ' +  mymodel.lastname))">
                                                         نتایج نظرات <i
                                                             class="icon-bar-chart"></i>&nbsp;
                                                     </button>
+                                                    <h6 ng-show="!(userType == '1' || userType == '2')">
+                                                        فقط مدیر امکان مشاهده این بخش را دارد
+                                                    </h6>
                                                 </td>
                                             </tr>
                                             </tbody>
                                         </table>
+
+<!--                                        For Print By Mohsen-->
+                                        <div id="print Section" ng-hide="true">
+                                         <table class="print table table-bordered table-striped border-black"  id="tblExport" >
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">ردیف</th>
+
+<!--                                                <th scope="col" class="v-middle  media-middle text-center ">#</th>-->
+                                                <th scope="col" class="v-middle  media-middle text-center ">تصویر</th>
+                                                <th scope="col" class="v-middle  media-middle text-center "> نام و نام خانوادگی</th>
+                                                <th scope="col" class="v-middle  media-middle text-center ">پایه/رشته</th>
+                                                <th scope="col" class="v-middle  media-middle text-center ">کد دانش آموز</th>
+
+                                                <th scope="col" class="v-middle  media-middle text-center ">حذف</th>
+                                                <th scope="col" class="v-middle  media-middle text-center ">جزییات</th>
+                                                <th scope="col" class="v-middle  media-middle text-center ">نظرات</th>
+                                                <th scope="col" class="v-middle  media-middle text-center ">نتایج</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody infinite-scroll='load2()' infinite-scroll-distance='1'>
+                                            <tr ng-repeat='mymodel in name | filter : filterByBaseSelect '>
+                                                <td>{{$index+1}}</td>
+
+<!--                                                <td class="v-middle  media-middle text-center">-->
+<!--                                                    {{mymodel.studentid}}-->
+<!--                                                </td>-->
+                                                <td class="v-middle  media-middle text-center">
+                                                    <img style="width: 50px;height: 60px"
+                                                         class="thumb-sm avatar" ng-if="mymodel.image  != ' '"
+                                                         src="{{mymodel.image || 'img/userNopic.jpg'}}">
+                                                    <img style="width: 50px;height: 50px"
+                                                         class="thumb-sm avatar" ng-if="mymodel.image  == ' '"
+                                                         src="img/userNopic.jpg">
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    {{ mymodel.firstname + " " + mymodel.lastname|| 'خالی' }}
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    {{mymodel.title + "/" + mymodel.title}}
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    {{ mymodel.studentcode }}
+                                                </td >
+
+                                                <td class="v-middle  media-middle text-center">
+                                                    {{mymodel._parent}}
+                                                </td>
+
+
+                                                <td class="v-middle  media-middle text-center">
+                                                    {{mymodel.serialshenasname}}
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    {{mymodel.mobile}}
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    {{mymodel.student_phone}}
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                            </div>
+
+
+
                                     </div>
                                 </div>
 
@@ -147,6 +368,7 @@
             </div>
         </div>
     </div>
+    <!-- مشخصات دانش آموز پیش ثبت نام شده-->
     <div class="modal fade bd-example-modal-lg" id="myModal" tabindex="-1" role="dialog"
          aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -164,296 +386,437 @@
                     </div>
                     <div class="modal-body">
                         <div>
-                            <div class="panel-body">
-                                <div class="row">
+                            <div class="tab" style="float: right">
+                                <button class="tablinks" onclick="openCity(event, 'info')" id="defaultOpen"
+                                        style="float: right">مشخصات دانش آموز
+                                </button>
+                                <button class="tablinks" onclick="openCity(event, 'snd')">اسناد</button>
+                            </div>
+
+                            <div id="info" class="tabcontent">
+                                <div class="line line-dashed line-lg pull-in"></div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="panel-heading font-bold"
+                                             style="background-color: #f6f8f8">
+                                            اطلاعات فردی دانش آموز
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
+                                            <div class="panel-body">
+                                                <img src="{{thisSt.image || 'img/userNopic.jpg'}}"
+                                                     class="img-circle" ng-if="thisSt.image  != ' '"
+                                                     style="width: 100px;height: 100px;">
+                                                <img style="width: 100px;height: 100px;"
+                                                     class="img-circle" ng-if="thisSt.image  == ' '"
+                                                     src="img/userNopic.jpg">
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">
+                                            <br>
+                                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                <div class="panel-body">
+                                                    <label style="margin-top: 8px;font-size: 15px;"
+                                                           class="col-xs-5 col-sm-6 col-md-6 col-lg-7 control-label">نام
+                                                        و
+                                                        نام خانوداگی:</label>
+                                                    <div class="col-xs-7 col-sm-6 col-md-6 col-lg-5" align="right">
+                                                        <h5> {{thisSt.firstname + ' ' + thisSt.lastname}}</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                <div class="panel-body">
+                                                    <label style="margin-top: 8px;font-size: 15px;"
+                                                           class="col-xs-4 col-sm-3 col-md-4 col-lg-4 control-label">نام
+                                                        پدر:</label>
+                                                    <div class="col-xs-8 col-sm-9 col-md-8 col-lg-8" align="right">
+                                                        <h5> {{student_parr.fathername}}</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
+                                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                <div class="panel-body">
+                                                    <label style="margin-top: 8px;font-size: 15px;"
+                                                           class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">کد
+                                                        ملی:</label>
+                                                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" align="right">
+                                                        <h5> {{stu_id}}</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                <div class="panel-body">
+                                                    <label style="margin-top: 8px;font-size: 15px;"
+                                                           class="col-xs-4 col-sm-5 col-md-4 col-lg-5 control-label">تاریخ
+                                                        تولد:</label>
+                                                    <div class="col-xs-8 col-sm-7 col-md-8 col-lg-7" align="right">
+                                                        <h5> {{stu_berthday}}</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="panel-heading font-bold"
                                          style="background-color: #f6f8f8">
                                         اطلاعات فردی دانش آموز
                                     </div>
-                                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
-                                        <div class="panel-body">
-                                            <img style="width: 100px;height: 100px;"
-                                                 class="thumb-sm avatar" ng-if="thisSt.image  != ' '"
-                                                 src="{{thisSt.image || 'img/userNopic.jpg'}}">
-                                            <img style="width: 100px;height: 100px;"
-                                                 class="thumb-sm avatar" ng-if="thisSt.image  == ' '"
-                                                 src="img/userNopic.jpg">
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">
-                                        <br>
-                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
                                             <div class="panel-body">
                                                 <label style="margin-top: 8px;font-size: 15px;"
-                                                       class="col-xs-5 col-sm-6 col-md-6 col-lg-7 control-label">نام و
-                                                    نام خانوداگی:</label>
-                                                <div class="col-xs-7 col-sm-6 col-md-6 col-lg-5" align="right">
-                                                    <h5> {{thisSt.firstname + ' ' + thisSt.lastname}}</h5>
+                                                       class="col-xs-6 col-sm-6 col-md-6 col-lg-6 control-label">شماره
+                                                    منزل:</label>
+                                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" align="right">
+                                                    <h5> {{stu_tel || 'نامشخص'}}</h5>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
                                             <div class="panel-body">
                                                 <label style="margin-top: 8px;font-size: 15px;"
-                                                       class="col-xs-4 col-sm-3 col-md-4 col-lg-4 control-label">نام
-                                                    پدر:</label>
+                                                       class="col-xs-6 col-sm-6 col-md-6 col-lg-6 control-label">شماره
+                                                    تماس:</label>
+                                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" align="right">
+                                                    <h5> {{thisSt.student_phone || 'نامشخص'}}</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                                            <div class="panel-body">
+                                                <label style="margin-top: 8px;font-size: 15px;"
+                                                       class="col-xs-6 col-sm-6 col-md-6 col-lg-7 control-label">شماره
+                                                    والدین
+                                                    :</label>
+                                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-5" align="right">
+                                                    <h5> {{stu_f_tel || stu_m_tel || '-'}}</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="panel-body">
+                                                <label style="margin-top: 8px;font-size: 15px;"
+                                                       class="col-xs-3 col-sm-3 col-md-2 col-lg-2 control-label">نشانی
+                                                    منزل:</label>
+                                                <div class="col-xs-9 col-sm-9 col-md-8 col-lg-8" align="right">
+                                                    <h5  style="line-height: 25px"> {{stu_address || 'نامشخص'}}</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="panel-heading font-bold"
+                                         style="background-color: #f6f8f8">
+                                        فرم پیش ثبت نام
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                                            <div class="panel-body">
+                                                <label style="margin-top: 8px;font-size: 15px;"
+                                                       class="col-xs-6 col-sm-7 col-md-6 col-lg-7 control-label">مدرسه
+                                                    سال
+                                                    قبل:</label>
+                                                <div class="col-xs-6 col-sm-5 col-md-6 col-lg-5" align="right">
+                                                    <h5 style="color: green" ng-show="pre_stu.Current_school == '0'">
+                                                        مدرسه
+                                                        جاری</h5>
+                                                    <h5 ng-show="pre_stu.Current_school == '1'">
+                                                        {{pre_stu.Previous_school}}</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                                            <div class="panel-body">
+                                                <label style="margin-top: 8px;font-size: 15px;"
+                                                       class="col-xs-6 col-sm-6 col-md-6 col-lg-6 control-label">پایه
+                                                    تحصیلی:</label>
+                                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" align="right">
+                                                    <h5> {{thisSt.basename}}</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4" ng-show="thisSt.ismajor == 1">
+                                            <div class="panel-body">
+                                                <label style="margin-top: 8px;font-size: 15px;"
+                                                       class="col-xs-6 col-sm-6 col-md-6 col-lg-7 control-label">رشته
+                                                    تحصیلی:</label>
+                                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-5" align="right">
+                                                    <h5> {{thisSt.title}}</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                             ng-show="thisSt.ismajor == 1">
+                                            <div class="panel-body">
+                                                <label style="margin-top: 8px;font-size: 15px;"
+                                                       class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">آشنایی
+                                                    با رشته:</label>
                                                 <div class="col-xs-8 col-sm-9 col-md-8 col-lg-8" align="right">
-                                                    <h5> {{student_parr.fathername}}</h5>
+                                                    <h5> {{about_major}}</h5>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
-                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <br>
+                                    <div class="panel-heading font-bold"
+                                         style="background-color: #f6f8f8">
+                                        وضعیت درسی / انضباطی
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                             <div class="panel-body">
                                                 <label style="margin-top: 8px;font-size: 15px;"
-                                                       class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">کد
-                                                    ملی:</label>
+                                                       class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">وضعیت
+                                                    انضباطی:</label>
                                                 <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" align="right">
-                                                    <h5> {{stu_id}}</h5>
+                                                    <div id="enz1">
+                                                        <label style="margin-top: 1px;"
+                                                               class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">سال
+                                                            اول:</label>
+                                                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                            <input ng-model="enz.one" ng-show="thisSt.enz_type == 1"
+                                                                   class="form-control rounded"
+                                                                   tooltip="معدل یکسال قبل خود را وارد نمایید. مثال : (18.50)"
+                                                                   oninput="javascript:
+                                                               if (this.value > 20) this.value = this.value.slice(0, 0);
+                                                               if (this.value.length > 2) this.value = this.value.slice(0, this.maxLength);"
+                                                                   type="text">
+                                                            <select tooltip="معدل یک سال قبل خود را انتخاب نمایید."
+                                                                    ng-model="enz.one" ng-disabled="true"
+                                                                    ng-show="thisSt.enz_type == 0"
+                                                                    ng-options="enz.value as enz.name for enz in enzs"
+                                                                    class="form-control">
+                                                                <option ng-disabled="true"
+                                                                        ng-selected="false"
+                                                                        value="">
+                                                                    انضباط
+                                                                    یک سال
+                                                                    قبل
+                                                                    خود
+                                                                    را
+                                                                    را
+                                                                    انتخاب
+                                                                    نمایید.
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="line line-dashed line-lg pull-in"></div>
+                                                    <div id="enz2">
+                                                        <label style="margin-top: 1px;"
+                                                               class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">سال
+                                                            دوم:</label>
+                                                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                            <input ng-model="enz.two" ng-show="thisSt.enz_type == 1"
+                                                                   class="form-control rounded"
+                                                                   tooltip="معدل دوسال قبل خود را وارد نمایید. مثال : (18.50)"
+                                                                   oninput="javascript:
+                                                               if (this.value > 20) this.value = this.value.slice(0, 0);
+                                                               if (this.value.length > 2) this.value = this.value.slice(0, this.maxLength);"
+                                                                   type="text">
+                                                            <select tooltip="معدل دوسال سال قبل خود را انتخاب نمایید. "
+                                                                    ng-model="enz.two" ng-disabled="true"
+                                                                    ng-show="thisSt.enz_type == 0"
+                                                                    ng-options="enz.value as enz.name for enz in enzs"
+                                                                    class="form-control">
+                                                                <option ng-disabled="true"
+                                                                        ng-selected="false"
+                                                                        value="">
+                                                                    انضباط
+                                                                    دو سال
+                                                                    قبل
+                                                                    خود
+                                                                    را
+                                                                    را
+                                                                    انتخاب
+                                                                    نمایید.
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="line line-dashed line-lg pull-in"></div>
+                                                    <div id="enz3">
+                                                        <label style="margin-top: 1px;"
+                                                               class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">سال
+                                                            سوم:</label>
+                                                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                            <input ng-model="enz.two" ng-show="thisSt.enz_type == 1"
+                                                                   class="form-control rounded"
+                                                                   tooltip="معدل دوسال قبل خود را وارد نمایید. مثال : (18.50)"
+                                                                   oninput="javascript:
+                                                               if (this.value > 20) this.value = this.value.slice(0, 0);
+                                                               if (this.value.length > 2) this.value = this.value.slice(0, this.maxLength);"
+                                                                   type="text">
+                                                            <select tooltip="معدل سه سال قبل خود را انتخاب نمایید."
+                                                                    ng-model="enz.tree" ng-disabled="true"
+                                                                    ng-show="thisSt.enz_type ==0"
+                                                                    ng-options="enz.value as enz.name for enz in enzs"
+                                                                    class="form-control">
+                                                                <option ng-disabled="true"
+                                                                        ng-selected="false"
+                                                                        value="">
+                                                                    انضباط
+                                                                    سه سال
+                                                                    قبل
+                                                                    خود
+                                                                    را
+                                                                    را
+                                                                    انتخاب
+                                                                    نمایید.
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                             <div class="panel-body">
                                                 <label style="margin-top: 8px;font-size: 15px;"
-                                                       class="col-xs-4 col-sm-5 col-md-4 col-lg-5 control-label">تاریخ
-                                                    تولد:</label>
-                                                <div class="col-xs-8 col-sm-7 col-md-8 col-lg-7" align="right">
-                                                    <h5> {{stu_berthday}}</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel-heading font-bold"
-                                     style="background-color: #f6f8f8">
-                                    اطلاعات فردی دانش آموز
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-                                        <div class="panel-body">
-                                            <label style="margin-top: 8px;font-size: 15px;"
-                                                   class="col-xs-6 col-sm-6 col-md-6 col-lg-6 control-label">شماره
-                                                منزل:</label>
-                                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" align="right">
-                                                <h5> {{stu_tel}}</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-                                        <div class="panel-body">
-                                            <label style="margin-top: 8px;font-size: 15px;"
-                                                   class="col-xs-6 col-sm-6 col-md-6 col-lg-6 control-label">شماره
-                                                تماس:</label>
-                                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" align="right">
-                                                <h5> {{thisSt.student_phone}}</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-                                        <div class="panel-body">
-                                            <label style="margin-top: 8px;font-size: 15px;"
-                                                   class="col-xs-6 col-sm-6 col-md-6 col-lg-7 control-label">شماره
-                                                والدین
-                                                :</label>
-                                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-5" align="right">
-                                                <h5> {{stu_f_tel || stu_m_tel || '-'}}</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <div class="panel-body">
-                                            <label style="margin-top: 8px;font-size: 15px;"
-                                                   class="col-xs-3 col-sm-3 col-md-2 col-lg-2 control-label">نشانی
-                                                منزل:</label>
-                                            <div class="col-xs-9 col-sm-9 col-md-8 col-lg-8" align="right">
-                                                <h5> {{stu_address}}</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="panel-heading font-bold"
-                                     style="background-color: #f6f8f8">
-                                    فرم پیش ثبت نام
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-                                        <div class="panel-body">
-                                            <label style="margin-top: 8px;font-size: 15px;"
-                                                   class="col-xs-6 col-sm-7 col-md-6 col-lg-7 control-label">مدرسه سال
-                                                قبل:</label>
-                                            <div class="col-xs-6 col-sm-5 col-md-6 col-lg-5" align="right">
-                                                <h5 style="color: green" ng-show="pre_stu.Current_school == '0'">مدرسه
-                                                    جاری</h5>
-                                                <h5 ng-show="pre_stu.Current_school == '1'">
-                                                    {{pre_stu.Previous_school}}</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-                                        <div class="panel-body">
-                                            <label style="margin-top: 8px;font-size: 15px;"
-                                                   class="col-xs-6 col-sm-6 col-md-6 col-lg-6 control-label">پایه
-                                                تحصیلی:</label>
-                                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" align="right">
-                                                <h5> {{thisSt.basename}}</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4" ng-show="thisSt.ismajor == 1">
-                                        <div class="panel-body">
-                                            <label style="margin-top: 8px;font-size: 15px;"
-                                                   class="col-xs-6 col-sm-6 col-md-6 col-lg-7 control-label">رشته
-                                                تحصیلی:</label>
-                                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-5" align="right">
-                                                <h5> {{thisSt.title}}</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="thisSt.ismajor == 1">
-                                        <div class="panel-body">
-                                            <label style="margin-top: 8px;font-size: 15px;"
-                                                   class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label">آشنایی
-                                                با رشته:</label>
-                                            <div class="col-xs-8 col-sm-9 col-md-8 col-lg-8" align="right">
-                                                <h5> {{about_major}}</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="panel-heading font-bold"
-                                     style="background-color: #f6f8f8">
-                                    وضعیت درسی / انضباطی
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                        <div class="panel-body">
-                                            <label style="margin-top: 8px;font-size: 15px;"
-                                                   class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">وضعیت
-                                                انضباطی:</label>
-                                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" align="right">
-                                                <div id="enz1">
-                                                    <label style="margin-top: 1px;"
-                                                           class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">سال
-                                                        اول:</label>
-                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                                                        <input class="form-control" ng-readonly="true" type="text"
-                                                               ng-model="enz.one" ui-mask="99.99"/>
+                                                       class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">وضعیت
+                                                    درسی:</label>
+                                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" align="right">
+                                                    <div id="drs1">
+                                                        <label style="margin-top: 1px;"
+                                                               class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">درس
+                                                            ریاضی:</label>
+                                                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                            <input class="form-control" ng-readonly="true" type="text"
+                                                                   ng-model="drs.reyazi"/>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="line line-dashed line-lg pull-in"></div>
-                                                <div id="enz2">
-                                                    <label style="margin-top: 1px;"
-                                                           class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">سال
-                                                        دوم:</label>
-                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                                                        <input class="form-control" ng-readonly="true" type="text"
-                                                               ng-model="enz.two" ui-mask="99.99"/>
+                                                    <div class="line line-dashed line-lg pull-in"></div>
+                                                    <div id="drs2">
+                                                        <label style="margin-top: 1px;"
+                                                               class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">درس
+                                                            علوم:</label>
+                                                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                            <input class="form-control" ng-readonly="true" type="text"
+                                                                   ng-model="drs.olom"/>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="line line-dashed line-lg pull-in"></div>
-                                                <div id="enz3">
-                                                    <label style="margin-top: 1px;"
-                                                           class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">سال
-                                                        سوم:</label>
-                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                                                        <input class="form-control" ng-readonly="true" type="text"
-                                                               ng-model="enz.tree" ui-mask="99.99"/>
+                                                    <div class="line line-dashed line-lg pull-in"></div>
+                                                    <div id="drs3">
+                                                        <label style="margin-top: 1px;"
+                                                               class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">درس
+                                                            هنر:</label>
+                                                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                            <input class="form-control" ng-readonly="true" type="text"
+                                                                   ng-model="drs.honar"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="line line-dashed line-lg pull-in"></div>
+                                                    <div id="drs4">
+                                                        <label style="margin-top: 1px;"
+                                                               class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">درس
+                                                            زبان:</label>
+                                                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                            <input class="form-control" ng-readonly="true" type="text"
+                                                                   ng-model="drs.zaban"/>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                        <div class="panel-body">
-                                            <label style="margin-top: 8px;font-size: 15px;"
-                                                   class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">وضعیت
-                                                درسی:</label>
-                                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" align="right">
-                                                <div id="drs1">
-                                                    <label style="margin-top: 1px;"
-                                                           class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">درس
-                                                        ریاضی:</label>
-                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                                                        <input class="form-control" ng-readonly="true" type="text"
-                                                               ng-model="drs.reyazi" ui-mask="99.99"/>
-                                                    </div>
-                                                </div>
-                                                <div class="line line-dashed line-lg pull-in"></div>
-                                                <div id="drs2">
-                                                    <label style="margin-top: 1px;"
-                                                           class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">درس
-                                                        علوم:</label>
-                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                                                        <input class="form-control" ng-readonly="true" type="text"
-                                                               ng-model="drs.olom" ui-mask="99.99"/>
-                                                    </div>
-                                                </div>
-                                                <div class="line line-dashed line-lg pull-in"></div>
-                                                <div id="drs3">
-                                                    <label style="margin-top: 1px;"
-                                                           class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">درس
-                                                        هنر:</label>
-                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                                                        <input class="form-control" ng-readonly="true" type="text"
-                                                               ng-model="drs.honar" ui-mask="99.99"/>
-                                                    </div>
-                                                </div>
-                                                <div class="line line-dashed line-lg pull-in"></div>
-                                                <div id="drs4">
-                                                    <label style="margin-top: 1px;"
-                                                           class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">درس
-                                                        زبان:</label>
-                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                                                        <input class="form-control" ng-readonly="true" type="text"
-                                                               ng-model="drs.zaban" ui-mask="99.99"/>
-                                                    </div>
+                                    <br>
+                                    <div class="panel-heading font-bold"
+                                         style="background-color: #f6f8f8">
+                                        توضیحات و ...
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                            <div class="panel-body">
+                                                <label style="margin-top: 8px;font-size: 15px;"
+                                                       class="col-xs-6 col-sm-6 col-md-6 col-lg-6 control-label">یادداشت
+                                                    :</label>
+                                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" align="right">
+                                                    <h5> {{stu_note}}</h5>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="panel-heading font-bold"
-                                     style="background-color: #f6f8f8">
-                                    توضیحات و ...
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                        <div class="panel-body">
-                                            <label style="margin-top: 8px;font-size: 15px;"
-                                                   class="col-xs-6 col-sm-6 col-md-6 col-lg-6 control-label">یادداشت
-                                                :</label>
-                                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" align="right">
-                                                <h5> {{stu_note}}</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                        <div class="panel-body">
-                                            <label style="margin-top: 8px;font-size: 15px;"
-                                                   class="col-xs-6 col-sm-6 col-md-6 col-lg-6 control-label">بیماری
-                                                :</label>
-                                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" align="right">
-                                                <h5 ng-show="stu_illness !=' '"> {{stu_illness}}</h5>
-                                                <h5 ng-show="stu_illness ==' '">هیچکدام</h5>
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                            <div class="panel-body">
+                                                <label style="margin-top: 8px;font-size: 15px;"
+                                                       class="col-xs-6 col-sm-6 col-md-6 col-lg-6 control-label">بیماری
+                                                    :</label>
+                                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" align="right">
+                                                    <h5 ng-show="stu_illness !=' '"> {{stu_illness}}</h5>
+                                                    <h5 ng-show="stu_illness ==' '">هیچکدام</h5>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <div id="snd" class="tabcontent">
+                                <div class="line line-dashed line-lg pull-in"></div>
+                                <br>
+                                <div class="panel-heading font-bold"
+                                     style="background-color: #f6f8f8">
+                                    تصویر اسناد اپلود شده
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div ng-show="(pre_stu.karnameimg && pre_stu.karnameimg != ' ' ) || (pre_stu.fish_variz && pre_stu.fish_variz != ' ' )">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                             ng-show="pre_stu.karnameimg && pre_stu.karnameimg != ' '">
+                                            <div class="panel-body" align="right">
+                                                <label>تصویر کارنامه : </label>&nbsp;<br><br>
+                                                <img src="{{pre_stu.karnameimg}}"
+                                                     style="width: 600px;height: 400px">
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4"
+                                             ng-show="pre_stu.fish_variz  && pre_stu.fish_variz != ' '">
+                                            <div class="panel-body" align="right">
+                                                <label>تصویر فبش واریزی : </label>&nbsp;<br><br>
+                                                <img src="{{pre_stu.fish_variz || 'img/userNopic.jpg'}}"
+                                                     style="width: 600px;height: 400px">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-show="!((pre_stu.karnameimg && pre_stu.karnameimg != ' ' ) || (pre_stu.fish_variz && pre_stu.fish_variz != ' ' ))">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="panel-body" align="center">
+                                                <img src="img/notFound(404).png"
+                                                     style="width: 500px;height: 400px">
+                                                <label><span
+                                                        style="font-family: Arial"> 404 not found</span>&nbsp;<span>هیچ سندی از این دانش آموز موجود نمیباشد.</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                function openCity(evt, cityName) {
+                                    var i, tabcontent, tablinks;
+                                    tabcontent = document.getElementsByClassName("tabcontent");
+                                    for (i = 0; i < tabcontent.length; i++) {
+                                        tabcontent[i].style.display = "none";
+                                    }
+                                    tablinks = document.getElementsByClassName("tablinks");
+                                    for (i = 0; i < tablinks.length; i++) {
+                                        tablinks[i].className = tablinks[i].className.replace(" active", "");
+                                    }
+                                    document.getElementById(cityName).style.display = "block";
+                                    evt.currentTarget.className += " active";
+                                }
+
+                                // Get the element with id="defaultOpen" and click on it
+                                document.getElementById("defaultOpen").click();
+                            </script>
                         </div>
                         <div class="modal-footer">
                             <div style="width: 100%;margin-right: 20px;">
                                 <div class="row">
-                                    <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
                                             <div class="panel-body">
 
@@ -474,6 +837,7 @@
             </div>
         </div>
     </div>
+    <!-- ثبت نظر برای دانش آموز-->
     <div class="modal fade bd-example-modal-lg" id="note" tabindex="-1" role="dialog"
          aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -494,19 +858,19 @@
                         <div>
                             <div class="panel-body">
                                 <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2" dir="rtl"
-                                     style="background-color: #fafbfc;padding: 10px;border: 1px #eff1f2 solid">
+                                     style="padding: 10px">
                                     رشته
                                 </div>
                                 <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" dir="rtl"
-                                     style="padding: 10px;border: 1px #eff1f2 solid;">
+                                     style="padding: 10px">
                                     {{thisSt.basename + '/' +thisSt.title}}
                                 </div>
                                 <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2" dir="rtl"
-                                     style="background-color: #fafbfc;padding: 10px;border: 1px #eff1f2 solid">
+                                     style="padding: 10px">
                                     مدرسه سال قبل
                                 </div>
                                 <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" dir="rtl"
-                                     style="padding: 10px;border: 1px #eff1f2 solid">
+                                     style="padding: 10px">
                                     <span ng-if="pre_stu.Current_school == 0" style="color: green">مدرسه جاری</span>
                                     <span ng-if="pre_stu.Current_school == 1">{{pre_stu.Previous_school}}</span>
                                 </div>
@@ -523,8 +887,31 @@
                                                        class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">سال
                                                     اول:</label>
                                                 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                                                    <input class="form-control" ng-readonly="true" type="text"
-                                                           ng-model="enz.one" ui-mask="99.99"/>
+                                                    <input ng-model="enz.one" ng-show="thisSt.enz_type == 1"
+                                                           class="form-control rounded"
+                                                           tooltip="معدل یکسال قبل خود را وارد نمایید. مثال : (18.50)"
+                                                           oninput="javascript:
+                                                               if (this.value > 20) this.value = this.value.slice(0, 0);
+                                                               if (this.value.length > 2) this.value = this.value.slice(0, this.maxLength);"
+                                                           type="text">
+                                                    <select tooltip="معدل یک سال قبل خود را انتخاب نمایید."
+                                                            ng-model="enz.one" ng-disabled="true"
+                                                            ng-show="thisSt.enz_type == 0"
+                                                            ng-options="enz.value as enz.name for enz in enzs"
+                                                            class="form-control">
+                                                        <option ng-disabled="true"
+                                                                ng-selected="false"
+                                                                value="">
+                                                            انضباط
+                                                            یک سال
+                                                            قبل
+                                                            خود
+                                                            را
+                                                            را
+                                                            انتخاب
+                                                            نمایید.
+                                                        </option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="line line-dashed line-lg pull-in"></div>
@@ -533,8 +920,31 @@
                                                        class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">سال
                                                     دوم:</label>
                                                 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                                                    <input class="form-control" ng-readonly="true" type="text"
-                                                           ng-model="enz.two" ui-mask="99.99"/>
+                                                    <input ng-model="enz.two" ng-show="thisSt.enz_type == 1"
+                                                           class="form-control rounded"
+                                                           tooltip="معدل دوسال قبل خود را وارد نمایید. مثال : (18.50)"
+                                                           oninput="javascript:
+                                                               if (this.value > 20) this.value = this.value.slice(0, 0);
+                                                               if (this.value.length > 2) this.value = this.value.slice(0, this.maxLength);"
+                                                           type="text">
+                                                    <select tooltip="معدل دوسال سال قبل خود را انتخاب نمایید. "
+                                                            ng-model="enz.two" ng-disabled="true"
+                                                            ng-show="thisSt.enz_type == 0"
+                                                            ng-options="enz.value as enz.name for enz in enzs"
+                                                            class="form-control">
+                                                        <option ng-disabled="true"
+                                                                ng-selected="false"
+                                                                value="">
+                                                            انضباط
+                                                            دو سال
+                                                            قبل
+                                                            خود
+                                                            را
+                                                            را
+                                                            انتخاب
+                                                            نمایید.
+                                                        </option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="line line-dashed line-lg pull-in"></div>
@@ -543,8 +953,31 @@
                                                        class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">سال
                                                     سوم:</label>
                                                 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                                                    <input class="form-control" ng-readonly="true" type="text"
-                                                           ng-model="enz.tree" ui-mask="99.99"/>
+                                                    <input ng-model="enz.two" ng-show="thisSt.enz_type == 1"
+                                                           class="form-control rounded"
+                                                           tooltip="معدل دوسال قبل خود را وارد نمایید. مثال : (18.50)"
+                                                           oninput="javascript:
+                                                               if (this.value > 20) this.value = this.value.slice(0, 0);
+                                                               if (this.value.length > 2) this.value = this.value.slice(0, this.maxLength);"
+                                                           type="text">
+                                                    <select tooltip="معدل سه سال قبل خود را انتخاب نمایید."
+                                                            ng-model="enz.tree" ng-disabled="true"
+                                                            ng-show="thisSt.enz_type ==0"
+                                                            ng-options="enz.value as enz.name for enz in enzs"
+                                                            class="form-control">
+                                                        <option ng-disabled="true"
+                                                                ng-selected="false"
+                                                                value="">
+                                                            انضباط
+                                                            سه سال
+                                                            قبل
+                                                            خود
+                                                            را
+                                                            را
+                                                            انتخاب
+                                                            نمایید.
+                                                        </option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -562,7 +995,7 @@
                                                     ریاضی:</label>
                                                 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                                                     <input class="form-control" ng-readonly="true" type="text"
-                                                           ng-model="drs.reyazi" ui-mask="99.99"/>
+                                                           ng-model="drs.reyazi"/>
                                                 </div>
                                             </div>
                                             <div class="line line-dashed line-lg pull-in"></div>
@@ -572,7 +1005,7 @@
                                                     علوم:</label>
                                                 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                                                     <input class="form-control" ng-readonly="true" type="text"
-                                                           ng-model="drs.olom" ui-mask="99.99"/>
+                                                           ng-model="drs.olom"/>
                                                 </div>
                                             </div>
                                             <div class="line line-dashed line-lg pull-in"></div>
@@ -582,7 +1015,7 @@
                                                     هنر:</label>
                                                 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                                                     <input class="form-control" ng-readonly="true" type="text"
-                                                           ng-model="drs.honar" ui-mask="99.99"/>
+                                                           ng-model="drs.honar"/>
                                                 </div>
                                             </div>
                                             <div class="line line-dashed line-lg pull-in"></div>
@@ -592,7 +1025,7 @@
                                                     زبان:</label>
                                                 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                                                     <input class="form-control" ng-readonly="true" type="text"
-                                                           ng-model="drs.zaban" ui-mask="99.99"/>
+                                                           ng-model="drs.zaban"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -618,10 +1051,10 @@
                                                            class="form-control rounded"
                                                            ng-model="tarbiaty.score"
                                                            oninput="javascript:
-                                                                if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);
-                                                                if (this.value > this.max) this.value = this.value.slice(0, 0);"
-                                                           type="number"
-                                                           maxlength="2" max="20">
+                                                           if (this.value > 20) this.value = this.value.slice(0, 0);
+                                                           if (this.value.length > 2) this.value = this.value.slice(0, this.maxLength);"
+                                                           type="text"
+                                                    >
                                                 </div>
                                                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"
                                                      style="margin-top: 3px;float: left">
@@ -656,11 +1089,10 @@
                                                 <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
                                                     <input ng-model="amozeshi.score" class="form-control rounded"
                                                            placeholder="امتیاز از 20" style="width: 100%"
-                                                           ng-required="true" type="number" oninput="javascript:
-                                                                if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);
-                                                                if (this.value > this.max) this.value = this.value.slice(0, 0);"
-                                                           type="number"
-                                                           maxlength="2" max="20">
+                                                           ng-required="true" oninput="javascript:
+                                                                                                                     if (this.value > 20) this.value = this.value.slice(0, 0);
+                                                                                                                   if (this.value.length > 2) this.value = this.value.slice(0, this.maxLength);"
+                                                           type="text">
                                                 </div>
                                                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"
                                                      style="margin-top: 3px;float: left">
@@ -705,7 +1137,7 @@
                     <div class="modal-footer">
                         <div style="width: 100%;margin-right: 20px;">
                             <div class="row">
-                                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
                                         <div class="panel-body">
                                             <button
@@ -734,6 +1166,7 @@
             </div>
         </div>
     </div>
+    <!-- نتایج یک دانش آموز-->
     <div class="modal fade" id="myModal2" role="dialog">
         <div class="modal-dialog">
 
@@ -749,7 +1182,7 @@
                         ({{st_name}}) </h4>
                 </div>
                 <div class="modal-body">
-                    <div>
+                    <div ng-show="resultValue == 1">
                         <div class="panel-body">
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" dir="rtl"
                                  style="background-color: #fafbfc;padding: 10px;border: 1px #eff1f2 solid">
@@ -757,7 +1190,7 @@
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2" dir="rtl"
                                  style="padding: 10px;border: 1px #eff1f2 solid;">
-                                {{pre_comment.length}}
+                                {{pre_comment.countAll}}
                             </div>
                             <div class="panel-body" style="">
                                 <a style="color: blue;text-decoration: underline;margin-right: 15px;"
@@ -778,7 +1211,7 @@
                                                 </div>
                                                 <div class="col-xs-4 col-sm-6 col-md-2 col-lg-2" dir="rtl"
                                                      style="padding: 10px;border: 1px #eff1f2 solid;">
-                                                    {{amozeshi_Score_avg | limitTo: 4}}
+                                                    {{pre_comment.avgScoreAmozeshi | limitTo : 4}}
                                                 </div>
                                                 <div class="line line-dashed  line-lg pull-in"></div>
                                                 <div class="col-xs-8 col-sm-6 col-md-4 col-lg-4" dir="rtl"
@@ -787,7 +1220,7 @@
                                                 </div>
                                                 <div class="col-xs-4 col-sm-6 col-md-2 col-lg-2" dir="rtl"
                                                      style="padding: 10px;border: 1px #eff1f2 solid;color:green;">
-                                                    {{amozeshi_true}}
+                                                    {{pre_comment.countBoolAmozeshi}}
                                                 </div>
                                                 <div class="col-xs-8 col-sm-6 col-md-4 col-lg-4" dir="rtl"
                                                      style="background-color: #fafbfc;padding: 10px;border: 1px #eff1f2 solid">
@@ -795,7 +1228,7 @@
                                                 </div>
                                                 <div class="col-xs-4 col-sm-6 col-md-2 col-lg-2" dir="rtl"
                                                      style="padding: 10px;border: 1px #eff1f2 solid;color: red">
-                                                    {{amozeshi_false}}
+                                                    {{boolAmozeshi0}}
                                                 </div>
                                             </div>
                                         </div>
@@ -810,7 +1243,7 @@
                                                 </div>
                                                 <div class="col-xs-4 col-sm-6 col-md-2 col-lg-2" dir="rtl"
                                                      style="padding: 10px;border: 1px #eff1f2 solid;">
-                                                    {{tarbiaty_Score_avg | limitTo: 4}}
+                                                    {{pre_comment.avgScoreTarbiaty | limitTo: 4}}
                                                 </div>
                                                 <div class="line line-dashed  line-lg pull-in"></div>
                                                 <div class="col-xs-8 col-sm-6 col-md-4 col-lg-4" dir="rtl"
@@ -819,7 +1252,7 @@
                                                 </div>
                                                 <div class="col-xs-4 col-sm-6 col-md-2 col-lg-2" dir="rtl"
                                                      style="padding: 10px;border: 1px #eff1f2 solid;color:green;">
-                                                    {{tarbiaty_true}}
+                                                    {{pre_comment.countBoolTarbiaty}}
                                                 </div>
                                                 <div class="col-xs-8 col-sm-6 col-md-4 col-lg-4" dir="rtl"
                                                      style="background-color: #fafbfc;padding: 10px;border: 1px #eff1f2 solid">
@@ -827,7 +1260,7 @@
                                                 </div>
                                                 <div class="col-xs-4 col-sm-6 col-md-2 col-lg-2" dir="rtl"
                                                      style="padding: 10px;border: 1px #eff1f2 solid;color: red">
-                                                    {{tarbiaty_false}}
+                                                    {{boolTarbiaty0}}
                                                 </div>
                                             </div>
                                         </div>
@@ -881,12 +1314,25 @@
                             </div>
                         </div>
                     </div>
+                    <div ng-show="resultValue == 0">
+                        <h4>هیچ نظری برای این دانش آموز تا این لحظه ثبت نگردیده است.</h4>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <div style="width: 100%;margin-right: 20px;">
                         <br>
                         <div class="row">
-                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"
+                                 style="float: right;margin-right: 20px;color: white">
+                                <button ng-click="submitSt(st_id,st_name)"
+                                        style="width: 100%;"
+                                        type="submit" href="index.html"
+                                        class="btn btn-info">
+                                    <i class="icon-note"></i>
+                                    &nbsp;
+                                    <span> ثبت نام قطعی دانش آموز در مدرسه </span></button>
+                            </div>
+                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"
                                  style="float: right;margin-right: 20px;color: white">
                                 <button data-dismiss="modal"
                                         style="width: 100%;background-color: #6c757d"
@@ -904,6 +1350,7 @@
             </div>
         </div>
     </div>
+    <!-- ریز گزارشات یک دانش آموز-->
     <div class="modal fade bd-example-modal-lg" id="pay_com" tabindex="-1" role="dialog"
          aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -947,6 +1394,7 @@
                                                          style="margin-top: 3px;">
                                                         <div class="panel-body" style="float: left">
                                                             <button style="width: 100%;" class="btn btn-link"
+                                                                    ng-model="myprint"
                                                                     ng-click="printDiv('tblExport');">
                                                                 <i class="fa fa-print"></i>
                                                                 چاپ لیست
@@ -965,10 +1413,6 @@
                                                         <table class="table table-striped , td" id="tblExport2">
                                                             <thead>
                                                             <tr>
-                                                                <th rowspan="2" scope="col"
-                                                                    class="v-middle  media-middle text-center , td">
-                                                                    #
-                                                                </th>
                                                                 <th rowspan="2"
                                                                     class="v-middle  media-middle text-center , td">
                                                                     نام
@@ -1010,25 +1454,22 @@
                                                             </tr>
                                                             </thead>
                                                             <tbody>
-                                                            <tr ng-repeat="item in pre_comment">
-                                                                <td class="v-middle  media-middle text-center , td">
-                                                                    {{item.id}}
-                                                                </td>
+                                                            <tr ng-repeat="item in all_pre_comment">
                                                                 <td class="v-middle  media-middle text-center , td">
                                                                     {{ item.firstname + " " + item.lastname||
                                                                     'خالی'}}
                                                                 </td>
                                                                 <td class="v-middle  media-middle text-center , td">
-                                                                    {{retAmozeshi(item.amozeshi , 'bool')}}
+                                                                    {{retAmozeshi(item.amozeshi_bool)}}
                                                                 </td>
                                                                 <td class="v-middle  media-middle text-center , td">
-                                                                    {{retAmozeshi(item.amozeshi , 'score')}}
+                                                                    {{item.amozeshi_score}}
                                                                 </td>
                                                                 <td class="v-middle  media-middle text-center , td">
-                                                                    {{retTarbity(item.tarbiaty , 'bool')}}
+                                                                    {{retTarbity(item.tarbiaty_bool )}}
                                                                 </td>
                                                                 <td class="v-middle  media-middle text-center , td">
-                                                                    {{retTarbity(item.tarbiaty , 'score')}}
+                                                                    {{item.tarbiaty_score}}
                                                                 </td>
                                                                 <td class="v-middle  media-middle text-center , td">
                                                                     {{ item.comment || '---'}}
@@ -1051,7 +1492,7 @@
                     <div class="modal-footer">
                         <div style="width: 100%;margin-right: 20px;">
                             <div class="row">
-                                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
                                         <button ng-click="backToNote()"
                                                 style="width: 100%;"
@@ -1068,6 +1509,300 @@
             </div>
         </div>
     </div>
+    <!-- ریز گزارشات همه دانش آموزان-->
+    <div class="modal fade bd-example-modal-lg modal-xl"  style="max-width: 80%" id="myModal3" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal">&times;
+                        </button>
+                        <h4 class="modal-title">
+                            <img src="img/icon/wrtie.png" class="icnSize">
+                            ریز گزارشات همه دانش آموزان پیش ثبت نام شده
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="panel-body">
+                                <div class="panel panel-default" style="width: 100%;">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <div class="row">
+                                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                    <div class="panel-body">
+                                                        <h4 align="right">نتیجه نظرات ثبت شده برای دانش آموزان پیش ثبت
+                                                            نام شده</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"
+                                                     style="float: left">
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                                         style="margin-top: 3px;float: left">
+                                                        <div class="panel-body" style="float: left">
+                                                            <button style="width: 100%;" class="btn btn-link"
+                                                                    onclick="tableToExcel('tblExport' , 'لیست دانش آموزان')">
+                                                                <i class="fa fa-file-excel-o"></i>
+                                                                خروجی Excel
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                                         style="margin-top: 3px;">
+                                                        <div class="panel-body" style="float: left">
+                                                            <button style="width: 100%;" class="btn btn-link"
+                                                                    ng-click="printDiv('tblExport');">
+                                                                <i class="fa fa-print"></i>
+                                                                چاپ لیست
+                                                            </button>
+                                                        </div>
+
+
+
+                                                        <div class="panel-body" style="float: left">
+                                                            <button style="width: 100%;" class="btn btn-link"
+                                                                    ng-print >
+                                                                <i class="fa fa-print"></i>
+                                                                چاپ لیست
+                                                            </button>
+                                                        </div>
+
+
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse3" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="panel-body">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped , td" id="tblExport3">
+                                                            <thead>
+                                                            <tr>
+                                                                <th rowspan="2" class="v-middle  media-middle text-center , td">
+                                                                    ردیف
+                                                                </th>
+                                                                <th rowspan="2"
+                                                                    class="v-middle  media-middle text-center , td">
+                                                                    پایه انتخابی
+                                                                </th>
+                                                                <th colspan="3" rowspan="2"
+                                                                    class="v-middle  media-middle text-center , td">
+                                                                    نام
+                                                                    دانش آموز
+                                                                </th>
+
+                                                                <th colspan="3"
+                                                                    class="v-middle  media-middle text-center , td">
+                                                                    زمینه
+                                                                    آموزشی
+                                                                </th>
+                                                                <th colspan="3"
+                                                                    class="v-middle  media-middle text-center , td">
+                                                                    زمینه
+                                                                    تربیتی
+                                                                </th>
+                                                                <th colspan="2" rowspan="2"
+                                                                    class="v-middle  media-middle text-center , td">
+                                                                    ثبت نام
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="v-middle  media-middle text-center , td">
+                                                                    نظرات موفق
+                                                                </th>
+                                                                <th class="v-middle  media-middle text-center , td">
+                                                                    نظرات مخالف
+                                                                </th>
+                                                                <th class="v-middle  media-middle text-center , td">
+                                                                    میانگین امتیازات
+                                                                </th>
+                                                                <th class="v-middle  media-middle text-center , td">
+                                                                    نظرات موفق
+                                                                </th>
+                                                                <th class="v-middle  media-middle text-center , td">
+                                                                    نظرات مخالف
+                                                                </th>
+                                                                <th class="v-middle  media-middle text-center , td">
+                                                                    میانگین امتیازات
+                                                                </th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr ng-repeat="item in all_result">
+                                                                <td>{{$index+1}}</td>
+                                                                <td class="v-middle  media-middle text-center , td">
+                                                                    {{item.title}}
+                                                                </td>
+                                                                <td colspan="3" class="v-middle  media-middle text-center , td">
+                                                                    {{ item.firstname + ' ' + item.lastname||
+                                                                    'خالی'}}
+                                                                </td>
+
+                                                                <td class="v-middle  media-middle text-center , td">
+                                                                    {{item.countBoolAmozeshi}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center , td"
+                                                                    ng-show="item.countBoolAmozeshi">
+                                                                    {{item.boolAmozeshi0}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center , td">
+                                                                    {{item.avgScoreAmozeshi}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center , td">
+                                                                    {{item.countBoolTarbiaty}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center , td"
+                                                                    ng-show="item.countBoolTarbiaty">
+                                                                    {{item.boolTarbiaty0}}
+                                                                </td>
+                                                                <td class="v-middle  media-middle text-center , td">
+                                                                    {{item.avgScoreTarbiaty}}
+                                                                </td>
+                                                                <td colspan="2" class="v-middle  media-middle text-center , td">
+                                                                    <button
+                                                                            class="btn btn-sm btn-success"
+                                                                            ng-show="userType == '1'"
+                                                                            ng-click="submitSt(item.studentid,item.firstname + ' ' + item.lastname)">
+                                                                        <span> ثبت نام </span> <i
+                                                                            class="icon-bar-chart"></i>&nbsp;
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div style="width: 100%;margin-right: 20px;">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                                        <button data-dismiss="modal"
+                                                style="width: 100%;"
+                                                type="submit"
+                                                class="btn btn-dark">
+                                            <i class="icon-arrow-left"></i>&nbsp;<span> بازگشت </span></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--ارسال دعوت نامه-->
+    <div class="modal fade bd-example-modal-lg" id="sendSms" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal">&times;
+                        </button>
+                        <h4 class="modal-title">
+                            <img src="img/icon/sms2.png" class="icnSize">
+                            ارسال دعوت نامه جهت ثبت نام دانش آموز
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <h5>تعداد دعوت نامه های ارسالی : {{arrayPhone.length}}</h5>
+                        <div class="line line-dashed line-lg pull-in"></div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="panel-body">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="panel-body">
+                                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                   style="margin-top: 8px;">قالب پیامک آماده:</label>
+                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                <select tooltip="شهر"
+                                                        ng-model="sms_temp" ng-change="setTemp(sms_temp.text)"
+                                                        ng-options="sms as sms.title for sms in smsTemps"
+                                                        class="form-control rounded">
+                                                    <option ng-disabled="true"
+                                                            ng-selected="false" value="">قالب پیامکی
+                                                        مورد نظر
+                                                        را انتخاب
+                                                        نمایید.
+                                                    </option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="panel-body">
+                                            <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                   style="margin-top: 8px;">متن پیامک:</label>
+                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                <textarea rows="8" ng-change="smsLength(sms_note.length)"
+                                                          style="width:100%;height:auto; "
+                                                          ng-model="sms_note"
+                                                          ui-validate=""
+                                                          placeholder="متن پیامک..."
+                                                          type="text"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="float: left;margin-left: 20px;" class="panel-body">
+                                        <p><span>تعداد کاراکتر :</span>&nbsp;{{sms_note.length || '0'}}</p>
+                                        <p><span>تعداد پیامک :</span>&nbsp;{{smsLen}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div style="width: 100%;margin-right: 20px;">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="margin-top: 15px;">
+                                        <button ng-click="sendSms()"
+                                                style="width: 100%;"
+                                                type="submit" href="index.html"
+                                                class="btn btn-info">
+                                            <i class="fa fa-paper-plane"></i>
+                                            &nbsp;
+                                            <span> ارسال </span></button>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        <div class="panel-body">
+                                            <button data-dismiss="modal"
+                                                    style="width: 100%;"
+                                                    type="submit"
+                                                    class="btn btn-dark">
+                                                <i class="icon-close"></i>&nbsp;<span> بستن </span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 <script type="text/javascript">
     var tableToExcel = (function () {
@@ -1089,5 +1824,4 @@
         }
     })()
 </script>
-</div>
 

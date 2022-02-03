@@ -18,7 +18,14 @@ app.controller('insertTheacher', ['$scope', '$filter', '$http', function ($scope
         document.getElementById("pic2").className = "gray100";
         document.getElementById("pic3").className = "gray100";
 
-
+        $http.post(URL_GET, JSON.stringify({
+            ViewName: "XV_SelectRole",
+            parameters: [
+                {key: "%schoolid", value: localStorage.schoolId},
+            ],
+        })).success(function (result, status, headers, config) {
+            $scope.roles = result.data;
+        });
         var mdk = {
             ViewName: "educationdegreeSelect",
             mutualTransaction: {
@@ -105,7 +112,7 @@ app.controller('insertTheacher', ['$scope', '$filter', '$http', function ($scope
         }
     }
     $scope.checkstep1 = function () {
-        if (($scope.th_fitstname) && ($scope.th_lastname) && ($scope.th_fathername)) {
+        if (($scope.th_fitstname) && ($scope.th_lastname) && ($scope.th_fathername) && ($scope.th_codemeli)) {
             return false;
         } else {
             return true;
@@ -116,7 +123,7 @@ app.controller('insertTheacher', ['$scope', '$filter', '$http', function ($scope
         return false;
     }
     $scope.checkstep3 = function () {
-        if (($scope.th_mdrk) && ($scope.th_type)) {
+        if (($scope.th_mdrk) && ($scope.th_type)&&($scope.th_roleid)) {
             return false;
         } else {
             return true;
@@ -124,7 +131,7 @@ app.controller('insertTheacher', ['$scope', '$filter', '$http', function ($scope
     }
     $scope.insertTecherFunc = function () {
         if ((localStorage.adminId) && localStorage.adminCount != 0 && (localStorage.adminCount && localStorage.adminCount != undefined && localStorage.adminCount != "undefined")) {
-            if (($scope.th_fitstname) && ($scope.th_lastname) && ($scope.th_fathername) && ($scope.th_mdrk) && ($scope.th_type)) {
+            if (($scope.th_fitstname) &&  ($scope.th_lastname) && ($scope.th_codemeli) && ($scope.th_fathername) && ($scope.th_mdrk) && ($scope.th_type) && ($scope.th_roleid)) {
                 var bertday = '';
                 if ($scope.th_berthday) {
                     bertday = moment($scope.th_berthday, 'jYYYY-jM-jD').format('YYYY-M-D');
@@ -150,6 +157,9 @@ app.controller('insertTheacher', ['$scope', '$filter', '$http', function ($scope
                         {key: "%image", value: $scope.th_image || '' + ''},
                         {key: "%note", value: $scope.th_note || '' + ''},
                         {key: "%schoolid", value: localStorage.schoolId},
+                        {key: "%username", value: $scope.th_codemeli},
+                        {key: "%password", value: $scope.th_codemeli},
+                        {key: "%role_id", value:$scope.th_roleid},
                     ]
                 };
                 $http.post(URL_INSERT, JSON.stringify(ins_th))

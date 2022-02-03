@@ -34,8 +34,8 @@ app.controller('term_update', ['$scope', '$filter', '$http', function ($scope, $
                     $scope.trm_year = $scope.termha.year;
                     $scope.trm_name = $scope.termha.title;
                     $scope.trm_dore = $scope.termha.duration;
-                    $scope.trm_start = $scope.termha.startdate;
-                    $scope.trm_end = $scope.termha.enddate;
+                    $scope.trm_start =moment( $scope.termha.startdate, 'YYYY-M-D').format('jYYYY-jM-jD');
+                    $scope.trm_end =  moment( $scope.termha.enddate, 'YYYY-M-D').format('jYYYY-jM-jD');
                 });
         }
 
@@ -94,7 +94,9 @@ app.controller('term_update', ['$scope', '$filter', '$http', function ($scope, $
     $scope.BackToHistory = function () {
         window.history.back();
     }
-
+    $scope.retdata = function ($data) {
+        return moment($data, 'YYYY-M-D').format('jYYYY-jM-jD');
+    }
 }])
 ;
 

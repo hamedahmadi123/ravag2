@@ -40,10 +40,10 @@ app.controller('Enzebat_student_insert', ['$scope', '$filter', '$http', function
             mutualTransaction: {
                 kendoDataRequest: {
                     filter: {
-                        field: "",
-                        logic: "",
-                        operator: "",
-                        value: ""
+                        field: "schoolid",
+                        logic: "and",
+                        operator: "eq",
+                        value: localStorage.schoolId + ""
                     },
                 }
             }
@@ -63,7 +63,10 @@ app.controller('Enzebat_student_insert', ['$scope', '$filter', '$http', function
                         field: "roleid",
                         logic: "and",
                         operator: "eq",
-                        value: "1"
+                        value: "1",
+                        filters: [
+                            {field: "schoolid", logic: "and", operator: "eq", value: localStorage.schoolId + ""}
+                        ]
                     },
                 }
             },
@@ -72,7 +75,7 @@ app.controller('Enzebat_student_insert', ['$scope', '$filter', '$http', function
             .success(function (result, status, headers, config) {
                 $scope.enz_types = result.data;
                 for (var i = 0; i < $scope.enz_types.length; i++) {
-                    if ($scope.enz_types[i].owner == 2) {
+                    if ($scope.enz_types[i].owner == localStorage.userType) {
                         $scope.obj_disType[$scope.enz_types[i].disciplinetypeid] = true;
                     }
                 }
@@ -86,7 +89,10 @@ app.controller('Enzebat_student_insert', ['$scope', '$filter', '$http', function
                         field: "schoolid",
                         logic: "and",
                         operator: "eq",
-                        value: localStorage.schoolId + ''
+                        value: localStorage.schoolId + '',
+                        filters: [
+                            {field: "schoolid", logic: "and", operator: "eq", value: localStorage.schoolId + ""}
+                        ]
                     },
                 }
             },
@@ -174,7 +180,10 @@ app.controller('Enzebat_student_insert', ['$scope', '$filter', '$http', function
                         field: "classid",
                         logic: "and",
                         operator: "eq",
-                        value: $scope.classLessonId
+                        value: $scope.classLessonId,
+                        filters: [
+                            {field: "schoolid", logic: "and", operator: "eq", value: localStorage.schoolId + ""}
+                        ]
                     },
                 }
             },
@@ -192,7 +201,7 @@ app.controller('Enzebat_student_insert', ['$scope', '$filter', '$http', function
             take = 15;
             objects = 0;
             isem = false;
-            $scope.load2();
+
         } else {
             document.getElementById('lblName').innerText = "لیست دانش آموزان کلاس " + "(" + $name + ")";
             $scope.name = [];
@@ -270,7 +279,11 @@ app.controller('Enzebat_student_insert', ['$scope', '$filter', '$http', function
                         field: field,
                         logic: logic,
                         operator: operator,
-                        value: value
+                        value: value,
+                        filters: [
+                            {field: "schoolid", logic: "and", operator: "eq", value: localStorage.schoolId + ""},
+                            {field: "isactive", logic: "and", operator: "eq", value: "1"},
+                        ]
                     },
                     skip: skip,
                     take: take,
@@ -293,6 +306,7 @@ app.controller('Enzebat_student_insert', ['$scope', '$filter', '$http', function
             });
 
     }
+
     $scope.returnBase = function ($path) {
         try {
             var path_array = $path.split('//');
@@ -302,7 +316,7 @@ app.controller('Enzebat_student_insert', ['$scope', '$filter', '$http', function
         }
     }
     $scope.itemArray = function ($id, $bool, $name) {
-         if ($bool == undefined) {
+        if ($bool == undefined) {
             $bool = true;
         }
         $scope.obj_st[$id] = $bool;
@@ -317,7 +331,6 @@ app.controller('Enzebat_student_insert', ['$scope', '$filter', '$http', function
                 }
             }
         }
-        console.log($scope.arrselect);
     }
     $scope.selectAllStudent = function ($num) {
         $scope.arrselect = [];
@@ -405,7 +418,7 @@ app.controller('Enzebat_student_insert', ['$scope', '$filter', '$http', function
                         if ($scope.showAlltype == true) {
                             $scope.obj_disType[$scope.enz_types[i].disciplinetypeid] = true;
                         } else {
-                            if ($scope.enz_types[i].owner == 2) {
+                            if ($scope.enz_types[i].owner == localStorage.userType) {
                                 $scope.obj_disType[$scope.enz_types[i].disciplinetypeid] = true;
                             }
                         }
@@ -424,7 +437,7 @@ app.controller('Enzebat_student_insert', ['$scope', '$filter', '$http', function
                     if ($scope.showAlltype == true) {
                         $scope.obj_disType[$scope.enz_types[i].disciplinetypeid] = true;
                     } else {
-                        if ($scope.enz_types[i].owner == 2) {
+                        if ($scope.enz_types[i].owner == localStorage.userType) {
                             $scope.obj_disType[$scope.enz_types[i].disciplinetypeid] = true;
                         }
                     }
@@ -501,7 +514,6 @@ app.controller('Enzebat_student_insert', ['$scope', '$filter', '$http', function
                         };
                         ins_array.push(ins_dis);
                     }
-                    alert(JSON.stringify(ins_array));
                 } else {
                     if ($scope.Main_Array.length == 0) {
                         $scope.eroretext = "دانش آموزان";

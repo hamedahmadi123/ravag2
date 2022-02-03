@@ -31,14 +31,20 @@ app.controller('ClassSchedule', ['$scope', '$filter', '$http', function ($scope,
             ViewName: "ClassSelect",
             mutualTransaction: {
                 kendoDataRequest: {
-                    filter:  {field: "classid", logic: "and", operator: "eq", value: $scope.cls_id},
+                    filter: {
+                        field: "schoolid", logic: "and", operator: "eq", value: localStorage.schoolId + ''
+                        , filters: [
+                            {field: "classid", logic: "and", operator: "eq", value: $scope.cls_id+''}
+                        ]
+
+                    },
                 }
             }
         }
         $http.post(URL_GET, JSON.stringify(cls))
             .success(function (result, status, headers, config) {
                 $scope.class = result.data[0];
-                var drss = {
+                var msg = {
                     ViewName: "lesson_majorbaseSelect",
                     mutualTransaction: {
                         kendoDataRequest: {
@@ -52,7 +58,7 @@ app.controller('ClassSchedule', ['$scope', '$filter', '$http', function ($scope,
                         }
                     }
                 }
-                $http.post(URL_GET, JSON.stringify(drss))
+                $http.post(URL_GET, JSON.stringify(msg))
                     .success(function (result, status, headers, config) {
                         for (let i = 0; i < result.data.length; i++) {
                             result.data[i].index = i;
@@ -123,10 +129,10 @@ app.controller('ClassSchedule', ['$scope', '$filter', '$http', function ($scope,
             mutualTransaction: {
                 kendoDataRequest: {
                     filter: {
-                        // field: "schoolid",
-                        // logic: "and",
-                        // operator: "eq",
-                        // value: localStorage.schoolId + ""
+                        field: "schoolid",
+                        logic: "and",
+                        operator: "eq",
+                        value: localStorage.schoolId + ""
                     },
                 }
             }

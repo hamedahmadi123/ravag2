@@ -60,6 +60,7 @@ app.controller('teachers', ['$scope', '$filter', '$http', function ($scope, $fil
             });
 
     };
+
     $scope.detailTh = function ($id) {
         var stu = {
             ViewName: "TeacherSelect",
@@ -113,7 +114,6 @@ app.controller('teachers', ['$scope', '$filter', '$http', function ($scope, $fil
             };
             dataArray.push(del_Item);
         }
-        alert(JSON.stringify(dataArray))
         var j = confirm("آیا برای حذف معلین انتخاب شده اطمینان دارید ؟ ");
         if (j === true) {
             $http.post(URL_ARRAY_INSERT, JSON.stringify(dataArray))

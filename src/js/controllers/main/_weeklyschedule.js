@@ -103,7 +103,10 @@ app.controller('weeklyschedule', ['$scope', '$filter', '$http', function ($scope
                             field: "classid",
                             logic: "and",
                             operator: "eq",
-                            value: $id + ""
+                            value: $id + "",
+                            filters: [
+                                {field: "schoolid", logic: "and", operator: "eq", value:localStorage.schoolId+""}
+                            ]
                         },
 
                     }

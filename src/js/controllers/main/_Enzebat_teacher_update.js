@@ -44,7 +44,7 @@ app.controller('Enzebat_teacher_update', ['$scope', '$filter', '$http', function
                 $scope.the_dis_Id = $scope.this_dis.disciplinetypeid;
                 $scope.dis_note = $scope.this_dis.description;
                 $scope.dis_date = moment($scope.this_dis.createdAt, 'YYYY-M-D').format('jYYYY-jM-jD');
-                console.log($scope.this_dis)
+
             });
 
         var msg = {

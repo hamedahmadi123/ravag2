@@ -13,13 +13,10 @@ app.controller('class_insert', ['$scope', '$filter', '$http', function ($scope, 
     $scope.scholtype = JSON.parse(localStorage.schoolBase);
     for (var i = 0; i < $scope.scholtype.length; i++) {
         if ($scope.scholtype[i] >= 1 && $scope.scholtype[i] <= 6) {
-            // console.log("ابتدایی");
             $scope.isMajor = false;
         } else if ($scope.scholtype[i] >= 7 && $scope.scholtype[i] <= 9) {
-            // console.log("راهنمایی");
             $scope.isMajor = false;
         } else if ($scope.scholtype[i] >= 10 && $scope.scholtype[i] <= 12) {
-            // console.log("دبیرستان");
             $scope.isMajor = true;
         }
     }
@@ -29,10 +26,13 @@ app.controller('class_insert', ['$scope', '$filter', '$http', function ($scope, 
         mutualTransaction: {
             kendoDataRequest: {
                 filter: {
-                    // field: "schoolid",
-                    // logic: "and",
-                    // operator: "eq",
-                    // value: localStorage.schoolId
+                    field: "schoolid",
+                    logic: "and",
+                    operator: "eq",
+                    value: localStorage.schoolId,
+                    filters: [
+                        {field: "ismajor", logic: "and", operator: "eq", value: '0'},
+                    ]
                 },
             }
         }
@@ -88,7 +88,9 @@ app.controller('class_insert', ['$scope', '$filter', '$http', function ($scope, 
                     filter: {
                         field: "schoolid", logic: "and", operator: "eq", value: localStorage.schoolId + ''
                         , filters: [
-                            {field: "majorbaseid", logic: "and", operator: "eq", value: $major}]
+                            {field: "majorbaseid", logic: "and", operator: "eq", value: $major},
+                            {field: "isactive", logic: "and", operator: "eq", value:'1'},
+                            ]
 
                     },
                 }
@@ -116,6 +118,8 @@ app.controller('class_insert', ['$scope', '$filter', '$http', function ($scope, 
                 }
             }
         }
+
+
     }
     $scope.setStudent = function () {
         $scope.pEdit = !$scope.pEdit;
@@ -146,6 +150,7 @@ app.controller('class_insert', ['$scope', '$filter', '$http', function ($scope, 
 
             }
         }
+
 
     }
     $scope.insertClassFunctin = function () {

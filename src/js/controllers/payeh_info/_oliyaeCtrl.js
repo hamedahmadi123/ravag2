@@ -50,7 +50,7 @@ app.controller('oliyaeCtrl', ['$scope', '$filter', '$http', function ($scope, $f
                 if (j === true) {
                     $http.post(URL_INSERT, JSON.stringify(ins_oly))
                         .success(function (result, status, headers, config) {
-                            alert("اولیای جدیدی برای دانش آموز" + $scope.oly_s_meliCode + "با موفقیت درج شد.");
+
                             document.location.reload();
                         }).error(function (result, status, header, config) {
                         alert("درج اولیا با خطا مواجه شد.");

@@ -26,7 +26,6 @@ app.controller('students_card', ['$scope', '$filter', '$http', function ($scope,
         $http.post(URL_GET, JSON.stringify(class_student))
             .success(function (result, status, headers, config) {
                 $scope.studentClass = result.data;
-                console.log($scope.studentClass);
 
             });
     }

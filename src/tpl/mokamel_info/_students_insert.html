@@ -349,7 +349,7 @@
                 <fieldset>
                     <div style="background-color: white">
                         <div class="modal-body" align="center">
-                            <div dir="rtl" style="background-color: #f6fffc"> <!-- featureds -->
+                            <div dir="rtl" style="background-color: #fafafa"> <!-- featureds -->
                                 <div class="section featureds" style="background-color: white ; ">
                                     <section style="background:#ffffff;width: 100% ;">
                                         <div class="container" style="width: 100%;">
@@ -488,7 +488,7 @@
                                                                 <br>
                                                             </div>
 
-                                                            <div class="tab-pane fade" id="step2">
+                                                            <div class="tab-pane fade in active" id="step2">
                                                                 <br><br>
                                                                 <div class="row">
                                                                     <div class="panel-heading font-bold"
@@ -538,19 +538,6 @@
                                                                             </select>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="line line-dashed  line-lg pull-in"></div>
-
-                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                                                        <div class="panel-body">
-                                                                            <label><b>یادداشت :</b></label>&nbsp;
-                                                                            <textarea rows="13"
-                                                                                      style="width:100%;height:auto; "
-                                                                                      ng-model="stu_note"
-                                                                                      ui-validate=""
-                                                                                      placeholder="یادداشت..."
-                                                                                      type="text"></textarea>
-                                                                        </div>
-                                                                    </div>
                                                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                                                         <div class="panel-body">
                                                                             <label><b>عکس پرسنلی 4*3 :</b></label>&nbsp;
@@ -564,6 +551,33 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                        <div class="panel-body">
+                                                                            <label><b>عکس فوری :</b></label>&nbsp;
+                                                                            <div class="file-loading">
+                                                                                <input id="uploadFile2"
+                                                                                       name="uploadFile1" multiple
+                                                                                       type="file"
+                                                                                       accept="image/*">
+                                                                            </div>
+                                                                            <div id="togStatus2" class="hint-block">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="line line-dashed  line-lg pull-in"></div>
+
+                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                                        <div class="panel-body">
+                                                                            <label><b>یادداشت :</b></label>&nbsp;
+                                                                            <textarea rows="13"
+                                                                                      style="width:100%;height:auto; "
+                                                                                      ng-model="stu_note"
+                                                                                      ui-validate=""
+                                                                                      placeholder="یادداشت..."
+                                                                                      type="text"></textarea>
+                                                                        </div>
+                                                                    </div>
+
                                                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                                                         <div class="panel-body">
                                                                             <label><b>بیماری :</b></label>&nbsp;

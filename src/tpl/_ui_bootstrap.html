@@ -1,0 +1,28 @@
+<div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3">UI Bootstrap <span class="badge">16</span></h1>
+  <small class="text-muted">Bootstrap components written in pure AngularJS</small>
+</div>
+<div class="wrapper-md">
+  <div class="row">
+    <!-- carousel -->
+    <div ng-controller="CarouselDemoCtrl" class="panel b-a" set-ng-animate="false">
+      <div class="panel-heading">
+        Carousel
+      </div>
+      <carousel interval="myInterval">
+        <slide ng-repeat="slide in names" active="slide.active">
+          <img ng-src="{{slide.fil1}}" class="img-full">
+          <div class="carousel-caption">
+            <h4>Slide {{$index}}</h4>
+            <p>{{slide.text}}</p>
+          </div>
+        </slide>
+      </carousel>
+      <div class="panel-footer">
+        <button type="button" class="btn btn-default m-r" ng-click="addSlide()">Add Slide</button>
+        Interval: <input type="number" class="form-control w-sm inline" ng-model="myInterval"> ms
+      </div>
+    </div>
+    <!-- / carousel -->
+  </div>
+</div>

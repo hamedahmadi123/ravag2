@@ -9,30 +9,6 @@ app.controller("FlotChartDemoCtrl",['$scope', '$filter', '$http',
 
 
 
-        var usergrid =
-            {
-                ViewName: "UserCountPerDay",
-                parameters:[
-                    {key: "%dayParam",value: "53" }
-
-                ]
-
-            }
-
-        $http.post(URL_GET, JSON.stringify(usergrid))
-            .success(function (result, status, headers, config) {
-                $scope.usergrid = result.data;
-                $scope.usergrid.forEach(function (item) {
-                    $scope.data[i] = item.dif;
-                    i++;
-                });
-            });
-        console.log($scope.data);
-
-
-
-
-
     $scope.onClick = function (points, evt) {
         console.log(points, evt);
     };

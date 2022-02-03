@@ -66,7 +66,6 @@ app.controller('giftPoint', ['$scope', '$filter', '$http', function ($scope, $fi
                 };
                 $http.post(URL_INSERT, JSON.stringify(ins_gif))
                     .success(function (result, status, headers, config) {
-                        alert("جایزه جدیدی با عنوان " + $scope.gif_name + " با موفقیت درج شد.");
                         document.location.reload();
                     }).error(function (result, status, header, config) {
                     alert("درج جایزه با خطا مواجه شد.");

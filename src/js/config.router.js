@@ -31,7 +31,36 @@ angular.module('app')
                         url: '/app',
                         templateUrl: layout
                     })
+                    //profailAdmin
+                    .state('app.page.profailAdmin', {
+                        url: '/profailAdmin',
+                        templateUrl: 'tpl/_profile.html',
+                        controller: 'profailAdmin',
+                        resolve: load(['xeditable', 'js/controllers/_profileCtrl.js', 'ui.select'])
+                    })
 
+                    //test
+                    .state('app.page.test', {
+                        url: '/test',
+                        templateUrl: 'tpl/test.html',
+                        controller: 'testCTRL',
+                        resolve: load(['xeditable', 'js/controllers/test.js', 'ui.select'])
+                    })
+
+                    //permission
+                    .state('app.page.permission', {
+                        url: '/permission',
+                        templateUrl: 'tpl/_permission.html',
+                        controller: 'permission',
+                        resolve: load(['xeditable', 'js/controllers/_permissionCtrl.js'])
+                    })
+                    //role
+                    .state('app.page.role', {
+                        url: '/role',
+                        templateUrl: 'tpl/_role.html',
+                        controller: 'role',
+                        resolve: load(['xeditable', 'js/controllers/_roleCtrl.js'])
+                    })
                     ////////////////////////////////// print
                     //printClassList
                     .state('app.page.printClassList', {
@@ -72,6 +101,13 @@ angular.module('app')
 
 
                     ////////////////////////////////// main
+                    //teacherClass
+                    .state('app.page.teacherClass', {
+                        url: '/teacherClass',
+                        templateUrl: 'tpl/main/_teacherClass.html',
+                        controller: 'teacherClass',
+                        resolve: load(['xeditable', 'js/controllers/main/_teacherClass.js', 'ui.select'])
+                    })
                     //ClassStudents
                     .state('app.page.ClassStudents', {
                         url: '/ClassStudents',
@@ -201,6 +237,69 @@ angular.module('app')
                     ////////////////////////////////// main
 
                     ////////////////////////////////// mokamel_info
+                    //blog
+                    .state('app.page.blog', {
+                        url: '/blog',
+                        templateUrl: 'tpl/mokamel_info/_blog.html',
+                        controller: 'blog',
+                        resolve: load(['xeditable', 'js/controllers/mokamel_info/_blog.js', 'ui.select'])
+                    })
+                    //wallet
+                    .state('app.page.wallet', {
+                        url: '/wallet',
+                        templateUrl: 'tpl/mokamel_info/_wallet.html',
+                        controller: 'wallet',
+                        resolve: load(['xeditable', 'js/controllers/mokamel_info/_wallet.js', 'ui.select'])
+                    })
+                    //wallet_insert
+                    .state('app.page.wallet_insert', {
+                        url: '/wallet_insert',
+                        templateUrl: 'tpl/mokamel_info/_wallet_insert.html',
+                        controller: 'wallet_insert',
+                        resolve: load(['xeditable', 'js/controllers/mokamel_info/_wallet_insert.js', 'ui.select'])
+                    })
+                    //wallet_select
+                    .state('app.page.wallet_select', {
+                        url: '/wallet_select',
+                        templateUrl: 'tpl/mokamel_info/_wallet_select.html',
+                        controller: 'wallet_select',
+                        resolve: load(['xeditable', 'js/controllers/mokamel_info/_wallet_select.js', 'ui.select'])
+                    })
+                    //wallet_edit
+                    .state('app.page.wallet_edit', {
+                        url: '/wallet_edit/{walid}',
+                        templateUrl: 'tpl/mokamel_info/_walletEdit.html',
+                        controller: 'wallet_edit',
+                        resolve: load(['xeditable', 'js/controllers/mokamel_info/_walletEdit.js', 'ui.select'])
+                    })
+                    //classWallet
+                    .state('app.page.classWallet', {
+                        url: '/classWallet',
+                        templateUrl: 'tpl/mokamel_info/_classWallet.html',
+                        controller: 'classWallet',
+                        resolve: load(['xeditable', 'js/controllers/mokamel_info/_classWallet.js', 'ui.select'])
+                    })
+                    //payBedehi
+                    .state('app.page.payBedehi', {
+                        url: '/payBedehi',
+                        templateUrl: 'tpl/mokamel_info/_payBedehi.html',
+                        controller: 'payBedehi',
+                        resolve: load(['xeditable', 'js/controllers/mokamel_info/_payBedehi.js', 'ui.select'])
+                    })
+                    //chequEdit
+                    .state('app.page.chequEdit', {
+                        url: '/chequEdit/{cheqid}',
+                        templateUrl: 'tpl/mokamel_info/_chequEdit.html',
+                        controller: 'chequEdit',
+                        resolve: load(['xeditable', 'js/controllers/mokamel_info/_chequEdit.js', 'ui.select'])
+                    })
+                    //allInWallet
+                    .state('app.page.allInWallet', {
+                        url: '/allInWallet',
+                        templateUrl: 'tpl/mokamel_info/_allInWallet.html',
+                        controller: 'allInWallet',
+                        resolve: load(['xeditable', 'js/controllers/mokamel_info/_allInWallet.js', 'ui.select'])
+                    })
                     //pre_students
                     .state('app.page.pre_students', {
                         url: '/pre_students',
@@ -280,6 +379,21 @@ angular.module('app')
 // ---------------------------------------------------------------------------------------------------------------------
 
                     ////////////////////////////////// payeh info
+                    //aboutBase ................ By Mohsen
+                    .state('app.page.aboutBase', {
+                        url: '/aboutBase/{majorbaseid}',
+                        templateUrl: 'tpl/payeh_info/_aboutBase.html',
+                        controller: 'aboutBase',
+                        resolve: load(['xeditable', 'js/controllers/payeh_info/_aboutBase.js', 'ui.select'])
+                    })
+                    // By Mohsen End
+                    //aboutMajor
+                    .state('app.page.aboutMajor', {
+                        url: '/aboutMajor/{majorbaseid}',
+                        templateUrl: 'tpl/payeh_info/_aboutMajor.html',
+                        controller: 'aboutMajor',
+                        resolve: load(['xeditable', 'js/controllers/payeh_info/_aboutMajor.js', 'ui.select'])
+                    })
                     //instructions
                     .state('app.page.instructions', {
                         url: '/instructions',
@@ -429,6 +543,13 @@ angular.module('app')
                         templateUrl: 'tpl/_Settings.html',
                         controller: 'Setting',
                         resolve: load(['xeditable', 'js/controllers/_SettingCtrl.js', 'ui.select'])
+                    })
+                    //wizard
+                    .state('app.page.wizard', {
+                        url: '/wizard',
+                        templateUrl: 'tpl/payeh_info/_wizard.html',
+                        controller: 'wizard',
+                        resolve: load(['xeditable', 'js/controllers/payeh_info/_wizard.js', 'ui.select'])
                     })
 
                     //SupportPage

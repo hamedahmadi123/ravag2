@@ -120,7 +120,6 @@
     };
 
     $scope.toggled = function(open) {
-      //console.log('Dropdown is now: ', open);
     };
 
     $scope.toggleDropdown = function($event) {

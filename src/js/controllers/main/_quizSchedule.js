@@ -54,6 +54,7 @@ app.controller('quizSchedule', ['$scope', '$filter', '$http', function ($scope, 
             });
 
     };
+
     $scope.insertExamTitle = function () {
         if ((localStorage.adminId) && localStorage.adminCount != 0 && (localStorage.adminCount && localStorage.adminCount != undefined && localStorage.adminCount != "undefined")) {
 
@@ -211,7 +212,7 @@ app.controller('quizSchedule', ['$scope', '$filter', '$http', function ($scope, 
                 }
             }
         }
-        console.log("0", $scope.arrselect);
+
 
     }
     $scope.selectAllTh = function ($num) {
@@ -247,7 +248,7 @@ app.controller('quizSchedule', ['$scope', '$filter', '$http', function ($scope, 
 
             }
         }
-        console.log("1", $scope.arrselect);
+
     }
 
     $scope.selectall = function ($num) {
@@ -261,7 +262,6 @@ app.controller('quizSchedule', ['$scope', '$filter', '$http', function ($scope, 
             } else
                 $scope.arrselect = [];
         }
-        console.log("2", $scope.arrselect);
     }
     $scope.returnDay = function ($dayNumber) {
         if($dayNumber == 0)

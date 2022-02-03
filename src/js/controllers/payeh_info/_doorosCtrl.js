@@ -72,6 +72,7 @@ app.controller('dooros', ['$scope', '$filter', '$http', function ($scope, $filte
 
             });
     };
+
     $scope.majorbaseSelect = function () {
         $scope.resetArr();
         $scope.podemany_false = true;
@@ -291,9 +292,9 @@ app.controller('dooros', ['$scope', '$filter', '$http', function ($scope, $filte
     }
     $scope.setPodemany = function ($num) {
         if ($num == true) {
-            $scope.poodemani = 0;
-        } else {
             $scope.poodemani = 1;
+        } else {
+            $scope.poodemani = 0;
         }
     }
     $scope.resetArr = function () {
@@ -330,7 +331,6 @@ app.controller('dooros', ['$scope', '$filter', '$http', function ($scope, $filte
                         $scope.arrayMB[c] = $scope.arr2Path[c];
                     }
                 }
-                console.log($scope.arrayMB);
 
                 var ins_drs = {
                     ViewName: "LessonInsert",
@@ -355,10 +355,8 @@ app.controller('dooros', ['$scope', '$filter', '$http', function ($scope, $filte
                     };
                     dataArray.push(ins_lmb);
                 }
-                alert(JSON.stringify(dataArray));
                 $http.post(URL_ARRAY_INSERT, JSON.stringify(dataArray))
                     .success(function (result, status, headers, config) {
-                        alert("درس جدیدی با عنوان " + $scope.drs_name + " با موفقیت درج شد.");
                         document.location.reload();
                     }).error(function (result, status, header, config) {
                     alert("درج درس با خطا مواجه شد.");
@@ -410,12 +408,10 @@ app.controller('dooros', ['$scope', '$filter', '$http', function ($scope, $filte
         }
     }
     $scope.setPodemanyE = function ($num) {
-        if ($num == '0') {
-            $scope.podemany_trueE = false;
-            $scope.poodemaniE = 0;
-        } else {
-            $scope.podemany_falseE = false;
+        if ($num == true) {
             $scope.poodemaniE = 1;
+        } else {
+            $scope.poodemaniE = 0;
         }
     }
     $scope.updateDrs = function ($id) {

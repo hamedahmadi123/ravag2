@@ -120,15 +120,15 @@
                                                             </tr>
                                                             </thead>
                                                             <tbody infinite-scroll='load2()'
-                                                                   infinite-scroll-distance='0'>
+                                                                   infinite-scroll-distance='1'>
                                                             <tr ng-repeat='mymodel in studentClass | filter : gsearch'>
                                                                 <td scope="row"
                                                                     class="v-middle  media-middle text-center"
                                                                     align="center">
                                                                     <label class="containerCheckBox">
                                                                         <br>
-                                                                        <input type="checkbox"
-                                                                               ng-change="selectSt(obj[mymodel.studentid] , mymodel.studentid , mymodel.fathermobile , mymodel.mothermobile)"
+                                                                        <input type="checkbox" ng-disabled="objActive[mymodel.studentid]"
+                                                                               ng-click="selectSt(obj[mymodel.studentid] , mymodel.studentid , mymodel.fathermobile , mymodel.mothermobile)"
                                                                                ng-model="obj[mymodel.studentid]">
                                                                         <span class="checkmark2"
                                                                               style="margin-left: 5px;margin-top: 5px"></span>
@@ -213,7 +213,7 @@
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <div class="panel-body">
                                             <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
-                                                   style="margin-top: 8px;">قالب پایمک آماده:</label>
+                                                   style="margin-top: 8px;">قالب پیامک آماده:</label>
                                             <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                                                 <select tooltip="شهر"
                                                         ng-model="sms_temp" ng-change="setTemp(sms_temp.text)"
@@ -282,5 +282,7 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div id="snackbar">امکان ارسال پیامک به این دانش آموز وحود ندارد . شماره تلفن ولی برای این دانش آموز ثبت نگردیده است !
     </div>
 </div>

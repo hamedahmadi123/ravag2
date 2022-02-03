@@ -9,6 +9,7 @@ app.controller('majorbase', ['$scope', '$filter', '$http', function ($scope, $fi
     $scope.path = [];
     $scope.pathName = [];
     $scope.parrent1 = "";
+    $scope.mb_shahriye = 0;
     $scope.pathCode1 = "";
     $scope.pathName1 = "";
     $scope.major = "";
@@ -19,7 +20,6 @@ app.controller('majorbase', ['$scope', '$filter', '$http', function ($scope, $fi
     var objects = 0;
     var isem = false;
     $scope.load2 = function () {
-
         if (isem)
             return;
 
@@ -61,6 +61,8 @@ app.controller('majorbase', ['$scope', '$filter', '$http', function ($scope, $fi
             });
 
     };
+
+
 
 
     selectParrent();
@@ -192,8 +194,9 @@ app.controller('majorbase', ['$scope', '$filter', '$http', function ($scope, $fi
                 $scope.child4 = result.data;
             });
     }
-    //edit *************************
+    //edit *************************ویرایش پایه و رشته
     $scope.detial = function ($id, $ismajor) {
+
         var viename = "";
         if ($ismajor == 1) {
             viename = "allmajor";
@@ -221,6 +224,8 @@ app.controller('majorbase', ['$scope', '$filter', '$http', function ($scope, $fi
                 $scope.mb_name = $scope.thisMajorbase.title;
                 $scope.mb_discription = $scope.thisMajorbase.description;
                 $scope.mb_code = parseInt($scope.thisMajorbase.code);
+                $scope.mb_shahriye = parseInt($scope.thisMajorbase.shahriye);
+
                 $scope.parrent1 = $scope.thisMajorbase.parent;
                 $scope.pathCode1 = $scope.thisMajorbase.pathcode;
                 $scope.pathName1 = $scope.thisMajorbase.pathname;
@@ -260,6 +265,8 @@ app.controller('majorbase', ['$scope', '$filter', '$http', function ($scope, $fi
                 {key: "%pathname", value: $scope.pathName1 + ''},
                 {key: "%parent", value: $scope.parrent1 + ''},
                 {key: "%ismajor", value: $scope.major + ''},
+                {key: "%shahriye", value: $scope.mb_shahriye + ''},
+
             ]
         };
         var j = confirm("آیا برای ویرایش " + mbName + " با عنوان " + $scope.mb_name + "  اطمینان دارید ؟");

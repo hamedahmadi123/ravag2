@@ -21,7 +21,7 @@ app.controller('instructions', ['$scope', '$filter', '$http', function ($scope, 
         $http.post(URL_GET, JSON.stringify(msg))
             .success(function (result, status, headers, config) {
                 $scope.ins = result.data[0];
-                console.log($scope.ins);
+
             });
     }
 

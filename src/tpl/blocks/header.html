@@ -8,7 +8,7 @@
             <i class="glyphicon glyphicon-align-justify"></i>
         </button>
         <!-- brand -->
-        <a href="http://www.panaj.ir" class="navbar-brand text-lg">
+        <a ui-sref="app.dashboard-v1" class="navbar-brand text-lg">
             <img width="20px" height="40px" src="img/davat1.png" alt=".">
             <span class="hidden-folded m-l-xs">{{app.name ='پنل مدیریت دوات'}}</span>
         </a>
@@ -190,7 +190,37 @@
             <li class="hidden-xs">
                 <a ui-fullscreen></a>
             </li>
-
+            <li class="dropdown" dropdown>
+                <a href class="dropdown-toggle" dropdown-toggle>
+                    <i class="icon-bell fa-fw"></i>
+                    <span class="badge badge-sm up bg-danger pull-right-xs"><span style="font-family: Arial!important;">{{nearCheque.length}}</span></span>
+                </a>
+                <!-- dropdown -->
+                <div class="dropdown-menu w-xl animated fadeInUp" ng-if="permi['wallet']" ng-show="nearCheque.length != '0'">
+                    <div class="panel bg-white" >
+                        <div class="panel-heading b-light bg-light">
+                            <strong>اعلان ها</strong>
+                        </div>
+                        <div class="list-group">
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                        <tr ng-repeat="item in nearCheque">
+                                            <td class="v-middle  media-middle text-center" scope="row">
+                                              <span>شما در تاریخ :</span>&nbsp;<span dir="ltr">{{retdata(item.cheque_date)}}</span>&nbsp;چک دارید.
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <button ui-sref="app.page.wallet" style="float: left" class="btn-default">مشاهده همه</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- / dropdown -->
+            </li>
             <li class="dropdown" dropdown>
                 <a href class="dropdown-toggle clear" dropdown-toggle>
               <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
@@ -207,7 +237,7 @@
                         </a>
                     </li>
                     <li>
-                        <a ui-sref="app.page.profile">صفحه کاربری</a>
+                        <a ui-sref="app.page.profailAdmin">صفحه کاربری</a>
                     </li>
                     <li>
                         <a ui-sref="app.page.SupportPage">
@@ -229,6 +259,11 @@
 <!-- / navbar collapse -->
 <script>
     app.controller('headerCtrl', ['$scope', '$filter', '$http', function ($scope, $filter, $http, $timeout) {
+        // Daynamic***
+        $scope.permi = new Object();
+        dict = JSON.parse(localStorage.localmenu);
+        $scope.permi = dict;
+
         $scope.act_trm = "";
         $scope.act_trm = localStorage.act_term_name;
         $scope.schoolName = localStorage.schoolname;
@@ -237,10 +272,10 @@
             mutualTransaction: {
                 kendoDataRequest: {
                     filter: {
-                        // field: "schoolid",
-                        // logic: "and",
-                        // operator: "eq",
-                        // value: localStorage.schoolId + ""
+                        field: "schoolid",
+                        logic: "and",
+                        operator: "eq",
+                        value: localStorage.schoolId + ""
                     },
                 }
             }
@@ -248,6 +283,25 @@
         $http.post(URL_GET, JSON.stringify(trm))
             .success(function (result, status, headers, config) {
                 $scope.terms = result.data;
+            });
+
+        var chc = {
+            ViewName: "SelectNearCheque",
+            parameters: [{key: "%schoolid", value: localStorage.schoolId}],
+            mutualTransaction: {
+                kendoDataRequest: {
+                    filter: {
+                        field: "pass",
+                        logic: "and",
+                        operator: "eq",
+                        value: "0"
+                    },
+                }
+            }
+        }
+        $http.post(URL_GET, JSON.stringify(chc))
+            .success(function (result, status, headers, config) {
+                $scope.nearCheque = result.data;
             });
         $scope.logoutAdmin = function () {
             var j = confirm("آیا میخواهید از حساب خود خارج شوید ؟");
@@ -258,13 +312,15 @@
                 document.location.replace("index.html");
             }
         }
-        $scope.setAct_term = function ($id,$name) {
+        $scope.setAct_term = function ($id, $name) {
             localStorage.act_term_id = $id;
-            localStorage.act_term_name =  $name;
+            localStorage.act_term_name = $name;
             document.location.reload();
         }
 
-
+        $scope.retdata = function ($data) {
+            return moment($data, 'YYYY-M-D').format('jYYYY-jM-jD');
+        }
     }])
     ;
 </script>

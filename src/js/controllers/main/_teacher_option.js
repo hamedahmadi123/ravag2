@@ -71,7 +71,7 @@ app.controller('teacher_option', ['$scope', '$filter', '$http', function ($scope
         $scope.showInfoText = false;
         $scope.teacher_id = $id;
         $scope.teacher_name = $name;
-        console.log($scope.teacher_id);
+
         var clt = {
             ViewName: "SelectLessonClassTeacher",
             parameters: [
@@ -88,7 +88,7 @@ app.controller('teacher_option', ['$scope', '$filter', '$http', function ($scope
         $http.post(URL_GET, JSON.stringify(clt))
             .success(function (result, status, headers, config) {
                 $scope.classLesson = result.data;
-                console.log($scope.classLesson);
+
             });
     }
     $scope.selectLesson = function ($id, $name ) {
@@ -112,7 +112,6 @@ app.controller('teacher_option', ['$scope', '$filter', '$http', function ($scope
                 }
             }
         }
-        console.log(JSON.stringify(session_weekly));
         $http.post(URL_GET, JSON.stringify(session_weekly))
             .success(function (result, status, headers, config) {
                 $scope.session_weekly = result.data;
@@ -215,7 +214,7 @@ app.controller('teacher_option', ['$scope', '$filter', '$http', function ($scope
     }
     $scope.selectScore = function () {
         $scope.show_score = !$scope.show_score;
-        localStorage.act_term_id = '1';
+
         var session_score = {
             ViewName: "SessionScoreForClass",
             parameters: [
@@ -234,7 +233,6 @@ app.controller('teacher_option', ['$scope', '$filter', '$http', function ($scope
         $http.post(URL_GET, JSON.stringify(session_score))
             .success(function (result, status, headers, config) {
                 $scope.session_score = result.data;
-                console.log($scope.session_score);
             });
 
     }

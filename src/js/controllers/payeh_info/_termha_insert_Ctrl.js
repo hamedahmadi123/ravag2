@@ -23,7 +23,6 @@ app.controller('termha_insert', ['$scope', '$filter', '$http', function ($scope,
                     };
                     $http.post(URL_INSERT, JSON.stringify(ins_trm))
                         .success(function (result, status, headers, config) {
-                            alert("ترم جدیدی با عنوان " + $scope.trm_name + " با موفقیت درج شد.");
                             document.location.replace("#/app/page/termha");
                         }).error(function (result, status, header, config) {
                         alert("درج ترم با خطا مواجه شد.");

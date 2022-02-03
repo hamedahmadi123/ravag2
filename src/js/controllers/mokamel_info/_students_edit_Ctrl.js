@@ -31,7 +31,6 @@ app.controller('Student_edit', ['$scope', '$filter', '$http', function ($scope, 
             .success(function (result, status, headers, config) {
                 $scope.madraks = result.data;
             });
-
         var mbs = {
             ViewName: "majorbaseschoolselect",
             mutualTransaction: {
@@ -40,7 +39,10 @@ app.controller('Student_edit', ['$scope', '$filter', '$http', function ($scope, 
                         field: "schoolid",
                         logic: "and",
                         operator: "eq",
-                        value: localStorage.schoolId
+                        value: localStorage.schoolId,
+                        filters: [
+                            {field: "ismajor", logic: "and", operator: "eq", value: '0'},
+                        ]
                     },
                 }
             }
@@ -137,14 +139,18 @@ app.controller('Student_edit', ['$scope', '$filter', '$http', function ($scope, 
 
     $scope.setMajorBaseE = function ($id) {
         var mbs = {
-            ViewName: "allmajor",
+            ViewName: "majorbaseschoolselect",
             mutualTransaction: {
                 kendoDataRequest: {
                     filter: {
-                        field: "parent",
+                        field: "schoolid",
                         logic: "and",
                         operator: "eq",
-                        value: $id + ''
+                        value: localStorage.schoolId,
+                        filters: [
+                            {field: "ismajor", logic: "and", operator: "eq", value: '1'},
+                            {field: "parent", logic: "and", operator: "eq", value: $id}
+                        ]
                     },
                 }
             }
@@ -159,7 +165,6 @@ app.controller('Student_edit', ['$scope', '$filter', '$http', function ($scope, 
     }
     $scope.editeCodemeli = function () {
         $scope.editeCode = true;
-        console.log($scope.editeCode);
     }
     $scope.updateStudentFunctin = function ($id) {
         if ((localStorage.adminId) && localStorage.adminCount != 0 && (localStorage.adminCount && localStorage.adminCount != undefined && localStorage.adminCount != "undefined")) {
@@ -193,7 +198,7 @@ app.controller('Student_edit', ['$scope', '$filter', '$http', function ($scope, 
                     };
                     $http.post(URL_INSERT, JSON.stringify(upd_prn))
                         .success(function (result, status, headers, config) {
-                            console.log("succsess edit 1");
+
                             $scope.parrentEdit = true;
                         }).error(function (result, status, header, config) {
                         alert("ویرایش ولی دانش آموز با خطا مواجه شد.");
@@ -218,7 +223,7 @@ app.controller('Student_edit', ['$scope', '$filter', '$http', function ($scope, 
                     };
                     $http.post(URL_INSERT, JSON.stringify(upd_code))
                         .success(function (result, status, headers, config) {
-                            console.log("succsess edit 2");
+
                             $scope.codeEdit = true;
                         }).error(function (result, status, header, config) {
                         alert("ویرایش کد ملی دانش آمووز با خطا مواجه شد.");
@@ -262,10 +267,9 @@ app.controller('Student_edit', ['$scope', '$filter', '$http', function ($scope, 
                             {key: "%schoolid", value: localStorage.schoolId + ''},
                         ]
                     };
-                    alert(JSON.stringify(upd_stu))
                     $http.post(URL_INSERT, JSON.stringify(upd_stu))
                         .success(function (result, status, headers, config) {
-                            console.log("succsess edit 3");
+
                             window.history.back();
                         }).error(function (result, status, header, config) {
                         alert("ویرایش دانش آموز با خطا مواجه شد.");

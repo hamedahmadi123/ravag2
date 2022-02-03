@@ -7,7 +7,8 @@
             <div class="col-xs-12 col-sm-12 col-md-9 col-lg-5">
                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                     <div class="panel-body">
-                        <button ui-sref="app.page.majorbase_insert({userId: 0})" style="width: 100%" type="button" class="btn btn-addon , btn btn-default"><i class="icon-plus"></i> &nbsp;افزودن پایه
+                        <button ui-sref="app.page.majorbase_insert({userId: 0})" style="width: 100%" type="button"
+                                class="btn btn-addon , btn btn-default"><i class="icon-plus"></i> &nbsp;افزودن پایه
                             جدید
                         </button>
                     </div>
@@ -15,7 +16,8 @@
                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                     <div class="panel-body">
                         <button style="width: 100%" type="button" class="btn btn-addon , btn btn-default"
-                                ui-sref="app.page.majorbase_insert({userId: 1})"><i class="icon-plus"></i> &nbsp;افزودن رشته
+                                ui-sref="app.page.majorbase_insert({userId: 1})"><i class="icon-plus"></i> &nbsp;افزودن
+                            رشته
                             جدید
                         </button>
                     </div>
@@ -30,29 +32,40 @@
             <div class="row">
                 <div class="container panel v-middle media-middle text-center align-items-center">
                     <br>
+                    <div id="w1-info-1" class="alert-warning alert fade in" style="text-align: right">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
+                        </button>
+                        <h5>در صورت عدم نمایش همه مقاطع زوم صفحه خود را بروی %100 قرار دهید.</h5>
+                    </div>
+                    <div class="line line-dashed  line-lg pull-in"></div>
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
                             <tr>
                                 <td
-                                    style="width:2%; text-align: center ">#
+                                        style="text-align: center ">#
                                 </td>
                                 <td class="v-middle  media-middle text-center"
-                                    style="width:28%; text-align: center">عنوان
-                                    مقطع
+                                    style="text-align: center">
+                                عنوان
+                                مقطع
+                                </td>
+
+                                <td class="v-middle  media-middle text-center"
+                                    style="text-align: center">دسته بندی
                                 </td>
                                 <td class="v-middle  media-middle text-center"
-                                    style="width:28%; text-align: center">دسته بندی
+                                    style="text-align: center"> درباره رشته / پایه
                                 </td>
                                 <td class="v-middle  media-middle text-center"
-                                    style="width:10%; text-align: center ">ویرایش
+                                    style="text-align: center ">ویرایش
                                 </td>
                                 <td class="v-middle  media-middle text-center"
-                                    style="width:10%; text-align: center ">حذف
+                                    style="text-align: center ">حذف
                                 </td>
                             </tr>
                             </thead>
-                            <tbody infinite-scroll='load2()' infinite-scroll-distance='0'>
+                            <tbody infinite-scroll='load2()' infinite-scroll-distance='1'>
                             <tr ng-repeat='mymodel in name | filter : gsearch'>
                                 <th scope="row">
                                     {{mymodel.majorbaseid}}
@@ -62,6 +75,25 @@
                                 </td>
                                 <td class="v-middle  media-middle text-center">
                                     {{ mymodel.pathname || 'خالی'}}
+                                </td>
+                                <td class="v-middle  media-middle text-center">
+                                    <a ui-sref="app.page.aboutMajor({majorbaseid: mymodel.majorbaseid})" ng-show="mymodel.ismajor == 1">
+                                        <button  class="btn btn-sm btn-blue btn-outline-primary">
+                                            <i class="icon-info"></i>&nbsp;بخش درباره رشته
+                                        </button>
+                                    </a>
+
+<!--                                    By Mohsen Start-->
+
+
+                                    <a ui-sref="app.page.aboutBase({majorbaseid: mymodel.majorbaseid})" ng-show="mymodel.ismajor == 0">
+                                        <button  class="btn btn-sm btn-default btn-purple">
+                                            <i class="icon-info"></i>&nbsp;بخش درباره پایه
+                                        </button>
+                                    </a>
+
+<!--                                    By Mohsen End-->
+<!--                                    <h6  ng-show="mymodel.ismajor == 1" tooltip="این بخش فقط برای رشته ها فعال است">غیر فعال</h6>-->
                                 </td>
                                 <td class="v-middle  media-middle text-center">
                                     <button ng-show="mymodel.ismajor == 0" class="btn btn-sm btn-success"
@@ -114,9 +146,10 @@
                                             </div>
                                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                 <div class="panel-body">
-                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label" style="margin-top: 8px;"><span
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 8px;"><span
                                                             class="starstyle">*</span>عنوان:</label>
-                                                   <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                                                         <input ng-model="mb_name" class="form-control rounded"
                                                                tooltip="عنوان مقطع جدید"
                                                                placeholder="عنوان مقطع ...."
@@ -126,9 +159,10 @@
                                             </div>
                                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                 <div class="panel-body">
-                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label" style="margin-top: 8px;">کد
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 8px;">کد
                                                         :</label>
-                                                   <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                                                         <input ng-model="mb_code" class="form-control rounded"
                                                                tooltip="کد پایه یا رشته مورد نظر"
                                                                placeholder="کد پایه / رشته...."
@@ -136,13 +170,32 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="panel-body">
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 8px;">شهریه
+                                                        :</label>
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                        <input ng-model="mb_shahriye" class="form-control rounded"
+                                                               tooltip="شهریه "
+                                                               placeholder="شهریه پایه / رشته...."
+                                                               type="number">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
                                             <div class="line line-dashed b-b line-lg pull-in"></div>
                                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
                                                  ng-show="parrent.length != 0">
                                                 <div class="panel-body">
-                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label" style="margin-top: 10px">مقطع
+                                                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"
+                                                           style="margin-top: 10px">مقطع
                                                         :</label>
-                                                   <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                                                         <div class="input-group">
                                                             <input ng-disabled="true" value="{{thisMajorbase.pathname}}"
                                                                    class="form-control text-sm btn-rounded no-border">

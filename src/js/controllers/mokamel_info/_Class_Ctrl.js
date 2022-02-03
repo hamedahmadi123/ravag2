@@ -73,6 +73,7 @@ app.controller('Class_Ctrl', ['$scope', '$filter', '$http', function ($scope, $f
             });
 
     };
+
     $scope.selectStudentsInClass = function ($id) {
         var msg = {
             ViewName: "SelectStudentInClass",
@@ -91,7 +92,7 @@ app.controller('Class_Ctrl', ['$scope', '$filter', '$http', function ($scope, $f
         $http.post(URL_GET, JSON.stringify(msg))
             .success(function (result, status, headers, config) {
                 $scope.students_in_class = result.data;
-                console.log($scope.students_in_class);
+
             });
     }
     $scope.detailClass = function ($id) {
@@ -160,7 +161,7 @@ app.controller('Class_Ctrl', ['$scope', '$filter', '$http', function ($scope, $f
 
     $scope.deleteClass = function ($id, $name) {
         var del_Item = {
-            ViewName: "ClasstDelete",
+            ViewName: "ClassDelete",
             parameters: [
                 {key: "%classid", value: $id + ''},
             ]

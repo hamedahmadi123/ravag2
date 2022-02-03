@@ -52,7 +52,6 @@ app.controller('report_card_class', ['$scope', '$filter', '$http', function ($sc
                     for (var i = 0; i < $scope.studentClassRiportCard.length ; i++) {
                         $scope.studentClassRiportCard[i].index = i+1;
                     }
-                    console.log($scope.studentClassRiportCard);
                 });
 
         }

@@ -84,6 +84,7 @@
                                             <tr>
                                                 <th scope="col">انتخاب</th>
                                                 <th scope="col" class="v-middle  media-middle text-center ">#</th>
+                                                <th scope="col" class="v-middle  media-middle text-center ">تصویر</th>
                                                 <th scope="col" class="v-middle  media-middle text-center "> نام و نام خانوادگی</th>
                                                 <th scope="col" class="v-middle  media-middle text-center ">کد دانش آموز</th>
                                                 <th scope="col" class="v-middle  media-middle text-center ">ویرایش</th>
@@ -91,7 +92,7 @@
                                                 <th scope="col" class="v-middle  media-middle text-center ">جزییات</th>
                                             </tr>
                                             </thead>
-                                            <tbody infinite-scroll='load2()' infinite-scroll-distance='0'>
+                                            <tbody infinite-scroll='load2()' infinite-scroll-distance='1'>
                                             <tr ng-repeat='mymodel in name | filter : gsearch'>
                                                 <td class="v-middle  media-middle text-center" scope="row">
                                                     <label class="containerCheckBox">
@@ -104,6 +105,14 @@
                                                 </td>
                                                 <td class="v-middle  media-middle text-center">
                                                     {{mymodel.studentid}}
+                                                </td>
+                                                <td class="v-middle  media-middle text-center">
+                                                    <img style="width: 50px;height: 60px"
+                                                         class="thumb-sm avatar" ng-if="mymodel.image  != ' '"
+                                                         src="{{mymodel.image || 'img/userNopic.jpg'}}">
+                                                    <img style="width: 50px;height: 50px"
+                                                         class="thumb-sm avatar" ng-if="mymodel.image  == ' '"
+                                                         src="img/userNopic.jpg">
                                                 </td>
                                                 <td class="v-middle  media-middle text-center">
                                                     {{ mymodel.firstname + " " + mymodel.lastname|| 'خالی' }}

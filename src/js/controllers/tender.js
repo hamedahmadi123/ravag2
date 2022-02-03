@@ -153,7 +153,7 @@ app.controller('tenderCtrl', ['$scope', '$filter', '$http', 'editableOptions', '
 
                 }
 
-                console.log(datadel);
+
 
                 $http.post(URL_INSERT, JSON.stringify(datadel))
                     .success(function (result, status, headers, config) {

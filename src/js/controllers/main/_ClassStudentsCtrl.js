@@ -69,10 +69,8 @@ app.controller('ClassStudents', ['$scope', '$filter', '$http', function ($scope,
                 }
             }
         }
-        console.log(JSON.stringify(leson));
         $http.post(URL_GET, JSON.stringify(leson))
             .success(function (result, status, headers, config) {
-                console.log(result.data);
                 if (result.data.length != '0') {
                     $scope.lessons = result.data;
                 } else {
@@ -95,7 +93,6 @@ app.controller('ClassStudents', ['$scope', '$filter', '$http', function ($scope,
 
 
     $scope.selectgrp = function ($classId, $name, $major) {
-
         if ($scope.modelClassId && $scope.modelClassId != "" && $scope.modelClassId != undefined && $scope.modelClassId != "undefined") {
             document.getElementById($scope.modelClassId).style.border = "none";
             document.getElementById($classId).style.border = "2px #27c24c solid";
@@ -175,7 +172,7 @@ app.controller('ClassStudents', ['$scope', '$filter', '$http', function ($scope,
         $http.post(URL_GET, JSON.stringify(stuSelect))
             .success(function (result, status, headers, config) {
                 $scope.this_student = result.data[0];
-                console.log($scope.this_student);
+
                 $scope.st_classid = $scope.this_student.classid;
                 var RankAvgStudentInBase = {
                     ViewName: "RankAvgLessonPerBase",

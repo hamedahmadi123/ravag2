@@ -31,7 +31,10 @@ app.controller('Enzebat_student_update', ['$scope', '$filter', '$http', function
                         field: "disciplineid",
                         logic: "and",
                         operator: "eq",
-                        value: $scope.dis_id + ""
+                        value: $scope.dis_id + "",
+                        filters: [
+                            {field: "schoolid", logic: "and", operator: "eq", value:localStorage.schoolId+""}
+                        ]
                     },
                 }
             }
@@ -41,7 +44,7 @@ app.controller('Enzebat_student_update', ['$scope', '$filter', '$http', function
                 $scope.this_dis = result.data[0];
                 $scope.the_dis_Id =  $scope.this_dis.disciplinetypeid;
                 $scope.dis_date =  moment($scope.this_dis.createdAt, 'YYYY-M-D').format('jYYYY-jM-jD') ;
-                console.log($scope.this_dis)
+
             });
 
         var msg = {
@@ -53,7 +56,10 @@ app.controller('Enzebat_student_update', ['$scope', '$filter', '$http', function
                         field: "roleid",
                         logic: "and",
                         operator: "eq",
-                        value: "1"
+                        value: "1",
+                        filters: [
+                            {field: "schoolid", logic: "and", operator: "eq", value:localStorage.schoolId+""}
+                        ]
                     },
                 }
             },
@@ -104,7 +110,7 @@ app.controller('Enzebat_student_update', ['$scope', '$filter', '$http', function
 
     $scope.setDisclineType = function () {
         $scope.obj_disType = {};
-        console.log($scope.this_dis.disciplinetypeid);
+
         if ($scope.this_dis.disciplinetypeid == -1) {
             for (var i = 0; i < $scope.enz_types.length; i++) {
                 if ($scope.enz_types[i].owner == 2)
@@ -127,7 +133,7 @@ app.controller('Enzebat_student_update', ['$scope', '$filter', '$http', function
                         if ($scope.showAlltype == true) {
                             $scope.obj_disType[$scope.enz_types[i].disciplinetypeid] = true;
                         } else {
-                            if ($scope.enz_types[i].owner == 2) {
+                            if ($scope.enz_types[i].owner ==  localStorage.userType) {
                                 $scope.obj_disType[$scope.enz_types[i].disciplinetypeid] = true;
                             }
                         }
@@ -146,7 +152,7 @@ app.controller('Enzebat_student_update', ['$scope', '$filter', '$http', function
                     if ($scope.showAlltype == true) {
                         $scope.obj_disType[$scope.enz_types[i].disciplinetypeid] = true;
                     } else {
-                        if ($scope.enz_types[i].owner == 2) {
+                        if ($scope.enz_types[i].owner ==  localStorage.userType) {
                             $scope.obj_disType[$scope.enz_types[i].disciplinetypeid] = true;
                         }
                     }

@@ -215,8 +215,10 @@
                                                     <input placeholder="نمره دانش آموز...."
                                                            class="form-control text-sm" ng-model="ss_nomre"
                                                            ng-show="!(isPodemany) && !(isTosify)"
-                                                           type="number"
-                                                           max="20">
+                                                           oninput="javascript:
+                                                                                                                     if (this.value > 20) this.value = this.value.slice(0, 0);
+                                                                                                                   if (this.value.length > 2) this.value = this.value.slice(0, this.maxLength);"
+                                                           type="text">
                                                     <!--نمره پودمانی-->
                                                     <div class="row" ng-show="(isPodemany) && !(isTosify)">
                                                         <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
@@ -224,19 +226,18 @@
                                                                    class="form-control text-sm"
                                                                    ng-model="ss_podeman_1"
                                                                    oninput="javascript:
-                                                                if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);
-                                                                if (this.value > this.max) this.value = this.value.slice(0, 0);"
-                                                                   type="number"
-                                                                   maxlength="1" max="3">
+                                                           if (this.value > 20) this.value = this.value.slice(0, 0);
+                                                           if (this.value.length > 2) this.value = this.value.slice(0, this.maxLength);"
+                                                                   type="text">
                                                         </div>
                                                         <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
                                                             <input placeholder="مستمر" maxlength="1"
                                                                    class="form-control text-sm"
                                                                    ng-model="ss_podeman_2"
                                                                    oninput="javascript:
-                                                                if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);if (this.value > this.max) this.value = this.value.slice(0, 0);"
-                                                                   type="number"
-                                                                   maxlength="1" max="5">
+                                                           if (this.value > 20) this.value = this.value.slice(0, 0);
+                                                           if (this.value.length > 2) this.value = this.value.slice(0, this.maxLength);"
+                                                                   type="text">
                                                         </div>
                                                     </div>
                                                     <!--نمره توصیفی-->

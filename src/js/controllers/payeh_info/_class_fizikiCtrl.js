@@ -50,6 +50,7 @@ app.controller('class_fizikiCtrl', ['$scope', '$filter', '$http', function ($sco
             });
 
     };
+
     $scope.insertClass_fizikiss = function () {
         if ((localStorage.adminId) && localStorage.adminCount != 0 && (localStorage.adminCount && localStorage.adminCount != undefined && localStorage.adminCount != "undefined")) {
 
@@ -70,7 +71,6 @@ app.controller('class_fizikiCtrl', ['$scope', '$filter', '$http', function ($sco
 
                 $http.post(URL_INSERT, JSON.stringify(ins_clsF))
                     .success(function (result, status, headers, config) {
-                        alert("کلاس فیزیکی جدیدی با عنوان " + $scope.clsF_name + " با موفقیت درج شد.");
                         document.location.reload();
                     }).error(function (result, status, header, config) {
                     alert("درج کلاس فیزیکی با خطا مواجه شد.");

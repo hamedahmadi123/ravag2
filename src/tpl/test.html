@@ -1,0 +1,50 @@
+<div cass="container" ng-controller="blog">
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="m-n font-thin h3" style="padding: 20px;">
+                <img src="img/icon/list.png" style="width: 35px;height: 35px;">test
+            </div>
+            <div class="panel-body">
+
+
+
+                 <div id="SearchPart" class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="panel-body">
+                                                        <label><b>دسته بندی :</b></label>&nbsp;
+                                                        <div>
+                                                            <select ng-required="true"
+                                                                    tooltip="دسته بندی خبر"
+                                                                    ng-model="blog_category"
+                                                                    ng-options="cat.category_id  as cat.title for cat in category"
+                                                                    class="form-control">
+                                                                <option ng-disabled="true"
+                                                                        ng-selected="false" value="">
+                                                                    دسته بندی
+                                                                    را انتخاب
+                                                                    نمایید.
+                                                                </option>
+
+                                                            </select>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" >
+                <button ng-click="myfunc()" type="button"  >Click</button>
+                <p>{{CountAllBlog.countAllBlog}} lkjljljljljlkjklj</p>
+            </div>
+
+
+            <input type="textAngular" class="catagory-widgets" dir="ltr" ng-repeat="cat in category">
+                            <h5 class="hover" ng-click="filterByCategory(cat.category_id , cat.title)"><a><span><i
+                                    class="fa fa-angle-double-right"></i> {{cat.title}}</span>
+                                <span>{{cat.count}}</span></a>
+                            </h5>
+                        </input>
+
+
+            </div>
+        </div>
+    </div>
+</div>

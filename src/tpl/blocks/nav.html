@@ -4,69 +4,92 @@
         opacity: 0.4;
     }
 </style>
-<ul class="nav">
+<ul class="nav" ng-controller="nav">
     <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
         <span title="">همه صفحات</span>
     </li>
-
-    <li ui-sref-active="active">
+    <li ui-sref-active="active" ng-if="permi['dashbord']">
         <a ui-sref="app.dashboard-v1">
             <img src="img/icon/dashbord.png" class="icnSize">
             <span class="font-bold">داشبورد</span>
         </a>
     </li>
-<!--    <li ui-sref-active="active">-->
-<!--        <a href="http://localhost/davat/#/app/Main">-->
-<!--            <img src="img/icon/karname.png" class="icnSize">-->
-<!--            <span class="font-bold">پنل دانش آموز</span>-->
+    <li ui-sref-active="active" ng-if="permi['pre_student']">
+        <a ui-sref="app.page.pre_students">
+            <img src="img/icon/userDetail.png" class="icnSize">
+            <span class="font-bold">پیش ثبت نام</span>
+        </a>
+    </li>
+<!--    <li ui-sref-active="active" >-->
+<!--        <a ui-sref="app.page.test">-->
+<!--            <img src="img/icon/userDetail.png" class="icnSize">-->
+<!--            <span class="font-bold">test</span>-->
 <!--        </a>-->
 <!--    </li>-->
+    <li ui-sref-active="active" ng-if="permi['blog']">
+        <a ui-sref="app.page.blog">
+            <img src="img/icon/sms.png" class="icnSize">
+            <span class="font-bold">اخبار مدرسه</span>
+        </a>
+    </li>
     <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
         <span title="">گزارش ها </span>
     </li>
-    <li ui-sref-active="active">
-            <a ui-sref="app.page.teacher_option" disabled="">
-                <img src="img/icon/techer.png" class="icnSize">
-                <span class="font-bold">معلمین</span>
-            </a>
+    <li ui-sref-active="active" ng-if="permi['teacherClass']">
+        <a ui-sref="app.page.teacherClass" disabled="">
+            <img src="img/icon/books.png" class="icnSize">
+            <span class="font-bold">وضعیت دروس</span>
+        </a>
     </li>
-    <li ui-sref-active="active" ng-disabled="true">
+    <li ui-sref-active="active" ng-if="permi['techer_option']">
+        <a ui-sref="app.page.teacher_option" disabled="">
+            <img src="img/icon/techer.png" class="icnSize">
+            <span class="font-bold">معلمین</span>
+        </a>
+    </li>
+    <li ui-sref-active="active" ng-if="permi['student_option']">
         <a ui-sref="app.page.student_option">
             <img src="img/icon/student2.png" class="icnSize">
             <span class="font-bold">دانش آموزان</span>
         </a>
     </li>
-    <li ui-sref-active="active">
+    <li ui-sref-active="active" ng-if="permi['class_student']">
         <a ui-sref="app.page.ClassStudents">
             <img src="img/icon/class.png" class="icnSize">
             <span class="font-bold">کلاس ها</span>
         </a>
     </li>
+    <li ui-sref-active="active" ng-if="permi['wallet']">
+        <a ui-sref="app.page.wallet">
+            <img src="img/icon/accounting.png" class="icnSize">
+            <span>حسابداری</span>
+        </a>
+    </li>
     <li ui-sref-active="active">
         <div id="div5">
-        <a ui-sref="app.page.exportSnd">
-            <img src="img/icon/rele.png" class="icnSize">
-            <span class="font-bold">دریافت اطلاعات</span>
-        </a>
+            <a ui-sref="app.page.exportSnd">
+                <img src="img/icon/rele.png" class="icnSize">
+                <span class="font-bold">دریافت اطلاعات</span>
+            </a>
         </div>
     </li>
 
     <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
         <span title="">روزانه</span>
     </li>
-    <li ui-sref-active="active">
+    <li ui-sref-active="active" ng-if="permi['enz_student']">
         <a ui-sref="app.page.Enzebat_student">
             <img src="img/icon/wrtie.png" class="icnSize">
             <span style="font-size: 13px" class="font-bold">انضباط دانش آموز</span>
         </a>
     </li>
-    <li ui-sref-active="active">
+    <li ui-sref-active="active" ng-if="permi['enz_techer']">
         <a ui-sref="app.page.Enzebat_teacher">
             <img src="img/icon/diagram.png" class="icnSize">
             <span class="font-bold">عملکرد معلم</span>
         </a>
     </li>
-    <li ui-sref-active="active">
+    <li ui-sref-active="active" ng-if="permi['attendance']">
         <a ui-sref="app.page.attendanse">
             <img src="img/icon/report2.png" class="icnSize">
             <span style="font-size: 13px" class="font-bold">غیبت ها</span>
@@ -75,18 +98,18 @@
     <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
         <span title="">برنامه</span>
     </li>
-    <li ui-sref-active="active">
+    <li ui-sref-active="active" ng-if="permi['weeklyschedule']">
         <a ui-sref="app.page.weeklyschedule">
             <img src="img/icon/clander2.png" class="icnSize">
             <span class="font-bold">برنامه هفتگی</span>
         </a>
     </li>
-    <li ui-sref-active="active">
+    <li ui-sref-active="active" ng-if="permi['exam']">
         <div id="div2">
-        <a ui-sref="app.page.quizSchedule">
-            <img src="img/icon/clander.png" class="icnSize">
-            <span class="font-bold">برنامه آزمون</span>
-        </a>
+            <a ui-sref="app.page.quizSchedule">
+                <img src="img/icon/clander.png" class="icnSize">
+                <span class="font-bold">برنامه آزمون</span>
+            </a>
         </div>
     </li>
     <li>
@@ -99,31 +122,26 @@
             <span class="font-bold">اطلاعات مکمل</span>
         </a>
         <ul class="nav nav-sub dk">
-            <li ui-sref-active="active">
+            <li ui-sref-active="active" ng-if="permi['class']">
                 <a ui-sref="app.page.Class_Ctrl">
                     <img src="img/icon/class.png" class="icnSize">
                     <span>کلاس بندی</span>
                 </a>
             </li>
-            <li ui-sref-active="active">
+            <li ui-sref-active="active" ng-if="permi['students']">
                 <a ui-sref="app.page.students">
                     <img src="img/icon/student2.png" class="icnSize">
                     <span style="font-size: 13px">دانش آموزان</span>
                 </a>
             </li>
-            <li ui-sref-active="active">
-                <a ui-sref="app.page.pre_students">
-                    <img src="img/icon/userDetail.png" class="icnSize">
-                    <span style="font-size: 13px">پیش ثبت نام</span>
-                </a>
-            </li>
-            <li ui-sref-active="active">
+
+            <li ui-sref-active="active" ng-if="permi['teachers']">
                 <a ui-sref="app.page.teachers">
                     <img src="img/icon/techer.png" class="icnSize">
                     <span>معلمین</span>
                 </a>
             </li>
-            <li ui-sref-active="active">
+            <li ui-sref-active="active" ng-if="permi['sms_temp']">
                 <a ui-sref="app.page.smsTemplate">
                     <img src="img/icon/sms2.png" class="icnSize">
                     <span class="font-bold">قالب پیامک</span>
@@ -144,73 +162,82 @@
             <span class="font-bold">اطلاعات پایه</span>
         </a>
         <ul class="nav nav-sub dk">
-            <li ui-sref-active="active">
+
+<!--             <li ui-sref-active="active" ng-if="showOperator">-->
+<!--                <a ui-sref="app.page.aboutMajor">-->
+<!--                    <img src="img/icon/documents.png" class="icnSize">-->
+<!--                    <span style="font-size: 12px">معرفی پایه/رشته</span>-->
+<!--                </a>-->
+<!--            </li>-->
+
+
+            <li ui-sref-active="active" ng-if="showOperator">
                 <a ui-sref="app.page.majorbase">
                     <img src="img/icon/rele.png" class="icnSize">
                     <span style="font-size: 13px">مقاطع</span>
                 </a>
             </li>
-            <li ui-sref-active="active">
+            <li ui-sref-active="active" ng-if="showOperator">
                 <a ui-sref="app.page.dooros">
                     <img src="img/icon/books.png" class="icnSize">
                     <span>دروس</span>
                 </a>
             </li>
-            <li ui-sref-active="active">
+            <li ui-sref-active="active" ng-if="showOperator">
                 <a ui-sref="app.page.madarek">
                     <img src="img/icon/userDetail.png" class="icnSize">
                     <span style="font-size: 13px">مدارک تحصیلی</span>
                 </a>
             </li>
-            <li ui-sref-active="active">
+            <li ui-sref-active="active" ng-if="permi['term']">
                 <a ui-sref="app.page.termha">
                     <img src="img/icon/documents.png" class="icnSize">
                     <span>ترم ها</span>
                 </a>
             </li>
-            <li ui-sref-active="active">
+            <li ui-sref-active="active" ng-if="permi['sessiontype']">
                 <a ui-sref="app.page.jalase">
                     <img src="img/icon/jalase.png" class="icnSize">
                     <span>انواع جلسه</span>
                 </a>
             </li>
-            <li ui-sref-active="active">
+            <li ui-sref-active="active" ng-if="permi['pointtype']">
                 <a ui-sref="app.page.pointtype">
                     <img src="img/icon/License.png" class="icnSize">
                     <span>انواع امتیاز</span>
                 </a>
             </li>
-            <li ui-sref-active="active">
+            <li ui-sref-active="active" ng-if="permi['giftype']">
                 <a ui-sref="app.page.giftPoint">
                     <img src="img/icon/git_icon.png" class="icnSize">
                     <span>انواع جایزه</span>
                 </a>
             </li>
-            <li ui-sref-active="active">
+            <li ui-sref-active="active" ng-if="permi['enztype_st']">
                 <a ui-sref="app.page.enzebat_students">
                     <img src="img/icon/wrtie.png" class="icnSize2">
                     <span style="font-size: 13px">انضباط دانش آموز</span>
                 </a>
             </li>
-            <li ui-sref-active="active">
+            <li ui-sref-active="active" ng-if="permi['enztype_th']">
                 <a ui-sref="app.page.enzebat_teacher">
                     <img src="img/icon/karname2.png" class="icnSize">
                     <span>انضباط معلم</span>
                 </a>
             </li>
-            <li ui-sref-active="active">
+            <li ui-sref-active="active" ng-if="permi['location']">
                 <a ui-sref="app.page.class_fizikiCtrl">
                     <img src="img/icon/class2.png" class="icnSize">
                     <span style="font-size: 13px">کلاس فیزیکی</span>
                 </a>
             </li>
-            <li ui-sref-active="active">
+            <li ui-sref-active="active" ng-if="permi['instructions']">
                 <a ui-sref="app.page.instructions">
                     <img src="img/icon/report.png" class="icnSize">
                     <span style="font-size: 13px">موافقت نامه</span>
                 </a>
             </li>
-            <li ui-sref-active="active">
+            <li ui-sref-active="active" ng-if="showOperator">
                 <a ui-sref="app.page.schoolCtrl">
                     <img src="img/icon/company.png" class="icnSize">
                     <span>مدرسه</span>
@@ -235,16 +262,18 @@
                     <span>تنظیمات</span>
                 </a>
             </li>
-            <li ui-sref-active="active">
-                <a ui-sref="app.page.class">
-                    <img src="img/icon/users.png" class="icnSize">
-                    <span>کاربران</span>
+            <li ng-if="permi['role']">
+                <a ui-sref="app.page.role">
+                    <img src="img/icon/list.png" style="width: 50px;height: 50px;">
+                    <b class="badge bg-success pull-right"></b>
+                    <span style="font-size: 13px;" class="font-bold">گروه دسترسی</span>
                 </a>
             </li>
-            <li ui-sref-active="active">
-                <a ui-sref="app.page.class">
-                    <img src="img/icon/License.png" class="icnSize">
-                    <span>نقش ها</span>
+            <li ng-if="permi['permission']">
+                <a ui-sref="app.page.permission">
+                    <img src="img/icon/access-denied.png" style="width: 50px;height: 50px;">
+                    <b class="badge bg-success pull-right"></b>
+                    <span class="font-bold">دسترسی ها</span>
                 </a>
             </li>
         </ul>
@@ -253,10 +282,46 @@
 </ul>
 <!-- / list -->
 <script>
-    for (var i = 0; i < 10 ; i++) {
+    for (var i = 0; i < 10; i++) {
         $("#div" + i).attr("disabled", "disabled").off('click');
-        var x1=$("#div" + i).hasClass("disabledDiv");
-        (x1==true)?$("#div" + i).removeClass("disabledDiv"):$("#div" + i).addClass("disabledDiv");
+        var x1 = $("#div" + i).hasClass("disabledDiv");
+        (x1 == true) ? $("#div" + i).removeClass("disabledDiv") : $("#div" + i).addClass("disabledDiv");
     }
+
+</script>
+<script>
+    app.controller('nav', ['$scope', '$filter', '$http', function ($scope, $filter, $http, $timeout) {
+
+        // //Static***
+        // $scope.permi = new Object();
+        // dict = JSON.parse(localStorage.localmenu);
+        // for (var i = 0; i < dict.length; i++) {
+        //     $scope.permi[dict[i].name] = dict[i].value;
+        // }
+        $scope.showOperator = localStorage.operator;
+        if ( $scope.showOperator == true) {
+            $scope.showOperator = true;
+        }
+        //Daynamic***
+        $scope.permi = new Object();
+        $scope.permi = JSON.parse(localStorage.localmenu);
+        $scope.gotoWeb = function () {
+            localStorage.userId = localStorage.adminId;
+            $scope.clickCounter();
+        }
+        $scope.clickCounter = function () {
+            if (typeof (Storage) !== "undefined") {
+                if (localStorage.clickcount) {
+                    localStorage.clickcount = Number(localStorage.clickcount) + 1
+                } else {
+                    localStorage.clickcount = 1
+                }
+            } else {
+                alert("با عرض پوزش مرورگر شما از localStorage ما پشتیبانی نمیکند \t مروگر خود را اپدیت یا تغییر دهید سپس مجددا تلاش کنید.")
+            }
+        }
+    }])
+    ;
+
 
 </script>

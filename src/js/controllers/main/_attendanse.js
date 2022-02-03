@@ -67,7 +67,6 @@ app.controller('attendanse', ['$scope', '$filter', '$http', function ($scope, $f
                 {key: "%note", value: $note + ''},
             ]
         };
-        alert(JSON.stringify(upd_absn));
         $http.post(URL_INSERT, JSON.stringify(upd_absn))
             .success(function (result, status, headers, config) {
                 document.location.reload();

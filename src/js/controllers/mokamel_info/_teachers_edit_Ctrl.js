@@ -2,8 +2,6 @@ app.controller('Theacher_edit', ['$scope', '$filter', '$http', function ($scope,
     $scope.eroretext = "";
     $scope.th_id = "";
     $scope.th_image = "";
-    debugger
-
     $scope.users = [
         {value: "1", name: "مدیر آموزشگاه"},
         {value: "2", name: "معاون"},
@@ -36,7 +34,14 @@ app.controller('Theacher_edit', ['$scope', '$filter', '$http', function ($scope,
             .success(function (result, status, headers, config) {
                 $scope.madraks = result.data;
             });
-
+        $http.post(URL_GET, JSON.stringify({
+            ViewName: "XV_SelectRole",
+            parameters: [
+                {key: "%schoolid", value: localStorage.schoolId},
+            ],
+        })).success(function (result, status, headers, config) {
+            $scope.roles = result.data;
+        });
 
         var full_url = document.URL;
         var url_array = full_url.split('/')
@@ -68,6 +73,7 @@ app.controller('Theacher_edit', ['$scope', '$filter', '$http', function ($scope,
                 $scope.th_phone = $scope.techer.mobile;
                 $scope.th_email = $scope.techer.email;
                 $scope.th_mdrk = $scope.techer.educationdegreeid;
+                $scope.th_roleid = $scope.techer.role_id;
                 $scope.th_type = $scope.techer.teachertype;
                 $scope.th_note = $scope.techer.note;
                 $scope.th_image = $scope.techer.image;
@@ -81,8 +87,6 @@ app.controller('Theacher_edit', ['$scope', '$filter', '$http', function ($scope,
     $scope.updateTecherFunctin = function ($id) {
         if ((localStorage.adminId) && localStorage.adminCount != 0 && (localStorage.adminCount && localStorage.adminCount != undefined && localStorage.adminCount != "undefined")) {
             if (($scope.th_fitstname) && ($scope.th_lastname) && ($scope.th_fathername) && ($scope.th_mdrk) && ($scope.th_type)) {
-                debugger
-
                 var upd_th = {
                     ViewName: "TeacherUpdate",
                     parameters: [
@@ -101,6 +105,9 @@ app.controller('Theacher_edit', ['$scope', '$filter', '$http', function ($scope,
                         {key: "%image", value: $scope.th_image || '' + ''},
                         {key: "%note", value: $scope.th_note || '' + ''},
                         {key: "%schoolid", value: localStorage.schoolId},
+                        {key: "%username", value: $scope.th_codemeli},
+                        {key: "%password", value: $scope.th_codemeli},
+                        {key: "%role_id", value: $scope.th_roleid},
                     ]
                 };
 
@@ -150,10 +157,7 @@ app.controller('Theacher_edit', ['$scope', '$filter', '$http', function ($scope,
 
     $("#uploadFile1").on('fileuploaded', function (event, data) {
         // and check what's in both params
-        debugger
-        $scope.th_image =BaseApiAddress+ data.response.data;
-        debugger
-
+        $scope.stu_image = data.response.data;
     });
     $("#toggleOrient").on('change', function () {
         var val = $(this).prop('checked');

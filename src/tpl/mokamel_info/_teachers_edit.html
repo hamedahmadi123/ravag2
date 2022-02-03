@@ -2,7 +2,7 @@
     <div class="bg-light lter b-b wrapper-md" ng-init="app.settings.asideFixed = true;app.settings.headerFixed = true;">
         <div class="row">
             <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
-                <h1 class="m-n font-thin h4"><img src="{{th_image}}" class="icnSize"> ویرایش معلم (
+                <h1 class="m-n font-thin h4"><img src="img/icon/editUser.png" class="icnSize"> ویرایش معلم (
                     {{techer.firstname + " "+ techer.lastname}} )</h1>
             </div>
             <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
@@ -36,6 +36,17 @@
                         اطلاعات فردی
                     </div>
                     <br>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <div class="panel-body">
+                            <label><b><span style="color: blue;margin: 5px">*</span>کد پرسنلی :</b></label>&nbsp;
+                            <input ng-model="th_prscode"
+                                   class="form-control rounded"
+                                   tooltip="کد پرسنلی"
+                                   placeholder="کد پرسنلی..."
+                                   type="text">
+                        </div>
+                    </div>
+                    <div class="line line-dashed line-lg pull-in"></div>
                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                         <div class="panel-body">
                             <label><b><span class="starstyle">*</span>نام :</b></label> &nbsp;
@@ -134,6 +145,8 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="line line-dashed line-lg pull-in"></div>
+
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                             <div class="panel-body">
                                 <label><b><span class="starstyle">*</span>سمت :</b></label>&nbsp;
@@ -147,6 +160,25 @@
                                         نمایید.
                                     </option>
 
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div class="panel-body">
+                                <label><b><span
+                                        class="starstyle">*</span>گروه دسترسی
+                                    :</b></label>&nbsp;
+                                <select tooltip="ئسترسی به بخش های پنل (برای ایجاد گروه دسترسی خود وارد بخش تنظیمات / گروه دسترسی شوید.)"
+                                        ng-model="th_roleid"
+                                        ng-options="role.role_id as role.role_name for role in roles"
+                                        class="form-control rounded">
+                                    <option ng-disabled="true"
+                                            ng-required="true"
+                                            ng-selected="false"
+                                            value="">گروه دسترسی
+                                        را مشخص
+                                        نمایید.
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -172,16 +204,6 @@
                                 </div>
                                 <div id="togStatus" class="hint-block">
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                            <div class="panel-body">
-                                <label><b><span style="color: blue;margin: 5px">*</span>کد پرسنلی :</b></label>&nbsp;
-                                <input ng-model="th_prscode"
-                                       class="form-control rounded"
-                                       tooltip="کد پرسنلی"
-                                       placeholder="کد پرسنلی..."
-                                       type="text">
                             </div>
                         </div>
                     </div>
